@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		445673ED19FC6F3100B511B8 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 445673E319FC6F3100B511B8 /* ioapi.c */; };
-		445673EE19FC6F3100B511B8 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 445673E519FC6F3100B511B8 /* mztools.c */; };
-		445673EF19FC6F3100B511B8 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 445673E719FC6F3100B511B8 /* unzip.c */; };
-		445673F019FC6F3100B511B8 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 445673E919FC6F3100B511B8 /* zip.c */; };
-		445673F119FC6F3100B511B8 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 445673EC19FC6F3100B511B8 /* ZipArchive.mm */; };
 		4482EE8219F943D60078D8C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8119F943D60078D8C4 /* AppDelegate.swift */; };
 		4482EE8519F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8319F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld */; };
 		4482EE8719F943D60078D8C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8619F943D60078D8C4 /* ViewController.swift */; };
@@ -73,17 +68,6 @@
 
 /* Begin PBXFileReference section */
 		445673E019FC6F3100B511B8 /* GoogleTreasureHunt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoogleTreasureHunt-Bridging-Header.h"; sourceTree = "<group>"; };
-		445673E219FC6F3100B511B8 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		445673E319FC6F3100B511B8 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
-		445673E419FC6F3100B511B8 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
-		445673E519FC6F3100B511B8 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
-		445673E619FC6F3100B511B8 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
-		445673E719FC6F3100B511B8 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
-		445673E819FC6F3100B511B8 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
-		445673E919FC6F3100B511B8 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
-		445673EA19FC6F3100B511B8 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		445673EB19FC6F3100B511B8 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
-		445673EC19FC6F3100B511B8 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
 		4482EE7C19F943D60078D8C4 /* GoogleTreasureHunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoogleTreasureHunt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4482EE8019F943D60078D8C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4482EE8119F943D60078D8C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -155,33 +139,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		445673DF19FC6EF500B511B8 /* SSZipArchive */ = {
-			isa = PBXGroup;
-			children = (
-				445673E119FC6F3100B511B8 /* minizip */,
-				445673EB19FC6F3100B511B8 /* ZipArchive.h */,
-				445673EC19FC6F3100B511B8 /* ZipArchive.mm */,
-				445673E019FC6F3100B511B8 /* GoogleTreasureHunt-Bridging-Header.h */,
-			);
-			name = SSZipArchive;
-			sourceTree = "<group>";
-		};
-		445673E119FC6F3100B511B8 /* minizip */ = {
-			isa = PBXGroup;
-			children = (
-				445673E219FC6F3100B511B8 /* crypt.h */,
-				445673E319FC6F3100B511B8 /* ioapi.c */,
-				445673E419FC6F3100B511B8 /* ioapi.h */,
-				445673E519FC6F3100B511B8 /* mztools.c */,
-				445673E619FC6F3100B511B8 /* mztools.h */,
-				445673E719FC6F3100B511B8 /* unzip.c */,
-				445673E819FC6F3100B511B8 /* unzip.h */,
-				445673E919FC6F3100B511B8 /* zip.c */,
-				445673EA19FC6F3100B511B8 /* zip.h */,
-			);
-			path = minizip;
-			sourceTree = "<group>";
-		};
 		4482EE7319F943D60078D8C4 = {
 			isa = PBXGroup;
 			children = (
@@ -203,7 +160,7 @@
 		4482EE7E19F943D60078D8C4 /* GoogleTreasureHunt */ = {
 			isa = PBXGroup;
 			children = (
-				445673DF19FC6EF500B511B8 /* SSZipArchive */,
+				445673E019FC6F3100B511B8 /* GoogleTreasureHunt-Bridging-Header.h */,
 				4482EEBE19F944BE0078D8C4 /* Manager */,
 				4482EEBF19F944CD0078D8C4 /* Bean */,
 				4482EEC019F944E30078D8C4 /* Controller */,
@@ -459,7 +416,6 @@
 			files = (
 				4482EEBB19F944AC0078D8C4 /* SigninViewController.swift in Sources */,
 				4482EEB219F944AC0078D8C4 /* AHTag.swift in Sources */,
-				445673EE19FC6F3100B511B8 /* mztools.c in Sources */,
 				4482EE8719F943D60078D8C4 /* ViewController.swift in Sources */,
 				4482EEB919F944AC0078D8C4 /* ListViewController.swift in Sources */,
 				4482EE8519F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld in Sources */,
@@ -468,13 +424,9 @@
 				4482EEB519F944AC0078D8C4 /* Hunt.swift in Sources */,
 				4482EEB319F944AC0078D8C4 /* Clue.swift in Sources */,
 				4482EEBA19F944AC0078D8C4 /* QrViewController.swift in Sources */,
-				445673EF19FC6F3100B511B8 /* unzip.c in Sources */,
-				445673F019FC6F3100B511B8 /* zip.c in Sources */,
 				4482EEB619F944AC0078D8C4 /* HuntResourceManager.swift in Sources */,
-				445673F119FC6F3100B511B8 /* ZipArchive.mm in Sources */,
 				4482EEB119F944AC0078D8C4 /* AchievementManager.swift in Sources */,
 				4482EEB719F944AC0078D8C4 /* JSon.swift in Sources */,
-				445673ED19FC6F3100B511B8 /* ioapi.c in Sources */,
 				4482EEBC19F944AC0078D8C4 /* SoundManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
