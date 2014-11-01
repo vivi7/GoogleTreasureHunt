@@ -10,75 +10,38 @@ import UIKit
 import Foundation
 import AVFoundation
 
+protocol DetailsDelegate {
+    func labelDelegateMethodWithString(string: String)
+}
 
-class ViewController: UIViewController , DetailsDelegate, AVCaptureMetadataOutputObjectsDelegate {
-    
-    //@IBOutlet var currentPoint : UILabel!
-    
-    @IBOutlet var clueImage : UIImageView!
-    
-    @IBOutlet var tagImage1 : UIImageView!
-    
-    @IBOutlet var tagImage2 : UIImageView!
+class QrViewController: UIViewController ,AVCaptureMetadataOutputObjectsDelegate {
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @IBOutlet var currentClue : UILabel!
     
-    @IBOutlet weak var label: UILabel!
+    var delegate: DetailsDelegate
     
-    @IBOutlet var labelInstruction: UILabel!
-    
-    var hunt : Hunt!
-    
-    //let driveService : GTLService =  GTLService()
-    /*
-    let kKeychainItemName : NSString = "Google Plus Quickstart"
-    let kClientID : NSString = "875676980107-2cf2c876g3guuupalb9bjbig4s0n9kjq.apps.googleusercontent.com"
-    let kClientSecret : NSString = "e2fvmIcKUh7GMjU6C3KUUcen"
-    
-    
-    var num : Int = 0;
-    */
     let device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
     let session = AVCaptureSession()
     var layer: AVCaptureVideoPreviewLayer?
-
     
+    @IBOutlet weak var textField: UITextField!
+    //FIXME: Link this to the UITextField in the Storyboard!!!
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        let controller = segue.destinationViewController as QrViewController
-        controller.delegate = self
-    }
-    
-    func labelDelegateMethodWithString(string: String) {
-        label.text = string
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        delegate.labelDelegateMethodWithString(textField.text)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Treasure Hunt"
-        //currentPoint.text = self.title
-        
-        var hunt:Hunt = Hunt()
-        var currentClue:Clue = hunt.getCurrentClue()!
-        clueImage.image = UIImage(named:currentClue.displayImage)
-        
-        
-        
-        //For google login
-        //  driveService = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(kKeychainItemName,
-        //    clientID: kClientID,
-        //  clientSecret: kClientSecret)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func callScan(buttonTapped: UIButton){
-        
-        //currentClue.text = "Scan Qr Code "
-        
+        // Do any additional setup after loading the view, typically from a nib.
+        self.title = "Scan Qr Code "
+        currentClue.text = self.title
         self.view.backgroundColor = UIColor.grayColor()
         currentClue = UILabel(frame:CGRectMake(15, 80, 290, 50))
         currentClue.backgroundColor = UIColor.clearColor()
@@ -89,12 +52,35 @@ class ViewController: UIViewController , DetailsDelegate, AVCaptureMetadataOutpu
         imageView.image = UIImage(named:"pick_bg")
         self.view.addSubview(imageView)
         
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.Default
+        let item0 = UIBarButtonItem(image:(UIImage(named:"ocrBack.png")), style:(UIBarButtonItemStyle.Bordered), target:self, action:(Selector("backClick")))
+        let item1 = UIBarButtonItem(image:(UIImage(named:"ocr_flash-off.png")), style:(UIBarButtonItemStyle.Bordered), target:self, action:(Selector("turnTorchOn")))
+        let item2 = UIBarButtonItem(image:(UIImage(named:"ocr_albums.png")), style:(UIBarButtonItemStyle.Bordered), target:self, action:(Selector("pickPicture")))
+        let flexibleSpaceItem = UIBarButtonItem(barButtonSystemItem : (UIBarButtonSystemItem.FlexibleSpace), target: self, action: nil)
+        toolBar.items = [item0,flexibleSpaceItem,item2,flexibleSpaceItem, item1]
+        toolBar.frame = CGRectMake(0, UIScreen.mainScreen().bounds.size.height-44, 320, 44)
+        self.view.addSubview(toolBar)
     }
     
+    func backClick(){
+        
+    }
+    func turnTorchOn(){
+        
+    }
+    func pickPicture(){
+        
+    }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.setupCamera()
         self.session.startRunning()
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+        
     }
     
     func setupCamera(){
@@ -118,11 +104,11 @@ class ViewController: UIViewController , DetailsDelegate, AVCaptureMetadataOutpu
             session.addOutput(output)
             output.metadataObjectTypes = [AVMetadataObjectTypeQRCode];
         }
-    
+        
         session.startRunning()
     }
     
-    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects:[AnyObject]!, fromConnection connection: AVCaptureConnection!){
+    func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!){
         var stringValue:String?
         if metadataObjects.count > 0 {
             var metadataObject = metadataObjects[0] as AVMetadataMachineReadableCodeObject
@@ -130,9 +116,10 @@ class ViewController: UIViewController , DetailsDelegate, AVCaptureMetadataOutpu
         }
         self.session.stopRunning()
         println("code is \(stringValue)")
-    //        let alertController = UIAlertController(title: "title1", message: "message0:\(stringValue)", preferredStyle: UIAlertControllerStyle.Alert)
-    //        alertController.addAction(UIAlertAction(title: "title2", style: UIAlertActionStyle.Default, handler: nil))
-    //        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        //        let alertController = UIAlertController(title: "title1", message: "message0:\(stringValue)", preferredStyle: UIAlertControllerStyle.Alert)
+        //        alertController.addAction(UIAlertAction(title: "title2", style: UIAlertActionStyle.Default, handler: nil))
+        //        self.presentViewController(alertController, animated: true, completion: nil)
         var alertView = UIAlertView()
         alertView.delegate=self
         alertView.title = "title3"

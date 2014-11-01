@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		445673ED19FC6F3100B511B8 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 445673E319FC6F3100B511B8 /* ioapi.c */; };
+		445673EE19FC6F3100B511B8 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 445673E519FC6F3100B511B8 /* mztools.c */; };
+		445673EF19FC6F3100B511B8 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 445673E719FC6F3100B511B8 /* unzip.c */; };
+		445673F019FC6F3100B511B8 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 445673E919FC6F3100B511B8 /* zip.c */; };
+		445673F119FC6F3100B511B8 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 445673EC19FC6F3100B511B8 /* ZipArchive.mm */; };
 		4482EE8219F943D60078D8C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8119F943D60078D8C4 /* AppDelegate.swift */; };
 		4482EE8519F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8319F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld */; };
 		4482EE8719F943D60078D8C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8619F943D60078D8C4 /* ViewController.swift */; };
@@ -14,6 +19,46 @@
 		4482EE8C19F943D60078D8C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4482EE8B19F943D60078D8C4 /* Images.xcassets */; };
 		4482EE8F19F943D60078D8C4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4482EE8D19F943D60078D8C4 /* LaunchScreen.xib */; };
 		4482EE9B19F943D60078D8C4 /* GoogleTreasureHuntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE9A19F943D60078D8C4 /* GoogleTreasureHuntTests.swift */; };
+		4482EEB119F944AC0078D8C4 /* AchievementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEA419F944AC0078D8C4 /* AchievementManager.swift */; };
+		4482EEB219F944AC0078D8C4 /* AHTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEA519F944AC0078D8C4 /* AHTag.swift */; };
+		4482EEB319F944AC0078D8C4 /* Clue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEA619F944AC0078D8C4 /* Clue.swift */; };
+		4482EEB519F944AC0078D8C4 /* Hunt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEA819F944AC0078D8C4 /* Hunt.swift */; };
+		4482EEB619F944AC0078D8C4 /* HuntResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEA919F944AC0078D8C4 /* HuntResourceManager.swift */; };
+		4482EEB719F944AC0078D8C4 /* JSon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEAA19F944AC0078D8C4 /* JSon.swift */; };
+		4482EEB919F944AC0078D8C4 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEAC19F944AC0078D8C4 /* ListViewController.swift */; };
+		4482EEBA19F944AC0078D8C4 /* QrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEAD19F944AC0078D8C4 /* QrViewController.swift */; };
+		4482EEBB19F944AC0078D8C4 /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEAE19F944AC0078D8C4 /* SigninViewController.swift */; };
+		4482EEBC19F944AC0078D8C4 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEAF19F944AC0078D8C4 /* SoundManager.swift */; };
+		4482EEBD19F944AC0078D8C4 /* TriviaQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEB019F944AC0078D8C4 /* TriviaQuestion.swift */; };
+		4482EEDC19F945810078D8C4 /* app0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEC419F945810078D8C4 /* app0.jpg */; };
+		4482EEDD19F945810078D8C4 /* app1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEC519F945810078D8C4 /* app1.jpg */; };
+		4482EEDE19F945810078D8C4 /* app2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEC619F945810078D8C4 /* app2.jpg */; };
+		4482EEDF19F945810078D8C4 /* app3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEC719F945810078D8C4 /* app3.jpg */; };
+		4482EEE019F945810078D8C4 /* app4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEC819F945810078D8C4 /* app4.jpg */; };
+		4482EEE119F945810078D8C4 /* app5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEC919F945810078D8C4 /* app5.jpg */; };
+		4482EEE219F945810078D8C4 /* sampleHunt.json in Resources */ = {isa = PBXBuildFile; fileRef = 4482EECA19F945810078D8C4 /* sampleHunt.json */; };
+		4482EEE319F945810078D8C4 /* android-apple-friends.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EECC19F945810078D8C4 /* android-apple-friends.jpg */; };
+		4482EEE419F945810078D8C4 /* android-apple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EECD19F945810078D8C4 /* android-apple.jpg */; };
+		4482EEE519F945810078D8C4 /* android-cry.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EECE19F945810078D8C4 /* android-cry.jpg */; };
+		4482EEE619F945810078D8C4 /* apple-android-unite.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4482EECF19F945810078D8C4 /* apple-android-unite.jpg */; };
+		4482EEE719F945810078D8C4 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED019F945810078D8C4 /* back.png */; };
+		4482EEE819F945810078D8C4 /* block.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED119F945810078D8C4 /* block.png */; };
+		4482EEE919F945810078D8C4 /* flash.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED219F945810078D8C4 /* flash.png */; };
+		4482EEEA19F945810078D8C4 /* google.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED319F945810078D8C4 /* google.png */; };
+		4482EEEB19F945810078D8C4 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED419F945810078D8C4 /* logo.png */; };
+		4482EEEC19F945810078D8C4 /* map-trasure.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED519F945810078D8C4 /* map-trasure.png */; };
+		4482EEED19F945810078D8C4 /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED619F945810078D8C4 /* ok.png */; };
+		4482EEEE19F945810078D8C4 /* pick_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED719F945810078D8C4 /* pick_bg.png */; };
+		4482EEEF19F945810078D8C4 /* scan.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED819F945810078D8C4 /* scan.png */; };
+		4482EEF019F945810078D8C4 /* treasure-animated.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EED919F945810078D8C4 /* treasure-animated.png */; };
+		4482EEF119F945810078D8C4 /* treasure.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEDA19F945810078D8C4 /* treasure.png */; };
+		4482EEF219F945810078D8C4 /* hunt.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEDB19F945810078D8C4 /* hunt.zip */; };
+		4482EEF819F960580078D8C4 /* android.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEF319F960580078D8C4 /* android.png */; };
+		4482EEF919F960580078D8C4 /* androidify.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEF419F960580078D8C4 /* androidify.gif */; };
+		4482EEFA19F960580078D8C4 /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEF519F960580078D8C4 /* apple.png */; };
+		4482EEFB19F960580078D8C4 /* GdgGroup.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEF619F960580078D8C4 /* GdgGroup.png */; };
+		4482EEFC19F960580078D8C4 /* Google-Developers.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEF719F960580078D8C4 /* Google-Developers.png */; };
+		4482EEFE19F961410078D8C4 /* Gdg-roma copia.png in Resources */ = {isa = PBXBuildFile; fileRef = 4482EEFD19F961410078D8C4 /* Gdg-roma copia.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +72,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		445673E019FC6F3100B511B8 /* GoogleTreasureHunt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoogleTreasureHunt-Bridging-Header.h"; sourceTree = "<group>"; };
+		445673E219FC6F3100B511B8 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		445673E319FC6F3100B511B8 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		445673E419FC6F3100B511B8 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		445673E519FC6F3100B511B8 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		445673E619FC6F3100B511B8 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		445673E719FC6F3100B511B8 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		445673E819FC6F3100B511B8 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		445673E919FC6F3100B511B8 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		445673EA19FC6F3100B511B8 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		445673EB19FC6F3100B511B8 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		445673EC19FC6F3100B511B8 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
 		4482EE7C19F943D60078D8C4 /* GoogleTreasureHunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoogleTreasureHunt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4482EE8019F943D60078D8C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4482EE8119F943D60078D8C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +95,46 @@
 		4482EE9419F943D60078D8C4 /* GoogleTreasureHuntTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleTreasureHuntTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4482EE9919F943D60078D8C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4482EE9A19F943D60078D8C4 /* GoogleTreasureHuntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTreasureHuntTests.swift; sourceTree = "<group>"; };
+		4482EEA419F944AC0078D8C4 /* AchievementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementManager.swift; sourceTree = "<group>"; };
+		4482EEA519F944AC0078D8C4 /* AHTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AHTag.swift; sourceTree = "<group>"; };
+		4482EEA619F944AC0078D8C4 /* Clue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clue.swift; sourceTree = "<group>"; };
+		4482EEA819F944AC0078D8C4 /* Hunt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hunt.swift; sourceTree = "<group>"; };
+		4482EEA919F944AC0078D8C4 /* HuntResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuntResourceManager.swift; sourceTree = "<group>"; };
+		4482EEAA19F944AC0078D8C4 /* JSon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSon.swift; sourceTree = "<group>"; };
+		4482EEAC19F944AC0078D8C4 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		4482EEAD19F944AC0078D8C4 /* QrViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QrViewController.swift; sourceTree = "<group>"; };
+		4482EEAE19F944AC0078D8C4 /* SigninViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SigninViewController.swift; sourceTree = "<group>"; };
+		4482EEAF19F944AC0078D8C4 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		4482EEB019F944AC0078D8C4 /* TriviaQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriviaQuestion.swift; sourceTree = "<group>"; };
+		4482EEC419F945810078D8C4 /* app0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = app0.jpg; sourceTree = "<group>"; };
+		4482EEC519F945810078D8C4 /* app1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = app1.jpg; sourceTree = "<group>"; };
+		4482EEC619F945810078D8C4 /* app2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = app2.jpg; sourceTree = "<group>"; };
+		4482EEC719F945810078D8C4 /* app3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = app3.jpg; sourceTree = "<group>"; };
+		4482EEC819F945810078D8C4 /* app4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = app4.jpg; sourceTree = "<group>"; };
+		4482EEC919F945810078D8C4 /* app5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = app5.jpg; sourceTree = "<group>"; };
+		4482EECA19F945810078D8C4 /* sampleHunt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleHunt.json; sourceTree = "<group>"; };
+		4482EECC19F945810078D8C4 /* android-apple-friends.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "android-apple-friends.jpg"; sourceTree = "<group>"; };
+		4482EECD19F945810078D8C4 /* android-apple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "android-apple.jpg"; sourceTree = "<group>"; };
+		4482EECE19F945810078D8C4 /* android-cry.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "android-cry.jpg"; sourceTree = "<group>"; };
+		4482EECF19F945810078D8C4 /* apple-android-unite.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "apple-android-unite.jpg"; sourceTree = "<group>"; };
+		4482EED019F945810078D8C4 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		4482EED119F945810078D8C4 /* block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block.png; sourceTree = "<group>"; };
+		4482EED219F945810078D8C4 /* flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flash.png; sourceTree = "<group>"; };
+		4482EED319F945810078D8C4 /* google.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google.png; sourceTree = "<group>"; };
+		4482EED419F945810078D8C4 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		4482EED519F945810078D8C4 /* map-trasure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-trasure.png"; sourceTree = "<group>"; };
+		4482EED619F945810078D8C4 /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
+		4482EED719F945810078D8C4 /* pick_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pick_bg.png; sourceTree = "<group>"; };
+		4482EED819F945810078D8C4 /* scan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scan.png; sourceTree = "<group>"; };
+		4482EED919F945810078D8C4 /* treasure-animated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "treasure-animated.png"; sourceTree = "<group>"; };
+		4482EEDA19F945810078D8C4 /* treasure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = treasure.png; sourceTree = "<group>"; };
+		4482EEDB19F945810078D8C4 /* hunt.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = hunt.zip; sourceTree = "<group>"; };
+		4482EEF319F960580078D8C4 /* android.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = android.png; sourceTree = "<group>"; };
+		4482EEF419F960580078D8C4 /* androidify.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = androidify.gif; sourceTree = "<group>"; };
+		4482EEF519F960580078D8C4 /* apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple.png; sourceTree = "<group>"; };
+		4482EEF619F960580078D8C4 /* GdgGroup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GdgGroup.png; sourceTree = "<group>"; };
+		4482EEF719F960580078D8C4 /* Google-Developers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Google-Developers.png"; sourceTree = "<group>"; };
+		4482EEFD19F961410078D8C4 /* Gdg-roma copia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gdg-roma copia.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +155,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		445673DF19FC6EF500B511B8 /* SSZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				445673E119FC6F3100B511B8 /* minizip */,
+				445673EB19FC6F3100B511B8 /* ZipArchive.h */,
+				445673EC19FC6F3100B511B8 /* ZipArchive.mm */,
+				445673E019FC6F3100B511B8 /* GoogleTreasureHunt-Bridging-Header.h */,
+			);
+			name = SSZipArchive;
+			sourceTree = "<group>";
+		};
+		445673E119FC6F3100B511B8 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				445673E219FC6F3100B511B8 /* crypt.h */,
+				445673E319FC6F3100B511B8 /* ioapi.c */,
+				445673E419FC6F3100B511B8 /* ioapi.h */,
+				445673E519FC6F3100B511B8 /* mztools.c */,
+				445673E619FC6F3100B511B8 /* mztools.h */,
+				445673E719FC6F3100B511B8 /* unzip.c */,
+				445673E819FC6F3100B511B8 /* unzip.h */,
+				445673E919FC6F3100B511B8 /* zip.c */,
+				445673EA19FC6F3100B511B8 /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
 		4482EE7319F943D60078D8C4 = {
 			isa = PBXGroup;
 			children = (
@@ -79,12 +203,18 @@
 		4482EE7E19F943D60078D8C4 /* GoogleTreasureHunt */ = {
 			isa = PBXGroup;
 			children = (
-				4482EE8119F943D60078D8C4 /* AppDelegate.swift */,
-				4482EE8619F943D60078D8C4 /* ViewController.swift */,
+				445673DF19FC6EF500B511B8 /* SSZipArchive */,
+				4482EEBE19F944BE0078D8C4 /* Manager */,
+				4482EEBF19F944CD0078D8C4 /* Bean */,
+				4482EEC019F944E30078D8C4 /* Controller */,
+				4482EEC219F944F70078D8C4 /* Business */,
 				4482EE8819F943D60078D8C4 /* Main.storyboard */,
 				4482EE8B19F943D60078D8C4 /* Images.xcassets */,
 				4482EE8D19F943D60078D8C4 /* LaunchScreen.xib */,
 				4482EE8319F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld */,
+				4482EEC319F945810078D8C4 /* huntdata */,
+				4482EECB19F945810078D8C4 /* images */,
+				4482EEDB19F945810078D8C4 /* hunt.zip */,
 				4482EE7F19F943D60078D8C4 /* Supporting Files */,
 			);
 			path = GoogleTreasureHunt;
@@ -113,6 +243,89 @@
 				4482EE9919F943D60078D8C4 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4482EEBE19F944BE0078D8C4 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				4482EEA419F944AC0078D8C4 /* AchievementManager.swift */,
+				4482EEA919F944AC0078D8C4 /* HuntResourceManager.swift */,
+				4482EEAF19F944AC0078D8C4 /* SoundManager.swift */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		4482EEBF19F944CD0078D8C4 /* Bean */ = {
+			isa = PBXGroup;
+			children = (
+				4482EEA519F944AC0078D8C4 /* AHTag.swift */,
+				4482EEA619F944AC0078D8C4 /* Clue.swift */,
+				4482EEA819F944AC0078D8C4 /* Hunt.swift */,
+				4482EEAA19F944AC0078D8C4 /* JSon.swift */,
+				4482EEB019F944AC0078D8C4 /* TriviaQuestion.swift */,
+			);
+			name = Bean;
+			sourceTree = "<group>";
+		};
+		4482EEC019F944E30078D8C4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4482EEAC19F944AC0078D8C4 /* ListViewController.swift */,
+				4482EEAD19F944AC0078D8C4 /* QrViewController.swift */,
+				4482EEAE19F944AC0078D8C4 /* SigninViewController.swift */,
+				4482EE8619F943D60078D8C4 /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		4482EEC219F944F70078D8C4 /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				4482EE8119F943D60078D8C4 /* AppDelegate.swift */,
+			);
+			name = Business;
+			sourceTree = "<group>";
+		};
+		4482EEC319F945810078D8C4 /* huntdata */ = {
+			isa = PBXGroup;
+			children = (
+				4482EEC419F945810078D8C4 /* app0.jpg */,
+				4482EEC519F945810078D8C4 /* app1.jpg */,
+				4482EEC619F945810078D8C4 /* app2.jpg */,
+				4482EEC719F945810078D8C4 /* app3.jpg */,
+				4482EEC819F945810078D8C4 /* app4.jpg */,
+				4482EEC919F945810078D8C4 /* app5.jpg */,
+				4482EECA19F945810078D8C4 /* sampleHunt.json */,
+			);
+			path = huntdata;
+			sourceTree = "<group>";
+		};
+		4482EECB19F945810078D8C4 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				4482EEF319F960580078D8C4 /* android.png */,
+				4482EEFD19F961410078D8C4 /* Gdg-roma copia.png */,
+				4482EEF419F960580078D8C4 /* androidify.gif */,
+				4482EEF519F960580078D8C4 /* apple.png */,
+				4482EEF619F960580078D8C4 /* GdgGroup.png */,
+				4482EEF719F960580078D8C4 /* Google-Developers.png */,
+				4482EECC19F945810078D8C4 /* android-apple-friends.jpg */,
+				4482EECD19F945810078D8C4 /* android-apple.jpg */,
+				4482EECE19F945810078D8C4 /* android-cry.jpg */,
+				4482EECF19F945810078D8C4 /* apple-android-unite.jpg */,
+				4482EED019F945810078D8C4 /* back.png */,
+				4482EED119F945810078D8C4 /* block.png */,
+				4482EED219F945810078D8C4 /* flash.png */,
+				4482EED319F945810078D8C4 /* google.png */,
+				4482EED419F945810078D8C4 /* logo.png */,
+				4482EED519F945810078D8C4 /* map-trasure.png */,
+				4482EED619F945810078D8C4 /* ok.png */,
+				4482EED719F945810078D8C4 /* pick_bg.png */,
+				4482EED819F945810078D8C4 /* scan.png */,
+				4482EED919F945810078D8C4 /* treasure-animated.png */,
+				4482EEDA19F945810078D8C4 /* treasure.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,9 +408,38 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4482EEFB19F960580078D8C4 /* GdgGroup.png in Resources */,
+				4482EEE219F945810078D8C4 /* sampleHunt.json in Resources */,
+				4482EEDC19F945810078D8C4 /* app0.jpg in Resources */,
+				4482EEE519F945810078D8C4 /* android-cry.jpg in Resources */,
+				4482EEF019F945810078D8C4 /* treasure-animated.png in Resources */,
+				4482EEDD19F945810078D8C4 /* app1.jpg in Resources */,
 				4482EE8A19F943D60078D8C4 /* Main.storyboard in Resources */,
+				4482EEFC19F960580078D8C4 /* Google-Developers.png in Resources */,
+				4482EEF119F945810078D8C4 /* treasure.png in Resources */,
+				4482EEF919F960580078D8C4 /* androidify.gif in Resources */,
 				4482EE8F19F943D60078D8C4 /* LaunchScreen.xib in Resources */,
+				4482EEE619F945810078D8C4 /* apple-android-unite.jpg in Resources */,
+				4482EEEC19F945810078D8C4 /* map-trasure.png in Resources */,
+				4482EEE819F945810078D8C4 /* block.png in Resources */,
+				4482EEE119F945810078D8C4 /* app5.jpg in Resources */,
+				4482EEF819F960580078D8C4 /* android.png in Resources */,
+				4482EEE019F945810078D8C4 /* app4.jpg in Resources */,
+				4482EEEF19F945810078D8C4 /* scan.png in Resources */,
+				4482EEEA19F945810078D8C4 /* google.png in Resources */,
+				4482EEDF19F945810078D8C4 /* app3.jpg in Resources */,
+				4482EEEB19F945810078D8C4 /* logo.png in Resources */,
+				4482EEED19F945810078D8C4 /* ok.png in Resources */,
+				4482EEE419F945810078D8C4 /* android-apple.jpg in Resources */,
+				4482EEE719F945810078D8C4 /* back.png in Resources */,
+				4482EEE919F945810078D8C4 /* flash.png in Resources */,
+				4482EEE319F945810078D8C4 /* android-apple-friends.jpg in Resources */,
+				4482EEDE19F945810078D8C4 /* app2.jpg in Resources */,
 				4482EE8C19F943D60078D8C4 /* Images.xcassets in Resources */,
+				4482EEF219F945810078D8C4 /* hunt.zip in Resources */,
+				4482EEEE19F945810078D8C4 /* pick_bg.png in Resources */,
+				4482EEFA19F960580078D8C4 /* apple.png in Resources */,
+				4482EEFE19F961410078D8C4 /* Gdg-roma copia.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,9 +457,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4482EEBB19F944AC0078D8C4 /* SigninViewController.swift in Sources */,
+				4482EEB219F944AC0078D8C4 /* AHTag.swift in Sources */,
+				445673EE19FC6F3100B511B8 /* mztools.c in Sources */,
 				4482EE8719F943D60078D8C4 /* ViewController.swift in Sources */,
+				4482EEB919F944AC0078D8C4 /* ListViewController.swift in Sources */,
 				4482EE8519F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld in Sources */,
 				4482EE8219F943D60078D8C4 /* AppDelegate.swift in Sources */,
+				4482EEBD19F944AC0078D8C4 /* TriviaQuestion.swift in Sources */,
+				4482EEB519F944AC0078D8C4 /* Hunt.swift in Sources */,
+				4482EEB319F944AC0078D8C4 /* Clue.swift in Sources */,
+				4482EEBA19F944AC0078D8C4 /* QrViewController.swift in Sources */,
+				445673EF19FC6F3100B511B8 /* unzip.c in Sources */,
+				445673F019FC6F3100B511B8 /* zip.c in Sources */,
+				4482EEB619F944AC0078D8C4 /* HuntResourceManager.swift in Sources */,
+				445673F119FC6F3100B511B8 /* ZipArchive.mm in Sources */,
+				4482EEB119F944AC0078D8C4 /* AchievementManager.swift in Sources */,
+				4482EEB719F944AC0078D8C4 /* JSon.swift in Sources */,
+				445673ED19FC6F3100B511B8 /* ioapi.c in Sources */,
+				4482EEBC19F944AC0078D8C4 /* SoundManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,9 +600,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = GoogleTreasureHunt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GoogleTreasureHunt/GoogleTreasureHunt-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -352,9 +613,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = GoogleTreasureHunt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "GoogleTreasureHunt/GoogleTreasureHunt-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -411,6 +674,7 @@
 				4482EEA019F943D60078D8C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4482EEA119F943D60078D8C4 /* Build configuration list for PBXNativeTarget "GoogleTreasureHuntTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +683,7 @@
 				4482EEA319F943D60078D8C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
