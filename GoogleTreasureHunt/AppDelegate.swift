@@ -115,6 +115,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     
+    
+    
+    
+    
     let fileManager = NSFileManager()
     
     func createFolderAtPath(path: String){
@@ -229,7 +233,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func restoreData(path:String) -> NSDictionary {
         return NSDictionary(contentsOfFile: path)!
     }
-        
     
 }
 

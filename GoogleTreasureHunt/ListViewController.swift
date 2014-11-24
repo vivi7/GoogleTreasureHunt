@@ -16,10 +16,11 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     let tableViewtitle = "Clues"
     
     var hunt:Hunt = Hunt()
-    
     var clues: Array<Clue> = Array<Clue>()
+    var clue:Clue?
     
     override func viewDidLoad() {
+//        super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
@@ -50,35 +51,20 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
         cell.backgroundColor = color
         return cell
     }
-/*
-    func tableView(tableView: UITableView!, titleForHeaderInSection section: Int!) -> String! {
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return tableViewtitle
     }
-
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        return 0
-    }
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        println("Test\(indexPath.section) \(indexPath.row)")
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.clue = self.clues[indexPath.row]
+        self.performSegueWithIdentifier("detailViewControllerSegue", sender: self)
     }
     
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60.0
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var detailViewController = segue.destinationViewController as DetailViewController
+        detailViewController.clue = self.clue
     }
-    
-    
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int {}
-    
-    func pickerView(pickerView: UIPickerView!,numberOfRowsInComponent component: Int) -> Int{}
-    
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?{
-    }
-    
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?{
-    }
-*/
     
 }
 

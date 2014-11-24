@@ -18,10 +18,30 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>TreasureHunt</string>
+			<key>CFBundleURLName</key>
+			<string>com.vivi.GoogleTreasureHunt</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.vivi.GoogleTreasureHunt</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>newsstand-content</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

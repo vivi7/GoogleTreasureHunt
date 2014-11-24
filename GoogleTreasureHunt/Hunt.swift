@@ -87,7 +87,7 @@ class Hunt {
     func createHunt(){
         var huntResourceManager: HuntResourceManager = HuntResourceManager()
         var jsonDictonary: NSDictionary = huntResourceManager.getJSon()
-        var jsonString: String = huntResourceManager.getJSonString()
+        //var jsonString: String = huntResourceManager.getJSonString()
         
         var cluesDictonary: NSDictionary = jsonDictonary["clues"] as NSDictionary
         
@@ -98,7 +98,7 @@ class Hunt {
             clue.displayText = cluesDictonary["displayText"] as String
             clue.displayImage = cluesDictonary["displayImage"] as String
             clue.shufflegroup = cluesDictonary["shufflegroup"] as Int
-            clue.displayImage = cluesDictonary["displayImage"] as String
+            //clue.displayImage = cluesDictonary["displayImage"] as String
             
             var tagsDictonary: NSDictionary = jsonDictonary["tags"] as NSDictionary
             for(var t = 0; t < tagsDictonary.count; t++){

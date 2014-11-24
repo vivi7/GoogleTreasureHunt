@@ -1,63 +1,75 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
       "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "TreasureHunt-2.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "TreasureHunt.png",
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "TreasureHunt-1.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "TreasureHunt-4.png",
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "TreasureHunt-3.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "TreasureHunt-5.png",
       "scale" : "3x"
     },
     {
-      "idiom" : "ipad",
       "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "TreasureHunt-6.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "TreasureHunt-7.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "TreasureHunt-8.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "TreasureHunt-9.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "TreasureHunt-10.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "TreasureHunt-11.png",
       "scale" : "2x"
     }
   ],

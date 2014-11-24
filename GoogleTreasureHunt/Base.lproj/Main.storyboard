@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hBD-Yz-cuc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -177,7 +179,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5b-EX-QSM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="Cjq-hX-P4C">
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" id="qt7-Hi-Q7q"/>
+                        <segue destination="fqe-E9-Yn6" kind="show" id="ekr-C6-y8r"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -186,7 +188,7 @@
         <!--List View Controller-->
         <scene sceneID="67d-37-AXY">
             <objects>
-                <viewController id="0Pw-Zg-fvI" customClass="ListViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="listViewControllerSegue" id="0Pw-Zg-fvI" customClass="ListViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XCk-Bu-P8q"/>
                         <viewControllerLayoutGuide type="bottom" id="obR-Gf-V7w"/>
@@ -195,38 +197,103 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iyB-Fj-1FE">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="H54-Oi-vEO">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                </variation>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="obR-Gf-V7w" firstAttribute="top" secondItem="H54-Oi-vEO" secondAttribute="bottom" id="9Li-fl-KQ5"/>
+                            <constraint firstItem="obR-Gf-V7w" firstAttribute="top" secondItem="H54-Oi-vEO" secondAttribute="bottom" id="HKo-NJ-qjt"/>
+                            <constraint firstItem="H54-Oi-vEO" firstAttribute="leading" secondItem="6jn-jH-mnu" secondAttribute="leadingMargin" id="KGe-x1-Hex"/>
+                            <constraint firstItem="H54-Oi-vEO" firstAttribute="leading" secondItem="6jn-jH-mnu" secondAttribute="leadingMargin" id="OH1-1Q-QWj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="H54-Oi-vEO" secondAttribute="trailing" id="etX-XO-9pQ"/>
+                            <constraint firstItem="H54-Oi-vEO" firstAttribute="trailing" secondItem="6jn-jH-mnu" secondAttribute="trailingMargin" id="kZS-X4-oaf"/>
+                            <constraint firstItem="H54-Oi-vEO" firstAttribute="top" secondItem="6jn-jH-mnu" secondAttribute="topMargin" id="pc2-Sh-0dD"/>
+                            <constraint firstItem="H54-Oi-vEO" firstAttribute="leading" secondItem="6jn-jH-mnu" secondAttribute="leadingMargin" id="ry1-EU-iWj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="H54-Oi-vEO" secondAttribute="trailing" id="y3w-3S-oBI"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="iyB-Fj-1FE"/>
+                                <exclude reference="H54-Oi-vEO"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="9Li-fl-KQ5"/>
+                                <exclude reference="HKo-NJ-qjt"/>
+                                <exclude reference="KGe-x1-Hex"/>
+                                <exclude reference="OH1-1Q-QWj"/>
+                                <exclude reference="etX-XO-9pQ"/>
+                                <exclude reference="kZS-X4-oaf"/>
+                                <exclude reference="pc2-Sh-0dD"/>
+                                <exclude reference="ry1-EU-iWj"/>
+                                <exclude reference="y3w-3S-oBI"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
-                                <include reference="iyB-Fj-1FE"/>
+                                <include reference="H54-Oi-vEO"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="9Li-fl-KQ5"/>
+                                <include reference="HKo-NJ-qjt"/>
+                                <include reference="KGe-x1-Hex"/>
+                                <include reference="OH1-1Q-QWj"/>
+                                <include reference="etX-XO-9pQ"/>
+                                <include reference="kZS-X4-oaf"/>
+                                <include reference="pc2-Sh-0dD"/>
+                                <include reference="ry1-EU-iWj"/>
+                                <include reference="y3w-3S-oBI"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="x9D-MS-TCR"/>
                     <connections>
-                        <outlet property="tableView" destination="iyB-Fj-1FE" id="H82-Y7-HI1"/>
+                        <outlet property="tableView" destination="H54-Oi-vEO" id="OJw-Sq-FcW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ofE-AD-cB9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1147" y="-350"/>
+            <point key="canvasLocation" x="2955" y="750"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
+        <scene sceneID="dQi-pv-0bJ">
+            <objects>
+                <viewController storyboardIdentifier="detailViewControllerSegue" id="MPY-LH-TVd" customClass="DetailViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GCL-JC-P74"/>
+                        <viewControllerLayoutGuide type="bottom" id="xe2-4J-UCP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zYO-ob-NDf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JNq-fj-0KS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3744" y="750"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="qB0-p1-XPV">
+            <objects>
+                <navigationController id="fqe-E9-Yn6" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eqv-YE-h9u">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="UPp-dm-dJJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i11-ey-99S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1197" y="337"/>
+        </scene>
+        <!--CLUE SCAN-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="viewControllerSegue" id="BYZ-38-t0r" customClass="ViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -235,50 +302,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bd4-Nv-5JM">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <fontDescription key="fontDescription" name="Superclarendon-Light" family="Superclarendon" pointSize="15"/>
-                                <state key="normal" title="SCAN" backgroundImage="scan.png">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
-                                    <rect key="frame" x="160" y="324" width="80" height="76"/>
-                                </variation>
-                                <connections>
-                                    <action selector="callScan:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0kO-mR-oGv"/>
-                                </connections>
-                            </button>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="block.png" translatesAutoresizingMaskIntoConstraints="NO" id="0DH-uB-bk5">
-                                <rect key="frame" x="0.0" y="-64" width="64" height="64"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="86" y="466" width="64" height="64"/>
-                                </variation>
-                            </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="block.png" translatesAutoresizingMaskIntoConstraints="NO" id="vjf-l1-0EW">
-                                <rect key="frame" x="0.0" y="-64" width="64" height="64"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="250" y="466" width="64" height="64"/>
-                                </variation>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAG 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aP9-k3-Uyd">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="97" y="536" width="42" height="22"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAG 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1a3-D9-5Wr">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="261" y="535" width="42" height="22"/>
-                                </variation>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="63N-NT-aRv">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
@@ -310,6 +333,51 @@
                                     <rect key="frame" x="86" y="81" width="228" height="202"/>
                                 </variation>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bd4-Nv-5JM">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <fontDescription key="fontDescription" name="Superclarendon-Light" family="Superclarendon" pointSize="15"/>
+                                <state key="normal" title="SCAN" backgroundImage="scan.png">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                    <rect key="frame" x="160" y="291" width="80" height="76"/>
+                                </variation>
+                                <connections>
+                                    <action selector="callScan:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0kO-mR-oGv"/>
+                                    <segue destination="efA-sB-hdn" kind="show" identifier="qrScanSegue" id="bcb-3I-P1J"/>
+                                </connections>
+                            </button>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="block.png" translatesAutoresizingMaskIntoConstraints="NO" id="0DH-uB-bk5">
+                                <rect key="frame" x="0.0" y="-64" width="64" height="64"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="86" y="433" width="64" height="64"/>
+                                </variation>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="block.png" translatesAutoresizingMaskIntoConstraints="NO" id="vjf-l1-0EW">
+                                <rect key="frame" x="0.0" y="-64" width="64" height="64"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="250" y="433" width="64" height="64"/>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAG 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aP9-k3-Uyd">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="97" y="506" width="42" height="22"/>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAG 2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1a3-D9-5Wr">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="261" y="505" width="42" height="22"/>
+                                </variation>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KOL-aE-fym">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -322,40 +390,60 @@ Scan the two tags you find next to it.</string>
                                 <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="1" height="-1"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="16" y="408" width="368" height="50"/>
+                                    <rect key="frame" x="16" y="375" width="368" height="50"/>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vqv-7a-rs8">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="Index Clues">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="16" y="550" width="368" height="30"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="0Pw-Zg-fvI" kind="show" identifier="clueListSegue" id="Hbu-WY-o8J"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <gestureRecognizers/>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="63N-NT-aRv"/>
+                                <exclude reference="Cyh-uz-ZBc"/>
+                                <exclude reference="dlc-AD-rpf"/>
+                                <exclude reference="SgZ-ws-sgw"/>
                                 <exclude reference="Bd4-Nv-5JM"/>
                                 <exclude reference="0DH-uB-bk5"/>
                                 <exclude reference="vjf-l1-0EW"/>
                                 <exclude reference="aP9-k3-Uyd"/>
                                 <exclude reference="1a3-D9-5Wr"/>
-                                <exclude reference="63N-NT-aRv"/>
-                                <exclude reference="Cyh-uz-ZBc"/>
-                                <exclude reference="dlc-AD-rpf"/>
-                                <exclude reference="SgZ-ws-sgw"/>
                                 <exclude reference="KOL-aE-fym"/>
+                                <exclude reference="vqv-7a-rs8"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
+                                <include reference="63N-NT-aRv"/>
+                                <include reference="Cyh-uz-ZBc"/>
+                                <include reference="dlc-AD-rpf"/>
+                                <include reference="SgZ-ws-sgw"/>
                                 <include reference="Bd4-Nv-5JM"/>
                                 <include reference="0DH-uB-bk5"/>
                                 <include reference="vjf-l1-0EW"/>
                                 <include reference="aP9-k3-Uyd"/>
                                 <include reference="1a3-D9-5Wr"/>
-                                <include reference="63N-NT-aRv"/>
-                                <include reference="Cyh-uz-ZBc"/>
-                                <include reference="dlc-AD-rpf"/>
-                                <include reference="SgZ-ws-sgw"/>
                                 <include reference="KOL-aE-fym"/>
+                                <include reference="vqv-7a-rs8"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="CLUE SCAN" id="Uxn-A5-7xr">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="yP1-gi-HNa"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="clueImage" destination="SgZ-ws-sgw" id="b63-Ao-7gC"/>
                         <outlet property="currentClue" destination="Cyh-uz-ZBc" id="9Et-fs-u7t"/>
@@ -367,7 +455,42 @@ Scan the two tags you find next to it.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1147.5" y="337"/>
+            <point key="canvasLocation" x="2034" y="337"/>
+        </scene>
+        <!--Qr View Controller-->
+        <scene sceneID="PjV-kY-GMd">
+            <objects>
+                <viewController storyboardIdentifier="qrViewConttrollerSegue" id="efA-sB-hdn" customClass="QrViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FdB-cZ-BuP"/>
+                        <viewControllerLayoutGuide type="bottom" id="qXW-iV-F5K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bHa-ck-Kld">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uHS-dB-XEi">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="59" y="91" width="282" height="292"/>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="uHS-dB-XEi"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="uHS-dB-XEi"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kHp-oE-rqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2955" y="73"/>
         </scene>
     </scenes>
     <resources>

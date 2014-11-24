@@ -20,6 +20,8 @@ class QrViewController: UIViewController ,AVCaptureMetadataOutputObjectsDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
+    var stringValueQrCode:String = ""
+    
     @IBOutlet var currentClue : UILabel!
     
     var delegate: DetailsDelegate
@@ -41,13 +43,13 @@ class QrViewController: UIViewController ,AVCaptureMetadataOutputObjectsDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.title = "Scan Qr Code "
-        currentClue.text = self.title
+        //currentClue.text = self.title
         self.view.backgroundColor = UIColor.grayColor()
-        currentClue = UILabel(frame:CGRectMake(15, 80, 290, 50))
-        currentClue.backgroundColor = UIColor.clearColor()
-        currentClue.numberOfLines = 2
-        currentClue.textColor = UIColor.whiteColor()
-        self.view.addSubview(currentClue)
+        //currentClue = UILabel(frame:CGRectMake(15, 80, 290, 50))
+        //currentClue.backgroundColor = UIColor.clearColor()
+        //currentClue.numberOfLines = 2
+        //currentClue.textColor = UIColor.whiteColor()
+        //self.view.addSubview(currentClue)
         let imageView = UIImageView(frame:CGRectMake(10, 140, 300, 300))
         imageView.image = UIImage(named:"pick_bg")
         self.view.addSubview(imageView)
@@ -109,23 +111,28 @@ class QrViewController: UIViewController ,AVCaptureMetadataOutputObjectsDelegate
     }
     
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!){
-        var stringValue:String?
         if metadataObjects.count > 0 {
             var metadataObject = metadataObjects[0] as AVMetadataMachineReadableCodeObject
-            stringValue = metadataObject.stringValue
+            stringValueQrCode = metadataObject.stringValue
         }
         self.session.stopRunning()
-        println("code is \(stringValue)")
+        println("code is \(stringValueQrCode)")
         
         //        let alertController = UIAlertController(title: "title1", message: "message0:\(stringValue)", preferredStyle: UIAlertControllerStyle.Alert)
         //        alertController.addAction(UIAlertAction(title: "title2", style: UIAlertActionStyle.Default, handler: nil))
         //        self.presentViewController(alertController, animated: true, completion: nil)
+
         var alertView = UIAlertView()
         alertView.delegate=self
-        alertView.title = "title3"
-        alertView.message = "message1:\(stringValue)"
-        alertView.addButtonWithTitle("title4")
+        alertView.title = "QrScand say:"
+        var message:String = "You faund the Tag"
+        if(stringValueQrCode == ""){
+            message = "You didn't find Tag"
+        }
+        alertView.message = message
+        alertView.addButtonWithTitle("Ok")
         alertView.show()
+
     }
     
 }
