@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		442849611A233B5A00CE3AF2 /* sampleHunt.json in Resources */ = {isa = PBXBuildFile; fileRef = 442849601A233B5A00CE3AF2 /* sampleHunt.json */; };
 		4482EE8219F943D60078D8C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8119F943D60078D8C4 /* AppDelegate.swift */; };
 		4482EE8519F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8319F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld */; };
 		4482EE8719F943D60078D8C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EE8619F943D60078D8C4 /* ViewController.swift */; };
@@ -121,7 +120,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		442849601A233B5A00CE3AF2 /* sampleHunt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = sampleHunt.json; path = ../../../../../hunt/sampleHunt.json; sourceTree = "<group>"; };
 		445673E019FC6F3100B511B8 /* GoogleTreasureHunt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoogleTreasureHunt-Bridging-Header.h"; sourceTree = "<group>"; };
 		4482EE7C19F943D60078D8C4 /* GoogleTreasureHunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoogleTreasureHunt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4482EE8019F943D60078D8C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -415,7 +413,6 @@
 			isa = PBXGroup;
 			children = (
 				44D364031A12934800430EF6 /* sampleHunt.json */,
-				442849601A233B5A00CE3AF2 /* sampleHunt.json */,
 				44D363F71A12931D00430EF6 /* app0.jpg */,
 				44D363F81A12931D00430EF6 /* app1.jpg */,
 				44D363F91A12931D00430EF6 /* app2.jpg */,
@@ -721,7 +718,6 @@
 				4482EEE319F945810078D8C4 /* android-apple-friends.jpg in Resources */,
 				44D31B6C1A068EBB00DB7D6E /* TreasureHunt.png in Resources */,
 				4482EE8C19F943D60078D8C4 /* Images.xcassets in Resources */,
-				442849611A233B5A00CE3AF2 /* sampleHunt.json in Resources */,
 				44D364041A12934800430EF6 /* sampleHunt.json in Resources */,
 				4482EEEE19F945810078D8C4 /* pick_bg.png in Resources */,
 				4482EEFA19F960580078D8C4 /* apple.png in Resources */,

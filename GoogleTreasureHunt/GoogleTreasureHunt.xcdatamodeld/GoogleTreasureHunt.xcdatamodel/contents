@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AHTag" syncable="YES">
         <attribute name="clueId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,8 +19,17 @@
             <fetchRequest name="fetchedPropertyFetchRequest" entity="Clue"/>
         </fetchedProperty>
     </entity>
+    <entity name="TriviaQuestion" syncable="YES">
+        <attribute name="answers" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bitmapID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="correctAnswer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rightMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wrongMessage" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="AHTag" positionX="-45" positionY="0" width="128" height="75"/>
         <element name="Clue" positionX="-315" positionY="-270" width="128" height="221"/>
+        <element name="TriviaQuestion" positionX="-180" positionY="-117" width="128" height="135"/>
     </elements>
 </model>
