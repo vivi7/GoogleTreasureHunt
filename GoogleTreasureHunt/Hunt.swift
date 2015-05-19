@@ -8,12 +8,30 @@
 
 import Foundation
 
-class Hunt {
-    let QUESTION_STATE_NONE:Int = 0
-    let QUESTION_STATE_INTRO:Int = 1
-    let QUESTION_STATE_QUESTIONING:Int = 2
-    let QUESTION_STATE_KEY:String = "QUESTION_STATE_KEY"
-    let FINISH_TIME_KEY:String = "FINISH_TIME_KEY"
+let QUESTION_STATE_NONE:Int = 0
+let QUESTION_STATE_INTRO:Int = 1
+let QUESTION_STATE_QUESTIONING:Int = 2
+let QUESTION_STATE_KEY:String = "QUESTION_STATE_KEY"
+let FINISH_TIME_KEY:String = "FINISH_TIME_KEY"
+let HAS_SEEN_INTRO_KEY: String = "HAS_SEEN_INTRO_KEY";
+
+let WRONG_CLUE:String = "WRONG CLUE"
+let ACK:String = "TAG FOUND"
+let CLUE_COMPLETE:String = "CLUE COMPLETE"
+let ALREADY_FOUND:String = "ALREADY FOUND"
+let DECOY:String = "DECOY"
+// The actual text for the DECOY clue.
+let DECOY_ID:String = "decoy"
+
+class Hunt : NSObject, NSCoding{
+    
+    var id: String!
+    var type: String!
+    var displayName: String!
+    var clues: [Clue] = []
+    //var clueListShuffleFinal: [Clue] = []
+    //var tagList: Array<AHTag> = Array<AHTag>()
+    //var triviaQuestion: TriviaQuestion?
     
     //var theHunt:Hunt
     var hrm:HuntResourceManager = HuntResourceManager()
@@ -22,139 +40,132 @@ class Hunt {
     var questionState:Int = 0
     var finishTime:Double = 0.0
     
-    var soundManager:SoundManager = SoundManager()
-    var achievementManager:AchievementManager = AchievementManager()
+//    var soundManager:SoundManager = SoundManager()
+//    var achievementManager:AchievementManager = AchievementManager()
     
     var tagsFound: Dictionary<String,Bool> = Dictionary<String,Bool>()
-    var tags: Dictionary<String,AHTag> = Dictionary<String,AHTag>()
-    var clues: Dictionary<String,Clue> = Dictionary<String,Clue>()
-    
-    var clueList: Array<Clue> = Array<Clue>()
-    var clueListShuffleFinal: Array<Clue> = Array<Clue>()
-    //var tagList: Array<AHTag> = Array<AHTag>()
-    //var triviaQuestion: TriviaQuestion?
+    var questions: Dictionary<String,Int> = Dictionary<String,Int>()
+//    var tags: Dictionary<String,AHTag> = Dictionary<String,AHTag>()
     
     var hasSeenIntro:Bool = false;
     
-    let HAS_SEEN_INTRO_KEY: String = "HAS_SEEN_INTRO_KEY";
+    override init(){
+        super.init()
+    }
     
-    let WRONG_CLUE:String = "WRONG CLUE"
-    let ACK:String = "ACK"
-    let CLUE_COMPLETE:String = "CLUE COMPLETE"
-    let ALREADY_FOUND:String = "ALREADY FOUND"
-    let DECOY:String = "DECOY"
-    // The actual text for the DECOY clue.
-    let DECOY_ID:String = "decoy"
+    internal required init(coder aDecoder: NSCoder) {
+        self.id = aDecoder.decodeObjectForKey("kid") as! String
+        self.type = aDecoder.decodeObjectForKey("ktype") as! String
+        self.displayName = aDecoder.decodeObjectForKey("kdisplayName") as! String
+        self.clues = aDecoder.decodeObjectForKey("kclues") as! [Clue]
+        self.tagsFound = aDecoder.decodeObjectForKey("ktagsFound") as! Dictionary<String,Bool>
+        self.questions = aDecoder.decodeObjectForKey("kquestions") as! Dictionary<String,Int>
+    }
     
-    
-    
-    init(){
-        
+    func encodeWithCoder(encoder: NSCoder) {
+        encoder.encodeObject(self.id, forKey: "kid")
+        encoder.encodeObject(self.type, forKey: "ktype")
+        encoder.encodeObject(self.displayName, forKey: "kdisplayName")
+        encoder.encodeObject(self.clues, forKey: "kclues")
+        encoder.encodeObject(self.tagsFound, forKey: "ktagsFound")
+        encoder.encodeObject(self.questions, forKey: "kquestions")
     }
     
     func getHunt() -> Hunt{
         return self
     }
     
-/*
-    public static Hunt getHunt(Resources res, Context context) {
-    
-    if (theHunt == null) {
-    
-    hrm = new HuntResourceManager();
-    hrm.unzipFile(res);
-    
-    theHunt = new Hunt(hrm.huntJSON, res, context);
-    String android_id = Secure.getString(context.getContentResolver(),
-    Secure.ANDROID_ID);
-    
-    if (android_id == null) {
-    // Fall back on devices where ANDROID_ID is not reliable.
-    theHunt.shuffle(Integer.parseInt(Settings.Secure.ANDROID_ID, 0));
-    } else {
-    BigInteger bi = new BigInteger(android_id, 16);
-    System.out.println(bi);
-    
-    theHunt.shuffle(bi.shortValue());
-    }
-    }
-    
-    return theHunt;
-    }
-*/
-    
     /** Generates the entire hunt structure from JSON */
     func createHunt(){
-        var huntResourceManager: HuntResourceManager = HuntResourceManager()
-        var jsonDictonary: NSDictionary = huntResourceManager.getJSon()
-        //var jsonString: String = huntResourceManager.getJSonString()
         
-        var cluesDictonary: NSDictionary = jsonDictonary["clues"] as NSDictionary
+        let jsonData = hrm.getJsonData()
+        let json = JSON(data: jsonData)
         
-        for(var i = 0; i < cluesDictonary.count; i++){
-            var clue: Clue = Clue()
-            clue.id = cluesDictonary["id"] as String
-            clue.displayName = cluesDictonary["displayName"] as String
-            clue.displayText = cluesDictonary["displayText"] as String
-            clue.displayImage = cluesDictonary["displayImage"] as String
-            clue.shufflegroup = cluesDictonary["shufflegroup"] as Int
-            //clue.displayImage = cluesDictonary["displayImage"] as String
-            
-            var tagsDictonary: NSDictionary = jsonDictonary["tags"] as NSDictionary
-            for(var t = 0; t < tagsDictonary.count; t++){
-                var ahTag: AHTag = AHTag(idPassed: tagsDictonary["id"] as String, clueIdPassed: clue.id)
-                clue.tags.insert(ahTag, atIndex: t)
+        id = json["id"].string
+        type = json["type"].string
+        displayName = json["displayName"].string
+        
+        if let cluesArray = json["clues"].array {
+            for(var i = 0; i < cluesArray.count; i++){
+                var clue: Clue = Clue()
+                clue.id = cluesArray[i]["id"].string
+                clue.type = cluesArray[i]["type"].string
+                clue.shufflegroup = cluesArray[i]["shufflegroup"].int
+                clue.displayName = cluesArray[i]["displayName"].string
+                clue.displayText = cluesArray[i]["displayText"].string
+                clue.displayImage = cluesArray[i]["displayImage"].string
+                if let tagsArray = cluesArray[i]["tags"].array {
+                    for(var t = 0; t < tagsArray.count; t++){
+                        var tagId = tagsArray[t]["id"].string!
+                        var ahTag: AHTag = AHTag(idPassed: tagId, clueIdPassed: clue.id)
+                        clue.tags.append(ahTag)
+                        
+                        tagsFound.updateValue(false, forKey: tagId)
+                    }
+                }
+                
+                clue.question = TriviaQuestion(myQuestion: cluesArray[i]["question"]["question"].string!)
+                clue.question?.bitmapID = cluesArray[i]["question"]["bitmap"].string
+                    
+                var answersArray = cluesArray[i]["question"]["answers"].array
+                if answersArray != nil{
+                    for answear in answersArray! {
+                        clue.question?.answers.append(answear.string!)
+                    }
+                }
+                questions.updateValue(ANSWARE_UNDONE, forKey: clue.id)
+                clue.question?.correctAnswer = cluesArray[i]["question"]["correctAnswer"].int!
+                clue.question?.rightMessage = cluesArray[i]["question"]["rightMessage"].string
+                clue.question?.wrongMessage = cluesArray[i]["question"]["wrongMessage"].string
+                
+                //clue.number = i
+                
+                clues.append(clue)
             }
-            
-            if var triviaQuestionsDictonary: NSDictionary = jsonDictonary["question"] as? NSDictionary {
-                clue.question = TriviaQuestion(triviaQuestionsDictonary: triviaQuestionsDictonary)
-            }
-            clueList.insert(clue, atIndex: i)
         }
-        clueListShuffleFinal = shuffleClues(clueList)
-        
-        reset()
-        restore()
+        shuffle()
     }
     
     
     /** Shuffles the clues.  Note that each clue is marked with
     *  a difficulty group, so that, say, a hard clue can't preceed
     *  an easier clue.
-    * @param seed The random number seed.
     */
-    func shuffle(seed:Int) {
+    func shuffle() {
         if (isShuffled) {
             return;
         }
         
-        var cluesToShuffle:Array<Clue> = Array<Clue>();
+        var cluesToShuffle:[Clue] = [];
     
-        let firstClue:Clue = clueList[0]
-        let lastClue:Clue = clueList[clueList.count-1]
+        let firstClue:Clue = clues[0]
+        let lastClue:Clue = clues[clues.count-1]
         
         //Divide Clues for shufflegroup
-        for var i:Int = 0; i < clueList.count; i++ {
-            var clueIter:Clue = clueList[i]
+        for var i:Int = 0; i < clues.count; i++ {
+            var clueIter:Clue = clues[i]
             if (clueIter.shufflegroup != firstClue.shufflegroup &&
                 clueIter.shufflegroup != lastClue.shufflegroup) {
                 cluesToShuffle.append(clueIter)
             }
         }
         //Shuffle clues divided
-        var clueListShuffle:Array<Clue> = shuffleClues(cluesToShuffle)
+        var clueListShuffle:[Clue] = shuffleClues(cluesToShuffle)
+        
+        //empy clues
+        clues.removeAll(keepCapacity: true)
         
         //Set clueListShufflFinal
-        clueListShuffleFinal.append(firstClue)
+        clues.append(firstClue)
         for (var i=0; i<clueListShuffle.count; i++) {
-            clueListShuffleFinal.append(clueListShuffle[i])
+            clues.append(clueListShuffle[i])
         }
-        clueListShuffleFinal.append(lastClue)
+        clues.append(lastClue)
             
         isShuffled = true;
     }
     
-    func shuffleClues<Clue>(var list: Array<Clue>) -> Array<Clue> {
+    func shuffleClues(var list: [Clue]) -> [Clue] {
         for i in 0..<list.count {
             let j = Int(arc4random_uniform(UInt32(list.count - i))) + i
             list.insert(list.removeAtIndex(j), atIndex: i)
@@ -162,52 +173,52 @@ class Hunt {
         return list
     }
   
-    /** Saves the player's progress */
-    func save(){
-        var data: NSMutableData = NSMutableData()
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        var path = paths.stringByAppendingPathComponent("data.plist")
-        var fileManager = NSFileManager.defaultManager()
-        if (!(fileManager.fileExistsAtPath(path)))
-        {
-            var bundle : NSString = NSBundle.mainBundle().pathForResource("data", ofType: "plist")!
-            fileManager.copyItemAtPath(bundle, toPath: path, error:nil)
-        }
-        for (var i = 0; i < tagsFound.count; i++){
-            data.setValue(tagsFound.values.array[i], forKey: tagsFound.keys.array[i])
-        }
-        data.setValue(hasSeenIntro, forKey: HAS_SEEN_INTRO_KEY)
-        data.setValue(questionState, forKey: QUESTION_STATE_KEY)
-        data.setValue(finishTime, forKey: FINISH_TIME_KEY)
-        //data.setObject(self.object, forKey: "object")
-        data.writeToFile(path, atomically: true)
-    }
-    
-    /** Loads player progress. */
-    func restore() {
-        //TODO restore data
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        var path = paths.stringByAppendingPathComponent("data.plist")
-        
-        let save = NSDictionary(contentsOfFile: path)
-        
-        for (var i = 0; i < tagsFound.count; i++){
-            var val:Bool = (save?.valueForKey(tagsFound.keys.array[i])) as Bool
-            tagsFound.updateValue(val, forKey: tagsFound.keys.array[i])
-        }
-        hasSeenIntro =  save?.valueForKey(HAS_SEEN_INTRO_KEY) as Bool
-        questionState = save?.valueForKey(QUESTION_STATE_KEY) as Int
-        finishTime = save?.valueForKey(FINISH_TIME_KEY) as Double
-    }
-    
-    /** Returns whether or not we're in a question so we can restore itself. */
-    func getQuestionState() ->Int {
-        return questionState;
-    }
+//    /** Saves the player's progress */
+//    func save(){
+//        var data: NSMutableData = NSMutableData()
+//        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+//        var path = paths.stringByAppendingPathComponent("data.plist")
+//        var fileManager = NSFileManager.defaultManager()
+//        if (!(fileManager.fileExistsAtPath(path)))
+//        {
+//            var bundle : NSString = NSBundle.mainBundle().pathForResource("data", ofType: "plist")!
+//            fileManager.copyItemAtPath(bundle as String, toPath: path, error:nil)
+//        }
+//        for (var i = 0; i < tagsFound.count; i++){
+//            data.setValue(tagsFound.values.array[i], forKey: tagsFound.keys.array[i])
+//        }
+//        data.setValue(hasSeenIntro, forKey: HAS_SEEN_INTRO_KEY)
+//        data.setValue(questionState, forKey: QUESTION_STATE_KEY)
+//        data.setValue(finishTime, forKey: FINISH_TIME_KEY)
+//        //data.setObject(self.object, forKey: "object")
+//        data.writeToFile(path, atomically: true)
+//    }
+//    
+//    /** Loads player progress. */
+//    func restore() {
+//        //TODO restore data
+//        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+//        var path = paths.stringByAppendingPathComponent("data.plist")
+//        
+//        let save = NSDictionary(contentsOfFile: path)
+//        
+//        for (var i = 0; i < tagsFound.count; i++){
+//            var val:Bool = (save?.valueForKey(tagsFound.keys.array[i])) as! Bool
+//            tagsFound.updateValue(val, forKey: tagsFound.keys.array[i])
+//        }
+//        hasSeenIntro =  save?.valueForKey(HAS_SEEN_INTRO_KEY) as! Bool
+//        questionState = save?.valueForKey(QUESTION_STATE_KEY) as! Int
+//        finishTime = save?.valueForKey(FINISH_TIME_KEY) as! Double
+//    }
+//
+//    /** Returns whether or not we're in a question so we can restore itself. */
+//    func getQuestionState() ->Int {
+//        return questionState;
+//    }
     
     /** Deletes all player progress.*/
     func reset() {
-        tagsFound = Dictionary<String,Bool>()
+        //tagsFound = Dictionary<String,Bool>()
 /*
         for tag :AHTag in tagList {
             tagsFound.updateValue(false, forKey: tag.id)
@@ -217,22 +228,285 @@ class Hunt {
         hasSeenIntro = false;
         
         //Delete data
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        DataManager.sharedInstance.deleteHunt()
+        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
         var path = paths.stringByAppendingPathComponent("data.plist")
         path.removeAll(keepCapacity: true)
     }
     
-    func getCurrentClue() ->Clue? {
-        var length:Int = clueList.count;
-        for (var i:Int = 0; i < length; i++) {
-            var clue:Clue = clueList[i];
+//    func getCurrentClue() ->Clue? {
+//        var length:Int = clues.count;
+//        for (var i:Int = 0; i < length; i++) {
+//            var clue:Clue = clues[i];
+//    
+//            if (isClueFinished(clue) && questionState != QUESTION_STATE_NONE) {
+//                // We're still asking a question
+//                return clue;
+//            }
+//    
+//            if (!isClueFinished(clue)) {
+//                return clue;
+//            }
+//        }
+//        // The hunt is complete!
+//        return nil
+//    }
+//    
+//    /** What clue have I *just* completed? */
+//    func getLastCompletedClue() -> Clue? {
+//        var length:Int = clues.count
+//        var lastBestClue:Clue?
+//        for var i:Int = 0; i < length; i++ {
+//            var clue:Clue = clues[i]
+//    
+//            if (!isClueFinished(clue)) {
+//                return lastBestClue
+//            }
+//            lastBestClue = clue
+//        }
+//        // The hunt is complete.
+//        return lastBestClue
+//    }
+//    
+//    
+//    func isTagFound(id:String ) -> Bool {
+////        if ((tagsFound.indexForKey(id)) == nil) {
+////            return false;
+////        }
+////        return tagsFound[id]!;
+//        
+//        for tag in getCurrentClue()!.tags{
+//            if tag.id == id && tag.isFound == false{
+//                return false
+//            }
+//        }
+//        return true
+//    }
+//    
+//    func tagIsFound(id:String){
+//        let clueNum = getCurrentClue()!.number
+//        var tagNum = 0
+//        for (var h=0; h<getCurrentClue()!.tags.count; h++){
+//            if getCurrentClue()!.tags[h].id == id{
+//                tagNum = h
+//            }
+//        }
+//        self.clues[clueNum].tags[tagNum].isFound = true
+//        DataManager.sharedInstance.salvaHunt()
+//    }
+//    
+//    func getTagFromId(id:String) -> AHTag?{
+//        var tags = getCurrentClue()!.tags
+//        for (var h=0; h<tags.count; h++){
+//            if tags[h].id == id{
+//                return tags[h]
+//            }
+//        }
+//        return nil
+//    }
+//    
+//    /**
+//    * Called when a tag is scanned.  Checks the hunt
+//    */
+//    func findTag(tagId:String) -> String? {
+//        println(tagId)
+//        if (tagId == DECOY_ID) {
+//            return DECOY;
+//        }
+//        // See if this tag is part of this clue
+//        var clue:Clue = getCurrentClue()!;
+//    
+////        var tag:AHTag? = tags[tagId]!;
+//        var tag:AHTag? = getTagFromId(tagId)
+//        
+//        if tag == nil {
+//            return WRONG_CLUE
+//        }
+//    
+//        if (clue.id == tag!.clueId) {
+//            if (isTagFound(tagId)) {
+//                return ALREADY_FOUND
+//            }
+//    
+//            tagIsFound(tag!.id)
+////            tagsFound.updateValue(true, forKey: tag!.id)
+//    
+//            if (isClueFinished(clue)) {
+//                return CLUE_COMPLETE;
+//            }
+//            return ACK;
+//        }
+//        return WRONG_CLUE;
+//    }
+//    
+//    /** Have we found all the clues?  Does not check question completeness. */
+//    func isClueFinished(clue:Clue) ->Bool {
+//        for tag :AHTag in clue.tags {
+////            if (!isTagFound(tag.id)) {
+//            if (tag.isFound == false) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//    
+//    func hasAnsweredQuestion(clue:Clue) -> Bool{
+//        var currentClueNum:Int = getClueIndex(clue)
+//        
+//        // Find the first question in the list and see if we're past it.
+//        var totalClues:Int = clues.count
+//        for var i:Int = 0; i < totalClues; i++ {
+//            if (clues[i].question != nil) {
+//                return currentClueNum > i;
+//            }
+//        }
+//        return false;
+//    }
+//    
+//    /** Count from 1. */
+//    func getClueDisplayNumber(clue:Clue) ->Int {
+//        return  NSArray(array: clues).indexOfObject(clue)+1
+//    }
+//    
+//    /** Count from 0. */
+//    func getClueIndex(clue:Clue) ->Int {
+//        return NSArray(array: clues).indexOfObject(clue);
+//    }
+//    
+///*
+//    func setClueImage() {
+//        let clue:Clue = getCurrentClue()!;
+//    
+//        if (clue.displayImage == nil) {
+//            imgView.setImageDrawable(res.getDrawable(R.drawable.ab_icon));
+//        } else {
+//            imgView.setImageDrawable(hrm.drawables.get(clue.displayImage));
+//        }
+//    }
+//*/
+//    
+////    func getHasSeenIntro() -> Bool {
+////        return hasSeenIntro
+////    }
+////    
+////    func setIntroSeen(val:Bool) {
+////        hasSeenIntro = val;
+////    }
+////
+////    func setQuestionState(state:Int) {
+////        questionState = state;
+////    }
+//    
+//    func setStartTime() {
+//        finishTime = CFAbsoluteTimeGetCurrent() + 15000;
+//    }
+//    
+//    func getFinishTime() -> Double {
+//        return CFAbsoluteTimeGetCurrent()
+//    }
+//    
+//    func getSecondsLeft() -> Int{
+//        return Int((finishTime - CFAbsoluteTimeGetCurrent()) / 1000.0)
+//    }
+//    
+//    func isComplete() ->Bool {
+//        return (getCurrentClue() == nil)
+//    }
     
-            if (isClueFinished(clue) && questionState != QUESTION_STATE_NONE) {
-                // We're still asking a question
-                return clue;
+    
+    // MARK: - new controls
+    
+    func tagIsFound(tagId:String) -> Bool{
+        for tagDic in tagsFound{
+            if tagDic.0 == tagId && tagDic.1 == true{
+                return true
             }
+        }
+        return false
+    }
     
-            if (!isClueFinished(clue)) {
+    //go to question
+    func readyForAnswers() -> Bool{
+        var currentClue = getThisCLue()
+        if tagsRemain() == 0  && isThereQuestionToAnswer() == true{
+            return true
+        }
+        return false
+    }
+    
+    //go to congratulation
+    func isHuntComplete() -> Bool{
+        if getThisCLue() == nil{
+            return true
+        }
+        return false
+    }
+    
+    //go to next clue
+    func isClueComplete() -> Bool{
+        var currentClue = getThisCLue()
+        if tagsRemain() == 0  && isThereQuestionToAnswer() == false{
+            return true
+        }
+        return false
+    }
+    func isClueComplete(clue:Clue) -> Bool{
+        for tag :AHTag in clue.tags {
+            if (tagIsFound(tag.id) == false) {
+                return false;
+            }
+        }
+        if clue.question != nil && questions[clue.id] == ANSWARE_UNDONE{
+            return false
+        }
+        return true
+    }
+    
+    func getNumClueView() -> Int{
+        var num = 0
+        for clue in clues{
+            for tag in clue.tags{
+                if tagIsFound(tag.id){
+                    num++
+                }
+            }
+        }
+        num = (num/2)+1
+        return num
+    }
+    
+    func getTotalClues() -> Int {
+        return clues.count;
+    }
+    
+    func tagsRemain() -> Int{ //0,1,2
+        var tagsRemain = 0
+        var currentClue = getThisCLue()
+        if currentClue != nil{
+            for tag :AHTag in currentClue!.tags {
+                if (tagIsFound(tag.id) == false) {
+                    tagsRemain++
+                }
+            }
+        }
+        return tagsRemain
+    }
+    
+    func isThereQuestionToAnswer() -> Bool{
+        var isThereQuestion = false
+        var clue = getThisCLue()
+        if clue != nil && clue!.question != nil && questions[clue!.id] == ANSWARE_UNDONE{
+            isThereQuestion = true
+        }
+        return isThereQuestion
+    }
+    
+    func getThisCLue() -> Clue?{
+        var length:Int = clues.count;
+        for (var i:Int = 0; i < length; i++) {
+            var clue:Clue = clues[i];
+            
+            if (!isClueComplete(clue)) {
                 return clue;
             }
         }
@@ -240,203 +514,74 @@ class Hunt {
         return nil;
     }
     
-    /** What clue have I *just* completed? */
-    func getLastCompletedClue() -> Clue? {
-        var length:Int = clueList.count
-        var lastBestClue:Clue?
-        for var i:Int = 0; i < length; i++ {
-            var clue:Clue = clueList[i]
-    
-            if (!isClueFinished(clue)) {
-                return lastBestClue
+    func getClueTagFromId(id:String) -> AHTag?{
+        var tags = getThisCLue()!.tags
+        for (var h=0; h<tags.count; h++){
+            if tags[h].id == id{
+                return tags[h]
             }
-            lastBestClue = clue
         }
-        // The hunt is complete.
-        return lastBestClue
+        return nil
     }
     
-    
-    func isTagFound(id:String ) -> Bool {
-        if ((tagsFound.indexForKey(id)) == nil) {
-            return false;
+    func isClueTagFound(id:String ) -> Bool {
+        for tag in getThisCLue()!.tags{
+            if (tagIsFound(tag.id) == false) {
+                return false
+            }
         }
-        return tagsFound[id]!;
+        return true
     }
     
-    /**
-    * Called when a tag is scanned.  Checks the hunt
-    */
-    func findTag(tagId:String) -> String? {
-    
+    func messageFromTag(tagId:String) -> String{
         if (tagId == DECOY_ID) {
             return DECOY;
         }
         // See if this tag is part of this clue
-        var clue:Clue = getCurrentClue()!;
-    
-        var tag:AHTag? = tags[tagId]!;
-    
+        var clue:Clue = getThisCLue()!;
+        
+        //        var tag:AHTag? = tags[tagId]!;
+        var tag:AHTag? = getClueTagFromId(tagId)
+        
         if tag == nil {
             return WRONG_CLUE
         }
-    
+        
         if (clue.id == tag!.clueId) {
-            if (isTagFound(tagId)) {
+            if (isClueTagFound(tagId)) {
                 return ALREADY_FOUND
             }
-    
-            tagsFound.updateValue(true, forKey: tag!.id)
-    
-            if (isClueFinished(clue)) {
+            if (isClueComplete(clue)) {
                 return CLUE_COMPLETE;
             }
+            //setTagFound(tag!.id) //si setta dopo
             return ACK;
         }
         return WRONG_CLUE;
     }
     
-    /** Have we found all the clues?  Does not check question completeness. */
-    func isClueFinished(clue:Clue) ->Bool {
-        for tag :AHTag in clue.tags {
-            if (!isTagFound(tag.id)) {
-                return false;
-            }
+    func setTagFound(id:String){
+        DataManager.sharedInstance.hunt!.tagsFound.updateValue(true, forKey: id)
+        DataManager.sharedInstance.salvaHunt()
+        DataManager.sharedInstance.loadHunt()
     }
     
-    return true;
-    }
-    
-    func getTotalClues() -> Int {
-        return clueList.count;
-    }
-    
-    /** Count from 1. */
-    func getClueDisplayNumber(clue:Clue) ->Int {
-        return  NSArray(array: clueList).indexOfObject(clue)+1
-    }
-    
-    /** Count from 0. */
-    func getClueIndex(clue:Clue) ->Int {
-        return NSArray(array: clueList).indexOfObject(clue);
-    }
-    
-/*
-    func setClueImage() {
-        let clue:Clue = getCurrentClue()!;
-    
-        if (clue.displayImage == nil) {
-            imgView.setImageDrawable(res.getDrawable(R.drawable.ab_icon));
-        } else {
-            imgView.setImageDrawable(hrm.drawables.get(clue.displayImage));
+    func answerMessage(answer:Int) -> String{
+        var currentClue = getThisCLue()!
+        
+        setAnswer(answer)
+            
+        if currentClue.question!.correctAnswer == answer{
+            return currentClue.question!.rightMessage!
+        }else{
+            return currentClue.question!.wrongMessage!
         }
     }
-*/
     
-    func getHasSeenIntro() -> Bool {
-        return hasSeenIntro
+    func setAnswer(answer:Int){
+        var currentClue = getThisCLue()!
+        DataManager.sharedInstance.hunt!.questions.updateValue(answer, forKey: currentClue.id)
+        DataManager.sharedInstance.salvaHunt()
+        DataManager.sharedInstance.loadHunt()
     }
-    
-    func setIntroSeen(val:Bool) {
-        hasSeenIntro = val;
-    }
-    
-    func setQuestionState(state:Int) {
-        questionState = state;
-    }
-    
-    func setStartTime() {
-        finishTime = CFAbsoluteTimeGetCurrent() + 15000;
-    }
-    
-    func getFinishTime() -> Double {
-        return CFAbsoluteTimeGetCurrent()
-    }
-    
-    func getSecondsLeft() -> Int{
-        return Int((finishTime - CFAbsoluteTimeGetCurrent()) / 1000.0)
-    }
-    
-    func isComplete() ->Bool {
-        return (getCurrentClue() == nil)
-    }
-    
-    func hasAnsweredQuestion(clue:Clue) -> Bool{
-        var currentClueNum:Int = getClueIndex(clue)
-    
-        // Find the first question in the list and see if we're past it.
-        var totalClues:Int = clueList.count
-        for var i:Int = 0; i < totalClues; i++ {
-            if (clueList[i].question != nil) {
-                return currentClueNum > i;
-            }
-        }
-        return false;
-    }
-    
-/*
-    public void reload(Context context) {
-    reloadFromRemote(context);
-    }
-    
-    
-    private BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
-    
-    @Override
-    public void onReceive(Context context, Intent intent) {
-    
-    //check if the broadcast message is for our Enqueued download
-    long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-    if (downloadReference == referenceId) {
-    
-    ParcelFileDescriptor file;
-    try {
-    file = downloadManager.openDownloadedFile(downloadReference);
-    Log.d(TAG,"Downloaded " + downloadManager.getUriForDownloadedFile(downloadReference));
-    hrm = new HuntResourceManager();
-    hrm.unzipDownloadedFile(file);
-    
-    theHunt = new Hunt(hrm.huntJSON, context.getResources(), context);
-    String android_id = Secure.getString(context.getContentResolver(),
-    Secure.ANDROID_ID);
-    
-    if (android_id == null) {
-    // Fall back on devices where ANDROID_ID is not reliable.
-    theHunt.shuffle(Integer.parseInt(Settings.Secure.ANDROID_ID, 0));
-    } else {
-    BigInteger bi = new BigInteger(android_id, 16);
-    System.out.println(bi);
-    
-    theHunt.shuffle(bi.shortValue());
-    }
-    
-    
-    } catch (FileNotFoundException e) {
-    e.printStackTrace();
-    }
-    
-    }
-    }
-    };
-    
-    
-    
-    public void reloadFromRemote(Context context) {
-    downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-    Uri Download_Uri = Uri.parse("http://162.248.167.159:8080/zip/hunt.zip");
-    DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
-    
-    request.setAllowedNetworkTypes(
-    DownloadManager.Request.NETWORK_WIFI
-    | DownloadManager.Request.NETWORK_MOBILE)
-    .setAllowedOverRoaming(false).setTitle("NFC/IO Hunt")
-    .setDescription("Downloading Hunt data");
-    
-    //Enqueue a new download and same the referenceId
-    downloadReference = downloadManager.enqueue(request);
-    
-    }
-*/
 }
-
-

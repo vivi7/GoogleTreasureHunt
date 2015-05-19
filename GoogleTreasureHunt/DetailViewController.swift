@@ -10,7 +10,7 @@ import Foundation
 
 class DetailViewController: ViewController {
     
-    var clue:Clue!
+    var clue:Clue?
     
     override func viewDidLoad() {
         super.viewDidLoad()

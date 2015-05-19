@@ -19,10 +19,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //TODO: download and create Hunt and valuate the boolean
-        let huntResourceManager:HuntResourceManager = HuntResourceManager()
-        var downloadedZip: Bool = huntResourceManager.dounload()
-        let hunt:Hunt = Hunt()
-        hunt.createHunt()
+        DataManager.sharedInstance.startDataManager()
+        
+        if DataManager.sharedInstance.hunt != nil{
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+            
+            var vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ClueViewController") as! ClueViewController
+            if DataManager.sharedInstance.hunt!.isHuntComplete() == true{
+                vc = mainStoryboard.instantiateViewControllerWithIdentifier("VictoryViewController") as! VictoryViewController
+            }
+            self.window?.rootViewController = vc
+        }
+//        if DataManager.sharedInstance.numHunt == nil{
+//            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+//            
+//            let navigationController = UINavigationController(rootViewController: mainStoryboard.instantiateViewControllerWithIdentifier("ListViewController") as! ListViewController)
+//            
+//            self.window?.rootViewController = navigationController
+//        }
         
         return true
     }
@@ -56,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.vivi.GoogleTreasureHunt" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
+        return urls[urls.count-1] as! NSURL
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -79,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict as [NSObject : AnyObject])
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
@@ -139,7 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         for counter in 1...5{
             let fileName = NSString(format: "%lu.txt", counter)
-            let path = folder.stringByAppendingPathComponent(fileName)
+            let path = folder.stringByAppendingPathComponent(fileName as String)
             let fileContents = "Some text"
             var error:NSError?
             if fileContents.writeToFile(path,
@@ -178,7 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var error:NSError?
         let contents = fileManager.contentsOfDirectoryAtPath(folder,
-            error: &error) as [String]
+            error: &error) as! [String]
         
         if let theError = error{
             println("An error occurred = \(theError)")
@@ -224,7 +238,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (!(fileManager.fileExistsAtPath(path)))
         {
             var bundle : NSString = NSBundle.mainBundle().pathForResource("data", ofType: "plist")!
-            fileManager.copyItemAtPath(bundle, toPath: path, error:nil)
+            fileManager.copyItemAtPath(bundle as String, toPath: path, error:nil)
         }
         data.writeToFile(path, atomically: true)
     }

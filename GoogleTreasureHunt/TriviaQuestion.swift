@@ -8,25 +8,58 @@
 
 import Foundation
 
-class TriviaQuestion {
+let ANSWARE_UNDONE = -2
+
+class TriviaQuestion : NSObject, NSCoding {
     
     var question: String
     var bitmapID: String?
-    var answers: Array<String> = Array<String>()
-    var correctAnswer: Int = -1
+    var answers: [String] = []
+    var correctAnswer: Int!
     var rightMessage: String?
     var wrongMessage: String?
     
-    init(triviaQuestionsDictonary: NSDictionary) {
-        question = triviaQuestionsDictonary["question"] as String
-        bitmapID = triviaQuestionsDictonary["bitmap"] as? String
-        
-        var answersDictonary: NSDictionary = triviaQuestionsDictonary["answers"] as NSDictionary
-        for(key, answer) in answersDictonary{
-            answers.append(answer as String)
-        }
-        correctAnswer = triviaQuestionsDictonary["correctAnswer"] as Int
-        rightMessage = triviaQuestionsDictonary["rightMessage"] as? String
-        wrongMessage = triviaQuestionsDictonary["wrongMessage"] as? String
+    //var doneAnswer: Int!
+    
+    init(myQuestion: String){
+        question = myQuestion
+        correctAnswer = -1
+        //doneAnswer = ANSWARE_UNDONE
     }
+    
+    init(triviaQuestions: JSON) {
+        question = triviaQuestions["question"].string!
+        bitmapID = triviaQuestions["bitmap"].string
+        
+        var answersString = triviaQuestions["answers"][0].string
+        var answersArray = answersString?.componentsSeparatedByString(",")
+        
+        for answear in answersArray! {
+            answers.append(answear)
+        }
+        correctAnswer = triviaQuestions["correctAnswer"].int!
+        rightMessage = triviaQuestions["rightMessage"].string
+        wrongMessage = triviaQuestions["wrongMessage"].string
+    }
+    
+    internal required init(coder aDecoder: NSCoder) {
+        self.question = aDecoder.decodeObjectForKey("kquestion") as! String
+        self.bitmapID = aDecoder.decodeObjectForKey("kbitmapID") as? String
+        self.answers = aDecoder.decodeObjectForKey("kanswers") as! [String]
+        self.correctAnswer = aDecoder.decodeObjectForKey("kcorrectAnswer") as! Int
+        self.rightMessage = aDecoder.decodeObjectForKey("krightMessage") as? String
+        self.wrongMessage = aDecoder.decodeObjectForKey("kwrongMessage") as? String
+        //self.doneAnswer = aDecoder.decodeObjectForKey("kdoneAnswer") as! Int
+    }
+    
+    func encodeWithCoder(encoder: NSCoder) {
+        encoder.encodeObject(self.question, forKey: "kquestion")
+        encoder.encodeObject(self.bitmapID, forKey: "kbitmapID")
+        encoder.encodeObject(self.answers, forKey: "kanswers")
+        encoder.encodeObject(self.correctAnswer, forKey: "kcorrectAnswer")
+        encoder.encodeObject(self.rightMessage, forKey: "krightMessage")
+        encoder.encodeObject(self.wrongMessage, forKey: "kwrongMessage")
+        //encoder.encodeObject(self.doneAnswer, forKey: "kdoneAnswer")
+    }
+
 }

@@ -15,39 +15,32 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     
     let tableViewtitle = "Clues"
     
-    var hunt:Hunt = Hunt()
-    var clues: Array<Clue> = Array<Clue>()
-    var clue:Clue?
+    var hunt = DataManager.sharedInstance.hunt
+    var clues: [Clue] = []
+    var clue : Clue?
     
     override func viewDidLoad() {
 //        super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        clues = hunt!.clues
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if clues.isEmpty {
-            hunt.createHunt()
-            clues = hunt.clueListShuffleFinal
-        }
         return clues.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if clues.isEmpty {
-            hunt.createHunt()
-            clues = hunt.clueListShuffleFinal
-        }
         var clue:Clue = clues[indexPath.row]
         var color:UIColor = UIColor.redColor()
         
-        if hunt.isTagFound(clue.tags[0].id) && hunt.isTagFound(clue.tags[1].id){
+        if hunt!.isClueComplete() == true{
             color = UIColor.greenColor()
         }
         
         var cell = UITableViewCell()
-        cell.textLabel.text = clue.displayName
+        cell.textLabel!.text = clue.displayName
         cell.backgroundColor = color
         return cell
     }
@@ -62,7 +55,7 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var detailViewController = segue.destinationViewController as DetailViewController
+        var detailViewController = segue.destinationViewController as! DetailViewController
         detailViewController.clue = self.clue
     }
     

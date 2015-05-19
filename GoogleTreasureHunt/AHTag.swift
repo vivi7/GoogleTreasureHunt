@@ -8,13 +8,27 @@
 
 import Foundation
 
-class AHTag {
+class AHTag  : NSObject, NSCoding {
     
     var id:String!
     var clueId:String!
+    //var isFound:Bool!
     
     init(idPassed:String, clueIdPassed:String) {
         id = idPassed;
         clueId = clueIdPassed
+        //isFound = false
+    }
+    
+    internal required init(coder aDecoder: NSCoder) {
+        self.id = aDecoder.decodeObjectForKey("kid") as! String
+        self.clueId = aDecoder.decodeObjectForKey("kclueId") as! String
+        //self.isFound = aDecoder.decodeObjectForKey("kisFound") as! Bool
+    }
+    
+    func encodeWithCoder(encoder: NSCoder) {
+        encoder.encodeObject(self.id, forKey: "kid")
+        encoder.encodeObject(self.clueId, forKey: "kclueId")
+        //encoder.encodeObject(self.isFound, forKey: "kisFound")
     }
 }

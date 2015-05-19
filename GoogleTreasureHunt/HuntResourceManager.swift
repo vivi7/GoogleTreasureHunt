@@ -7,114 +7,128 @@
 //
 
 import Foundation
+import Alamofire
 
 class HuntResourceManager {
     
-    //let urlPath = "http://162.248.167.159:8080/zip/hunt.zip"
-    let urlPath = "192.168.1.4:8080/hunt.zip" //per provare attivare il servizio web da Server
+    // MARK: - Singleton
+    //***** CODICE SPECIALE CHE TRASFORMA QUESTA CLASSE IN UN SINGLETON (snippet sw_sgt)*****\\
+    class var sharedInstance:HuntResourceManager {
+        get {
+            struct Static {
+                static var instance : HuntResourceManager? = nil
+                static var token : dispatch_once_t = 0
+            }
+            
+            dispatch_once(&Static.token) { Static.instance = HuntResourceManager() }
+            
+            return Static.instance!
+        }
+    }
+    //***** FINE CODICE SPECIALE *****\\
+    
+    
+    let urlPath = "http://192.168.1.4:8089/hunt.zip" //per provare attivare il servizio web da Server
+    //let urlPath = "http://localhost.it:8089/hunt.zip"
+    //let urlPath = "http://31.170.163.175/hunt.zip"
     let nameHuntZip = "hunt.zip"
+    let containerFolder = "hunt/"
     let nameJSON = "sampleHunt.json"
     var jsonDictionary:NSDictionary!
     var jsonString:String!
     
+    
     init(){
         
     }
-    
-    func unzipFile() {
-        //TODO: unzip file
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        var path = paths.stringByAppendingPathComponent(nameHuntZip)
-        var destination = paths.stringByAppendingPathComponent("hunt/")
+
+    func download() -> Bool{
+        var isDownloaded = false
+        var fileName: String?
+        var finalPath: NSURL?
         
-        //var zip: SSZipArchive = SSZipArchive()
-        
-        //zip.unzipFileAtPath:path toDestination:destination
-        
-        //let zipPath = globalFileStrucure.stringByAppendingPathComponent("zipfile.zip")
-        //data.writeToFile(zipPath, options: nil, error: &error)
-        
-        let unZipped = SSZipArchive.unzipFileAtPath(path, toDestination: destination)
-    }
-    
-    func getJSon() -> NSDictionary {
-        // /Users/vivi/Library/Developer/CoreSimulator/Devices/B1950C18-0792-4D3D-B0B4-63C9B80913F2/data/Containers/Data/Application/4CDBA951-B55E-4558-A47F-218234C1360A/Documents
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        var path = paths.stringByAppendingPathComponent(nameJSON)
-        
-        let data  =   NSData(contentsOfFile: path)
-        
-        var error: NSErrorPointer = nil
-        jsonDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: error) as NSDictionary
-        
-        if(error != nil) {
-            // If there is an error parsing JSON, print it to the console
-            println("JSON Error \(error.debugDescription)")
-        }
-        // let results: NSArray = jsonDictionary["results"] as NSArray  //example to get a part
-        return jsonDictionary
-    }
-    
-    func getJSonString() -> String {
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        var path = paths.stringByAppendingPathComponent(nameJSON)
-        
-        let data  =   NSData(contentsOfFile: path)
-        
-        jsonString =   NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers, error: nil) as String
-        return jsonString
-    }
-    
-    var pathUrl: NSURL {
-        let folder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let path = folder.stringByAppendingPathComponent(nameHuntZip)
-        let url = NSURL(fileURLWithPath: path)
-        return url!
-    }
-    
-    func dounload() -> Bool {
-        //var downloadesZip:Bool = false
-        let url: NSURL = NSURL(string: urlPath)!
-        var request = NSURLRequest(URL: url)
-        let session = NSURLSession.sharedSession()
-/*        let task = session.dataTaskWithURL(url, completionHandler: {data, response, error -> Void in
-            println("Task completed")
-            if(error != nil) {
-                // If there is an error in the web request, print it to the console
-                println(error.localizedDescription)
-                downloadesZip = false
-            } else {
-                downloadesZip = true
+        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
+        Alamofire.download(.GET, urlPath, destination)
+            .progress { (bytesRead, totalBytesRead, totalBytesExpectedToRead) in
+                println(totalBytesRead)
             }
-        })
-        task.resume()
+            .response { (request, response, data, error) in
+                if error != nil {
+                    println("REQUEST: \(request)")
+                    println("RESPONSE: \(response)")
+                    isDownloaded = false
+                } else {
+                    isDownloaded = true
+                    let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
+                    data?.writeToURL(fileUrl, atomically: true, encoding: 1, error: nil)
+                }
+        }
+        println(isDownloaded)
         
-        let task1 = session.dataTaskWithURL(url)
-        task1.resume()
-        
-        var task2:NSURLSessionDownloadTask = session.downloadTaskWithURL(url)
-        task2.resume()
-*/
-        var task3 = session.downloadTaskWithRequest(request, completionHandler: {
-                response, localfile, error in
-                println("response \(response)")
-        })
-        task3.resume()
-        //sdownloadZip()
-        return false //downloadesZip
+        return isDownloaded
     }
     
     func downloadZip(){
         
-        var downloadesZip:Bool = false
-        let url: NSURL = NSURL(string: urlPath)!
-        
-        func completionHandler(response: NSURLResponse!, data: NSData!, error: NSError!) ->() {
-            
-            assert(error == nil,"Download Error")
-        }
-        
-        NSURLConnection.sendAsynchronousRequest(NSURLRequest(URL: url), queue: NSOperationQueue(), completionHandler:completionHandler)
+        let task = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!, completionHandler: {(data, response, error) in
+            println("Task completed")
+            let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
+            data.writeToURL(fileUrl, atomically: true)
+            println(data?.bytes)
+        })
+        task.resume()
     }
     
+    func createHunt(){
+        
+        self.unzipFile()
+        DataManager.sharedInstance.hunt = Hunt()
+        DataManager.sharedInstance.hunt!.createHunt()
+        DataManager.sharedInstance.salvaHunt()
+        
+        //DataManager.sharedInstance.printHunt()
+    }
+    
+    func getDestinationHuntFolder() -> String{
+        var paths = NSFileManager.applicationDocumentsDirectory().path!
+        var destination = paths.stringByAppendingPathComponent(containerFolder) + "/"
+        
+        return destination
+    }
+    
+    func getNameClueImage(name:String) -> String{
+        return getDestinationHuntFolder() + name
+    }
+    
+    func unzipFile() {
+        var paths = NSFileManager.applicationDocumentsDirectory().path!
+        var path = paths.stringByAppendingPathComponent(nameHuntZip)
+        var destination = paths.stringByAppendingPathComponent(containerFolder)
+        
+        let unZipped = SSZipArchive.unzipFileAtPath(path, toDestination: destination)
+    }
+    
+    func getJsonData() -> NSData{
+        var path = NSFileManager.applicationDocumentsDirectory().path!.stringByAppendingPathComponent(containerFolder+nameJSON)
+        
+        let data = NSData(contentsOfFile: path)
+        
+        return data!
+    }
+    
+    //metodo alternativo che scarica e converte in JSON direttamente
+    func downloadJson(){
+        Alamofire.request(.GET, urlPath)
+            .responseJSON { (req, res, json, error) in
+                if(error != nil) {
+                    NSLog("Error: \(error)")
+                    println(req)
+                    println(res)
+                }
+                else {
+                    NSLog("Success: \(self.urlPath)")
+                    var json = JSON(json!)
+                }
+        }
+    }
 }

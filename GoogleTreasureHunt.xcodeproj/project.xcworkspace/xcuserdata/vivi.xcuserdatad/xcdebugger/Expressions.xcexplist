@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "function signature specialization &lt;Arg[0] = Owned To Guaranteed&gt; of GoogleTreasureHunt.ClueViewController.viewDidLoad (GoogleTreasureHunt.ClueViewController)() -&gt; ():ClueViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GoogleTreasureHunt.Hunt.createHunt (GoogleTreasureHunt.Hunt)() -&gt; ():Hunt.swift">
+      </ContextState>
+      <ContextState
+         contextName = "function signature specialization &lt;Arg[0] = Owned To Guaranteed&gt; of GoogleTreasureHunt.Hunt.getCurrentClue (GoogleTreasureHunt.Hunt)() -&gt; Swift.Optional&lt;GoogleTreasureHunt.Clue&gt;:Hunt.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GoogleTreasureHunt.HuntResourceManager.dounload (GoogleTreasureHunt.HuntResourceManager)() -&gt; Swift.Bool:HuntResourceManager.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GoogleTreasureHunt.HuntResourceManager.getJsonData (GoogleTreasureHunt.HuntResourceManager)() -&gt; ObjectiveC.NSData:HuntResourceManager.swift">
+      </ContextState>
+      <ContextState
+         contextName = "function signature specialization &lt;Arg[0] = Owned To Guaranteed&gt; of GoogleTreasureHunt.Hunt.createHunt (GoogleTreasureHunt.Hunt)() -&gt; ():Hunt.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GoogleTreasureHunt.HuntResourceManager.download (GoogleTreasureHunt.HuntResourceManager)() -&gt; Swift.Bool:HuntResourceManager.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
