@@ -28,8 +28,10 @@ extension SKNode {
 
 class VictoryViewController: UIViewController {
     
-    @IBOutlet var timeLabel: UILabel!
+    @IBOutlet var answersLabel: UILabel!
     @IBOutlet var finishTimeLabel: UILabel!
+    @IBOutlet var androidVictoryImageView: UIImageView!
+    var imageList : [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +63,9 @@ class VictoryViewController: UIViewController {
         
         DataManager.sharedInstance.stopTimer()
         finishTimeLabel.text = "Finish Time: " + DataManager.sharedInstance.resultTimer()
-        timeLabel.text = " Your time: \(DataManager.sharedInstance.count) sec"
+        answersLabel.text = " Your correct answers: \(DataManager.sharedInstance.hunt!.numAnswersCorrect()) on \(DataManager.sharedInstance.hunt!.questions.count)"
+        
+        animateGif()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -75,6 +79,29 @@ class VictoryViewController: UIViewController {
     }
     override func shouldAutorotate() -> Bool {
         return false
+    }
+    
+    @IBAction func resetAction(sender: UIButton) {
+        resetControl()
+    }
+    func resetControl() {
+        var alert = UIAlertController(title: "Reset Hunt", message: "Are you sure? Then you can close app play again.", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { action in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } ))
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
+            self.reset()
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } ))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    func reset(){
+        DataManager.sharedInstance.deleteHunt()
+        //var vc = self.storyboard!.instantiateViewControllerWithIdentifier("WelcomeViewController") as! UIViewController
+        //TODO: use an other method to go to start
+        //self.presentViewController(vc, animated: true, completion: nil)
+        //self.showViewController(vc, sender: "")
+        
     }
     
     override func supportedInterfaceOrientations() -> Int {
@@ -92,5 +119,17 @@ class VictoryViewController: UIViewController {
     
     override func prefersStatusBarHidden() -> Bool {
         return false
+    }
+    
+    //MARCK: - Animation
+    
+    func animateGif(){
+        for i in 1...4{
+            let imageName = "gifandroidvic\(i)"
+            imageList.append(UIImage(named: imageName)!)
+        }
+        androidVictoryImageView.animationImages = imageList
+        androidVictoryImageView.animationDuration = NSTimeInterval(1.8)
+        androidVictoryImageView.startAnimating()
     }
 }

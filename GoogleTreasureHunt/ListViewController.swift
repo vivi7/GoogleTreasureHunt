@@ -24,6 +24,16 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        UIImage(named:"bg")?.drawInRect(self.view.bounds)
+        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        view.backgroundColor = UIColor(patternImage: image)
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+        //self.navigationController?.navigationBar.hidden = true
+//        self.navigationController?.navigationBar.
+        
         clues = hunt!.clues
     }
     
@@ -33,31 +43,50 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var clue:Clue = clues[indexPath.row]
-        var color:UIColor = UIColor.redColor()
         
-        if hunt!.isClueComplete() == true{
-            color = UIColor.greenColor()
+        var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as!UITableViewCell
+        cell.textLabel!.text = clue.displayName
+        cell.textLabel!.backgroundColor = UIColor.clearColor()
+        cell.detailTextLabel?.text = clue.displayText
+        cell.detailTextLabel!.backgroundColor = UIColor.clearColor()
+        
+        UIGraphicsBeginImageContext(cell.imageView!.frame.size)
+        UIImage(named:HuntResourceManager.sharedInstance.getNameClueImage(clue.displayImage))?.drawInRect(cell.imageView!.bounds)
+        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        cell.imageView!.image = image
+        
+        var color:UIColor = UIColor(red: 200.0, green: 0.0, blue: 0.0, alpha: 0.2)
+        if hunt!.isClueComplete(clue) == true{
+            cell.accessoryType = .Checkmark
+            color = UIColor(red: 0.0, green: 200.0, blue: 0.0, alpha: 0.2)
         }
         
-        var cell = UITableViewCell()
-        cell.textLabel!.text = clue.displayName
         cell.backgroundColor = color
         return cell
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return tableViewtitle
+        return nil //tableViewtitle
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.clue = self.clues[indexPath.row]
-        self.performSegueWithIdentifier("detailViewControllerSegue", sender: self)
+        //self.performSegueWithIdentifier("detailViewControllerSegue", sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var detailViewController = segue.destinationViewController as! DetailViewController
-        detailViewController.clue = self.clue
+    //override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    //    var detailViewController = segue.destinationViewController as! DetailViewController
+    //    detailViewController.clue = self.clue
+    //}
+    
+    @IBAction func swipeGestureAction(sender: UISwipeGestureRecognizer) {
+        goToClueVc()
     }
     
+    func goToClueVc(){
+        let vc : ClueViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ClueViewController") as! ClueViewController;
+        self.showViewController(vc, sender: "")
+    }
 }
 

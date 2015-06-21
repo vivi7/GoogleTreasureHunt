@@ -146,6 +146,46 @@ extension NSFileManager {
 }
 
 extension UIImageView {
+    
+    func downloadAsyncImage(urlStr:String){
+        let url = NSURL(string: urlStr)
+        
+        let urlRequest = NSURLRequest(URL: url!)
+        
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
+            
+            if error != nil {
+                
+                println(error)
+                
+            } else {
+                
+                if let bach = UIImage(data: data) {
+                    
+                    // self.image.image = bach
+                    
+                    var documentsDirectory:String?
+                    
+                    var paths:[AnyObject] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+                    
+                    if paths.count > 0 {
+                        
+                        documentsDirectory = paths[0] as? String
+                        
+                        var savePath = documentsDirectory! + url!.lastPathComponent!
+                        
+                        NSFileManager.defaultManager().createFileAtPath(savePath, contents: data, attributes: nil)
+                        
+                        self.image = UIImage(named: savePath)
+                        
+                    }
+                    
+                }
+                
+                
+            }
+    }
+    
     func loadImage(url: NSURL, autoCache: Bool) {
         var urlId = url.hash
         
@@ -165,7 +205,7 @@ extension UIImageView {
         }
     }
     
-    private class FileController {
+    class FileController {
         func writeFile(fileDir: String, fileContent: NSData) -> Bool {
             var filePath = NSHomeDirectory().stringByAppendingPathComponent(fileDir)
             
@@ -188,4 +228,18 @@ extension UIImageView {
             return NSFileManager.defaultManager().createDirectoryAtPath(filePath, withIntermediateDirectories: true, attributes: nil, error: nil)
         }
     }
+}
+
+//Methods
+func verifyUrl(urlString: String?) ->Bool{
+    //Check for nil
+    if let urlString = urlString{
+        //Create NSURL instance
+        if let url = NSURL(string: urlString){
+            //Check if your application can open the NSURL instance
+            if UIApplication.sharedApplication().canOpenURL(url){
+                return true
+            } else { return false }
+        }else { return false }
+    } else { return false }
 }

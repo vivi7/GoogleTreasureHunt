@@ -17,6 +17,9 @@ class QuestionViewController: UIViewController {
     @IBOutlet var answer1Button: UIButton!
     @IBOutlet var answer2Button: UIButton!
     
+    @IBOutlet var gifImageView: UIImageView!
+    var imageList : [UIImage] = []
+    
     var hunt : Hunt = DataManager.sharedInstance.hunt!
     var currentClue:Clue!
     
@@ -26,6 +29,9 @@ class QuestionViewController: UIViewController {
         super.viewDidLoad()
         self.title = "Question"
         
+        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.hidden = true
+        
         UIGraphicsBeginImageContext(self.view.frame.size)
         UIImage(named:"bg")?.drawInRect(self.view.bounds)
         var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -33,13 +39,23 @@ class QuestionViewController: UIViewController {
         
         view.backgroundColor = UIColor(patternImage: image)
         
+        DataManager.sharedInstance.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: DataManager.sharedInstance, selector: Selector("countSec"), userInfo: nil, repeats: true)
+        
         currentClue = hunt.getThisCLue()!
         
         questionLabel.backgroundColor = UIColor.clearColor() //UIColor(patternImage: UIImage(named: "questionBorder")!)
+        
         questionLabel.text = currentClue.question?.question
         answer0Button.setTitle(currentClue.question?.answers[0], forState: UIControlState.Normal)
         answer1Button.setTitle(currentClue.question?.answers[1], forState: UIControlState.Normal)
         answer2Button.setTitle(currentClue.question?.answers[2], forState: UIControlState.Normal)
+        
+        animateGif()
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        //animateGif()
     }
     
     override func didReceiveMemoryWarning() {
@@ -69,12 +85,47 @@ class QuestionViewController: UIViewController {
         self.showViewController(vc, sender: "")
     }
     
+//    func goToClueVcSide(){
+//        var vc = self.storyboard!.instantiateViewControllerWithIdentifier("SideBaseController") as! SideBaseController
+//        vc.storyboardID = "ClueViewController"
+//        self.showViewController(vc, sender: "")
+//    }
     
     //MARK: - Play
     
     func prepareAudios() {
-        var path = NSBundle.mainBundle().pathForResource("coin", ofType: "ogg")
+        var path = NSBundle.mainBundle().pathForResource("coin", ofType: "mp3")
         ding = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!), error: nil)
         ding.prepareToPlay()
+    }
+    
+    //MARK: - Animation
+    
+    func animateGif(){
+        for i in 1...4{
+            let imageName = "gifandroid\(i)"
+            imageList.append(UIImage(named: imageName)!)
+        }
+        gifImageView.animationImages = imageList
+        gifImageView.animationDuration = NSTimeInterval(0.8)
+        gifImageView.startAnimating()
+        androidUnHide()
+    }
+    
+    func androidUnHide(){
+        //self.gifImageView.frame.origin.y = 0.0
+        UIView.animateWithDuration(1.5, animations: { () -> Void in
+            self.gifImageView.frame.origin.y -= 67
+            }, completion: { (Bool) -> Void in
+                self.androidHide()
+        })
+    }
+    
+    func androidHide(){
+        UIView.animateWithDuration(1.5, animations: { () -> Void in
+            self.gifImageView.frame.origin.y += 67
+            }, completion: { (Bool) -> Void in
+                self.androidUnHide()
+        })
     }
 }

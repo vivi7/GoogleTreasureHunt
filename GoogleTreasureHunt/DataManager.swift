@@ -29,6 +29,7 @@ class DataManager: NSObject {
     let namePlist = "/hunt.plist"
     let nameHuntZip = "hunt.zip"
     let nameJSON = "sampleHunt.json"
+    let containerFolder = "huntdata/"
     
     // MARK: - variabili globali
 //    var hunts : [Hunt] = []
@@ -38,19 +39,25 @@ class DataManager: NSObject {
     //var mainController : MasterViewController!
     
     var docPath = NSFileManager.applicationDocumentsDirectory().path
-
+    
+    var zipDownloaded = false
+    var zipDownloading = false
     
     // MARK: - Metodi
     func startDataManager() {
         
 //        getNumHuntSelected()
-        
-        //debugPrint("%d", &filePath)
-        
-        if !NSFileManager.defaultManager().fileExistsAtPath(docPath! + namePlist) {
+        if !NSFileManager.defaultManager().fileExistsAtPath(docPath! + namePlist) && zipDownloading == false {
+            zipDownloading = true
             HuntResourceManager.sharedInstance.downloadZip()
         } else {
+            zipDownloaded = true
             loadHunt()
+            //provaVittoria()
+//            prova()
+//            printHunt()
+//            printTagsFound()
+//            printQuestions()
         }
     }
     
@@ -64,11 +71,27 @@ class DataManager: NSObject {
         }
     }
     
+    func provaVittoria(){
+        for qDic in hunt!.questions{
+            hunt!.questions.updateValue(0, forKey: qDic.0)
+        }
+        for tagDic in hunt!.tagsFound{
+            hunt!.tagsFound.updateValue(true, forKey: tagDic.0)
+        }
+    }
+    
     func createHunt(){
         var filePath = docPath! + namePlist
         
         if !NSFileManager.defaultManager().fileExistsAtPath(filePath) {
             HuntResourceManager.sharedInstance.createHunt()
+        }
+    }
+    
+    func printQuestions(){
+        for qDic in hunt!.questions{
+            print(qDic.0)
+            println(qDic.1)
         }
     }
     
@@ -143,7 +166,11 @@ class DataManager: NSObject {
         hunt = NSKeyedUnarchiver.unarchiveObjectWithFile(docPath! + namePlist) as? Hunt
     }
     func deleteHunt(){
+        zipDownloaded = false
+        zipDownloading = false
         deleteInDocumentFolder(namePlist)
+        deleteInDocumentFolder(nameHuntZip)
+        deleteInDocumentFolder(containerFolder)
     }
     
 //    func getHuntSelected() -> Hunt{
@@ -155,8 +182,8 @@ class DataManager: NSObject {
     }
     
     // MARK: - Timer
+    var numCount = 0
     var timer = NSTimer()
-    var count = 0
     
     func startTimer(){
         timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("countSec"), userInfo: nil, repeats: true)
@@ -167,7 +194,7 @@ class DataManager: NSObject {
     }
     
     func countSec(){
-        count++
+        numCount++
     }
     
     func resultTimer() -> String{

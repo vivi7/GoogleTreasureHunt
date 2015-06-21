@@ -108,12 +108,12 @@ class Hunt : NSObject, NSCoding{
                 clue.question?.bitmapID = cluesArray[i]["question"]["bitmap"].string
                     
                 var answersArray = cluesArray[i]["question"]["answers"].array
-                if answersArray != nil{
+                if answersArray != nil && !answersArray!.isEmpty{
                     for answear in answersArray! {
                         clue.question?.answers.append(answear.string!)
                     }
+                    questions.updateValue(ANSWARE_UNDONE, forKey: clue.id)
                 }
-                questions.updateValue(ANSWARE_UNDONE, forKey: clue.id)
                 clue.question?.correctAnswer = cluesArray[i]["question"]["correctAnswer"].int!
                 clue.question?.rightMessage = cluesArray[i]["question"]["rightMessage"].string
                 clue.question?.wrongMessage = cluesArray[i]["question"]["wrongMessage"].string
@@ -215,25 +215,25 @@ class Hunt : NSObject, NSCoding{
 //    func getQuestionState() ->Int {
 //        return questionState;
 //    }
-    
-    /** Deletes all player progress.*/
-    func reset() {
-        //tagsFound = Dictionary<String,Bool>()
-/*
-        for tag :AHTag in tagList {
-            tagsFound.updateValue(false, forKey: tag.id)
-        }
-*/        // I'm not currently asking a question
-        questionState = QUESTION_STATE_NONE;
-        hasSeenIntro = false;
-        
-        //Delete data
-        DataManager.sharedInstance.deleteHunt()
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = paths.stringByAppendingPathComponent("data.plist")
-        path.removeAll(keepCapacity: true)
-    }
-    
+//    
+//    /** Deletes all player progress.*/
+//    func reset() {
+//        //tagsFound = Dictionary<String,Bool>()
+///*
+//        for tag :AHTag in tagList {
+//            tagsFound.updateValue(false, forKey: tag.id)
+//        }
+//*/        // I'm not currently asking a question
+//        questionState = QUESTION_STATE_NONE;
+//        hasSeenIntro = false;
+//        
+//        //Delete data
+//        DataManager.sharedInstance.deleteHunt()
+//        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+//        var path = paths.stringByAppendingPathComponent("data.plist")
+//        path.removeAll(keepCapacity: true)
+//    }
+//    
 //    func getCurrentClue() ->Clue? {
 //        var length:Int = clues.count;
 //        for (var i:Int = 0; i < length; i++) {
@@ -436,15 +436,16 @@ class Hunt : NSObject, NSCoding{
     
     //go to congratulation
     func isHuntComplete() -> Bool{
-        if getThisCLue() == nil{
-            return true
+        for clue in clues{
+            if isClueComplete(clue) == false{
+                return false
+            }
         }
-        return false
+        return true
     }
     
     //go to next clue
     func isClueComplete() -> Bool{
-        var currentClue = getThisCLue()
         if tagsRemain() == 0  && isThereQuestionToAnswer() == false{
             return true
         }
@@ -495,7 +496,7 @@ class Hunt : NSObject, NSCoding{
     func isThereQuestionToAnswer() -> Bool{
         var isThereQuestion = false
         var clue = getThisCLue()
-        if clue != nil && clue!.question != nil && questions[clue!.id] == ANSWARE_UNDONE{
+        if clue != nil && clue!.question != nil && !clue!.question!.answers.isEmpty && questions[clue!.id] == ANSWARE_UNDONE{
             isThereQuestion = true
         }
         return isThereQuestion
@@ -576,6 +577,24 @@ class Hunt : NSObject, NSCoding{
         }else{
             return currentClue.question!.wrongMessage!
         }
+    }
+    
+    func numAnswersCorrect() -> Int{
+        var cluesWithQuestion : [Clue] = []
+        for clue in clues{
+            if clue.question != nil{
+                cluesWithQuestion.append(clue)
+            }
+        }
+        var num = 0
+        for (var i:Int = 0; i < cluesWithQuestion.count; i++) {
+            var clue:Clue = cluesWithQuestion[i];
+            var questionDone:Int = questions.values.array[i]
+            if (clue.question?.correctAnswer == questionDone) {
+                num++;
+            }
+        }
+        return num
     }
     
     func setAnswer(answer:Int){

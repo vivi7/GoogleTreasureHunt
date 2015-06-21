@@ -12,31 +12,23 @@ import Foundation
 
 class ViewController: UIViewController{
     
-    //let driveService : GTLService =  GTLService()
-    /*
-    let kKeychainItemName : NSString = "Google Plus Quickstart"
-    let kClientID : NSString = "208944949242-3nv46f8d2priu2p4su9kj1sdruekah56.apps.googleusercontent.com"
-    let kClientSecret : NSString = "4LCknQQmdH_Oa_Kx28Ufgh2f"
-    
-    
-    var num : Int = 0;
-    */
-    
     @IBOutlet var place: UILabel!
+    
+    var goNext = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        UIImage(named:"bg")?.drawInRect(self.view.bounds)
+        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
-        DataManager.sharedInstance.createHunt()
+        view.backgroundColor = UIColor(patternImage: image)
         
-        let intro = "Bugdroid is came to "
+        place.text = "Bugdroid is came to here!"
         
-        place.text = intro + DataManager.sharedInstance.hunt!.displayName
-        DataManager.sharedInstance.startTimer()
-        //For google login
-        //  driveService = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName(kKeychainItemName,
-        //    clientID: kClientID,
-        //  clientSecret: kClientSecret)
+        controls()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,5 +36,44 @@ class ViewController: UIViewController{
         // Dispose of any resources that can be recreated.
     }
     
+    func controls() -> Bool{
+        var isConnected = checkInternetConnection()
+        println(DataManager.sharedInstance.zipDownloaded)
+        println(DataManager.sharedInstance.zipDownloading)
+        if isConnected{
+            if DataManager.sharedInstance.zipDownloaded == true && DataManager.sharedInstance.zipDownloading == false{
+                goNext = true
+                DataManager.sharedInstance.createHunt()
+                place.text = "Bugdroid is came to " + DataManager.sharedInstance.hunt!.displayName + "!"
+                return true
+            } else{
+                println("Zip not downloaded")
+                var alert = UIAlertView(title: "No Hunt avaible", message: "Retry later", delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+            }
+        }
+        return false
+    }
+    
+    func checkInternetConnection() -> Bool{
+        var isConnected = Reachability.isConnectedToNetwork()
+        if isConnected == true {
+            println("Internet connection OK")
+        } else {
+            println("Internet connection FAILED")
+            var alert = UIAlertView(title: "No Internet Connection", message: "Make sure your device is connected to the internet.", delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+        }
+        return isConnected
+    }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        println(segue.identifier)
+//        let controller = segue.destinationViewController as! UIViewController
+//    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject?) -> Bool {
+        return controls()
+    }
 }
 

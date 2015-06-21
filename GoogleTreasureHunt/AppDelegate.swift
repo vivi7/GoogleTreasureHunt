@@ -21,6 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //TODO: download and create Hunt and valuate the boolean
         DataManager.sharedInstance.startDataManager()
         
+//        if DataManager.sharedInstance.hunt != nil{
+//            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+//            var vc = mainStoryboard.instantiateViewControllerWithIdentifier("SideBaseController") as! SideBaseController
+//            vc.storyboardID = "ClueViewController"
+//            if DataManager.sharedInstance.hunt!.isHuntComplete() == true{
+//                vc.storyboardID = "VictoryViewController"
+//            }
+//            self.window?.rootViewController = vc
+//        }
+        
         if DataManager.sharedInstance.hunt != nil{
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
             
@@ -30,13 +40,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             self.window?.rootViewController = vc
         }
-//        if DataManager.sharedInstance.numHunt == nil{
-//            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
-//            
-//            let navigationController = UINavigationController(rootViewController: mainStoryboard.instantiateViewControllerWithIdentifier("ListViewController") as! ListViewController)
-//            
-//            self.window?.rootViewController = navigationController
-//        }
+//        //        if DataManager.sharedInstance.numHunt == nil{
+//        //            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+//        //
+//        //            let navigationController = UINavigationController(rootViewController: mainStoryboard.instantiateViewControllerWithIdentifier("ListViewController") as! ListViewController)
+//        //
+//        //            self.window?.rootViewController = navigationController
+//        //        }
         
         return true
     }
@@ -248,5 +258,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return NSDictionary(contentsOfFile: path)!
     }
     
+    // Add this function to handle the openURL redirect from OAuth.
+//    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+//        return GPPURLHandler.handleURL(url, sourceApplication: sourceApplication, annotation: annotation);
+//    }
 }
 

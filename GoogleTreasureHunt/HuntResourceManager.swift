@@ -28,11 +28,9 @@ class HuntResourceManager {
     //***** FINE CODICE SPECIALE *****\\
     
     
-    let urlPath = "http://192.168.1.4:8089/hunt.zip" //per provare attivare il servizio web da Server
-    //let urlPath = "http://localhost.it:8089/hunt.zip"
-    //let urlPath = "http://31.170.163.175/hunt.zip"
+    //let urlPath = "http://192.168.1.3:8089/hunt.zip" //per provare attivare il servizio web da Server
+    let urlPath = "http://162.248.167.159:8080/zip/hunt.zip"
     let nameHuntZip = "hunt.zip"
-    let containerFolder = "hunt/"
     let nameJSON = "sampleHunt.json"
     var jsonDictionary:NSDictionary!
     var jsonString:String!
@@ -69,14 +67,27 @@ class HuntResourceManager {
     }
     
     func downloadZip(){
-        
-        let task = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!, completionHandler: {(data, response, error) in
-            println("Task completed")
-            let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
-            data.writeToURL(fileUrl, atomically: true)
-            println(data?.bytes)
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        dispatch_async(queue, {
+            //<code to load/prepare images>
+            println("->downloadZip() server: " + self.urlPath)
+            if Reachability.isValidUrlString(self.urlPath){
+                println("OK------------------" + self.urlPath)
+                let task = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: self.urlPath)!, completionHandler: {(data, response, error) in
+                    println("Task completed")
+                    let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
+                    data.writeToURL(fileUrl, atomically: true)
+                    DataManager.sharedInstance.zipDownloaded = true
+                    DataManager.sharedInstance.zipDownloading = false
+                    println(data?.bytes)
+                })
+                task.resume()
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                //<code to update UI elements>
+            })
         })
-        task.resume()
     }
     
     func createHunt(){
@@ -91,7 +102,7 @@ class HuntResourceManager {
     
     func getDestinationHuntFolder() -> String{
         var paths = NSFileManager.applicationDocumentsDirectory().path!
-        var destination = paths.stringByAppendingPathComponent(containerFolder) + "/"
+        var destination = paths.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder) + "/"
         
         return destination
     }
@@ -103,13 +114,13 @@ class HuntResourceManager {
     func unzipFile() {
         var paths = NSFileManager.applicationDocumentsDirectory().path!
         var path = paths.stringByAppendingPathComponent(nameHuntZip)
-        var destination = paths.stringByAppendingPathComponent(containerFolder)
+        var destination = paths//.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder)
         
         let unZipped = SSZipArchive.unzipFileAtPath(path, toDestination: destination)
     }
     
     func getJsonData() -> NSData{
-        var path = NSFileManager.applicationDocumentsDirectory().path!.stringByAppendingPathComponent(containerFolder+nameJSON)
+        var path = NSFileManager.applicationDocumentsDirectory().path!.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder+nameJSON)
         
         let data = NSData(contentsOfFile: path)
         
