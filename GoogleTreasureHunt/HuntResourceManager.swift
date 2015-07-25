@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 class HuntResourceManager {
     
@@ -39,7 +38,7 @@ class HuntResourceManager {
     init(){
         
     }
-
+/*
     func download() -> Bool{
         var isDownloaded = false
         var fileName: String?
@@ -65,6 +64,23 @@ class HuntResourceManager {
         
         return isDownloaded
     }
+    
+    //metodo alternativo che scarica e converte in JSON direttamente
+    func downloadJson(){
+    Alamofire.request(.GET, urlPath)
+    .responseJSON { (req, res, json, error) in
+    if(error != nil) {
+    NSLog("Error: \(error)")
+    println(req)
+    println(res)
+    }
+    else {
+    NSLog("Success: \(self.urlPath)")
+    var json = JSON(json!)
+    }
+    }
+    }
+*/
     
     func downloadZip(){
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -125,21 +141,5 @@ class HuntResourceManager {
         let data = NSData(contentsOfFile: path)
         
         return data!
-    }
-    
-    //metodo alternativo che scarica e converte in JSON direttamente
-    func downloadJson(){
-        Alamofire.request(.GET, urlPath)
-            .responseJSON { (req, res, json, error) in
-                if(error != nil) {
-                    NSLog("Error: \(error)")
-                    println(req)
-                    println(res)
-                }
-                else {
-                    NSLog("Success: \(self.urlPath)")
-                    var json = JSON(json!)
-                }
-        }
     }
 }

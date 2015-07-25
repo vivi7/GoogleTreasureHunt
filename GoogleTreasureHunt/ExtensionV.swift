@@ -184,6 +184,7 @@ extension UIImageView {
                 
                 
             }
+        }
     }
     
     func loadImage(url: NSURL, autoCache: Bool) {
