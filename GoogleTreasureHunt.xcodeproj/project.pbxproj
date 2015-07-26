@@ -15,6 +15,8 @@
 		440146D41AFBA98D00B8E802 /* ClueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440146D31AFBA98D00B8E802 /* ClueViewController.swift */; };
 		440146D61AFE3C4E00B8E802 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440146D51AFE3C4E00B8E802 /* CircleView.swift */; };
 		440146D91AFF6B9100B8E802 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440146D81AFF6B9100B8E802 /* QuestionViewController.swift */; };
+		442133651B643DC700C0198D /* hunt.zip in Resources */ = {isa = PBXBuildFile; fileRef = 442133641B643DC700C0198D /* hunt.zip */; };
+		442133671B654BE700C0198D /* ProgressHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442133661B654BE700C0198D /* ProgressHud.swift */; };
 		4444C63E1A90DED0001B9CAC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4444C62B1A90DECF001B9CAC /* Extensions.swift */; };
 		4444C6401A90DED0001B9CAC /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4444C62D1A90DECF001B9CAC /* ImageManager.swift */; };
 		4444C6491A90DED0001B9CAC /* RootMenuSideTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4444C6361A90DECF001B9CAC /* RootMenuSideTableViewController.swift */; };
@@ -116,6 +118,8 @@
 		440146D31AFBA98D00B8E802 /* ClueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClueViewController.swift; sourceTree = "<group>"; };
 		440146D51AFE3C4E00B8E802 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		440146D81AFF6B9100B8E802 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		442133641B643DC700C0198D /* hunt.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = hunt.zip; sourceTree = "<group>"; };
+		442133661B654BE700C0198D /* ProgressHud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHud.swift; sourceTree = "<group>"; };
 		4444C62B1A90DECF001B9CAC /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4444C62D1A90DECF001B9CAC /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		4444C6361A90DECF001B9CAC /* RootMenuSideTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootMenuSideTableViewController.swift; sourceTree = "<group>"; };
@@ -371,12 +375,13 @@
 		4482EEC019F944E30078D8C4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4482EEAC19F944AC0078D8C4 /* ListViewController.swift */,
-				440146D31AFBA98D00B8E802 /* ClueViewController.swift */,
-				447F139F1B0ACB04000FBD6F /* VictoryViewController.swift */,
-				440146D81AFF6B9100B8E802 /* QuestionViewController.swift */,
-				4482EE8619F943D60078D8C4 /* ViewController.swift */,
 				44DA2A9A1B0F701B00800D69 /* WelcomeViewController.swift */,
+				4482EE8619F943D60078D8C4 /* ViewController.swift */,
+				442133661B654BE700C0198D /* ProgressHud.swift */,
+				440146D31AFBA98D00B8E802 /* ClueViewController.swift */,
+				440146D81AFF6B9100B8E802 /* QuestionViewController.swift */,
+				447F139F1B0ACB04000FBD6F /* VictoryViewController.swift */,
+				4482EEAC19F944AC0078D8C4 /* ListViewController.swift */,
 				4482EEAE19F944AC0078D8C4 /* SigninViewController.swift */,
 				44DA2A9E1B10BD6600800D69 /* MiddleViewController.swift */,
 				44DA2A8C1B0CEDE500800D69 /* GreenController.swift */,
@@ -427,6 +432,7 @@
 		44D9A5561AE94579005B58AD /* ThirthLib */ = {
 			isa = PBXGroup;
 			children = (
+				442133641B643DC700C0198D /* hunt.zip */,
 				4444C6361A90DECF001B9CAC /* RootMenuSideTableViewController.swift */,
 				4444C6371A90DECF001B9CAC /* RootNavigationViewController.swift */,
 				4444C62B1A90DECF001B9CAC /* Extensions.swift */,
@@ -581,6 +587,7 @@
 				447F13B11B0B6D15000FBD6F /* fuse.sks in Resources */,
 				447F13B51B0B6D15000FBD6F /* GameScene.sks in Resources */,
 				44DA2A841B0CE8FF00800D69 /* repeat.mp3 in Resources */,
+				442133651B643DC700C0198D /* hunt.zip in Resources */,
 				447F13B21B0B6D15000FBD6F /* rocket.png in Resources */,
 				447F13B01B0B6D15000FBD6F /* explode.sks in Resources */,
 				447F13B31B0B6D15000FBD6F /* rocket@2x.png in Resources */,
@@ -649,6 +656,7 @@
 				4482EEB119F944AC0078D8C4 /* AchievementManager.swift in Sources */,
 				447F13A21B0B6CCA000FBD6F /* GameScene.swift in Sources */,
 				44DA2A941B0CEDE500800D69 /* SidePanelSystem.swift in Sources */,
+				442133671B654BE700C0198D /* ProgressHud.swift in Sources */,
 				4482EEBC19F944AC0078D8C4 /* SoundManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

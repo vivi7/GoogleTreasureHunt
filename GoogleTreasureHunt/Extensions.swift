@@ -1,6 +1,6 @@
 //
 //  Extensions.swift
-//  Spesami
+//  GoogleTreasureHunt
 //
 //  Created by Vincenzo Favara on 18/01/15.
 //  Copyright (c) 2015 Vincenzo Favara (VinSoft). All rights reserved.

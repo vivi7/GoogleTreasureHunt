@@ -26,10 +26,11 @@ class HuntResourceManager {
     }
     //***** FINE CODICE SPECIALE *****\\
     
-    
+    //ATTENZIONE: non usare dropbox
     //let urlPath = "http://192.168.1.3:8089/hunt.zip" //per provare attivare il servizio web da Server
-    let urlPath = "http://162.248.167.159:8080/zip/hunt.zip"
+    let urlPaths = ["http://162.248.167.159:8080/zip/hunt.zip","http://167.88.35.84/var/www/resources/hunt.zip"]
     let nameHuntZip = "hunt.zip"
+    let nameHuntfolder = "hunt.zip"
     let nameJSON = "sampleHunt.json"
     var jsonDictionary:NSDictionary!
     var jsonString:String!
@@ -85,25 +86,39 @@ class HuntResourceManager {
     func downloadZip(){
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         dispatch_async(queue, {
-            //<code to load/prepare images>
-            println("->downloadZip() server: " + self.urlPath)
-            if Reachability.isValidUrlString(self.urlPath){
-                println("OK------------------" + self.urlPath)
-                let task = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: self.urlPath)!, completionHandler: {(data, response, error) in
-                    println("Task completed")
-                    let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
-                    data.writeToURL(fileUrl, atomically: true)
-                    DataManager.sharedInstance.zipDownloaded = true
-                    DataManager.sharedInstance.zipDownloading = false
-                    println(data?.bytes)
-                })
-                task.resume()
+            for urlPath in self.urlPaths{
+                println("->downloadZip() server: " + urlPath)
+                if Reachability.isValidUrlString(urlPath){
+                    println("SERVER UP: " + urlPath)
+                    let task = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!, completionHandler: {(data, response, error) in
+                        println("Task completed")
+                        let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
+                        data.writeToURL(fileUrl, atomically: true)
+                        println(data?.bytes)
+                    })
+                    task.resume()
+                } else {
+                    println("SERVER DOWN: " + urlPath)
+                }
             }
-            
+            DataManager.sharedInstance.controlHuntOnline = true
+            self.unzipFile()
             dispatch_async(dispatch_get_main_queue(), {
                 //<code to update UI elements>
             })
         })
+    }
+    
+    func testHunt(){
+        let paths = NSFileManager.applicationDocumentsDirectory().path
+        
+        let bundle = NSBundle.mainBundle()
+        let path = bundle.pathForResource("hunt", ofType: "zip")
+        
+        let destination = paths!//.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder)
+        myPrintln("servers down: testHunt() start")
+        //NSFileManager.defaultManager().copyItemAtPath(path!, toPath:destination, error:nil)
+        let unZipped = SSZipArchive.unzipFileAtPath(path, toDestination: destination)
     }
     
     func createHunt(){
@@ -128,10 +143,11 @@ class HuntResourceManager {
     }
     
     func unzipFile() {
-        var paths = NSFileManager.applicationDocumentsDirectory().path!
-        var path = paths.stringByAppendingPathComponent(nameHuntZip)
-        var destination = paths//.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder)
-        
+        var paths = NSFileManager.applicationDocumentsDirectory().path
+        //var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        //        return paths[0] as String
+        var path = paths!.stringByAppendingPathComponent(nameHuntZip)
+        var destination = paths!//.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder)
         let unZipped = SSZipArchive.unzipFileAtPath(path, toDestination: destination)
     }
     

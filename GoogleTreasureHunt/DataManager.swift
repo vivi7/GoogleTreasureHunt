@@ -1,9 +1,9 @@
 //
 //  DataManager.swift
-//  Pizza List
+//  TreasureHunt
 //
-//  Created by Marcello Catelli on 08/10/14.
-//  Copyright (c) 2014 Objective C srl. All rights reserved.
+//  Created by Vincenzo Favara on 25/09/14.
+//  Copyright (c) 2014 Vincenzo Favara. All rights reserved.
 //
 
 import UIKit
@@ -36,29 +36,50 @@ class DataManager: NSObject {
 //    var numHunt : Int?
     var hunt : Hunt?
     
-    //var mainController : MasterViewController!
-    
     var docPath = NSFileManager.applicationDocumentsDirectory().path
     
-    var zipDownloaded = false
-    var zipDownloading = false
+    var controlHuntOnline = false
     
     // MARK: - Metodi
     func startDataManager() {
         
 //        getNumHuntSelected()
-        if !NSFileManager.defaultManager().fileExistsAtPath(docPath! + namePlist) && zipDownloading == false {
-            zipDownloading = true
-            HuntResourceManager.sharedInstance.downloadZip()
-        } else {
-            zipDownloaded = true
+        if NSFileManager.defaultManager().fileExistsAtPath(docPath! + namePlist){
             loadHunt()
             //provaVittoria()
-//            prova()
-//            printHunt()
-//            printTagsFound()
-//            printQuestions()
+            //prova()
+            //printHunt()
+            //printTagsFound()
+            //printQuestions()
+        } else {
+            HuntResourceManager.sharedInstance.downloadZip()
+/*          
+            if !isZipDownloaded() && !isZipUnzipped() && !controlHuntOnline{
+                HuntResourceManager.sharedInstance.downloadZip()
+            } else if isZipDownloaded() && !isZipUnzipped(){
+                HuntResourceManager.sharedInstance.unzipFile()
+            } else if !isZipDownloaded() && isZipUnzipped(){
+                HuntResourceManager.sharedInstance.testHunt()
+            }
+*/
         }
+    }
+    
+    func isZipDownloaded() -> Bool{
+        return self.exist(docPath! + "/" + nameHuntZip)
+    }
+    
+    func isZipUnzipped() -> Bool{
+        return self.exist(docPath! + "/" + containerFolder)
+    }
+    
+    func exist(filePath:String) -> Bool{
+        var exist = false
+        if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+            exist = true
+        }
+        myPrintln(filePath + " exist: \(exist)")
+        return exist
     }
     
     func prova(){
@@ -82,7 +103,7 @@ class DataManager: NSObject {
     
     func createHunt(){
         var filePath = docPath! + namePlist
-        
+        print(filePath)
         if !NSFileManager.defaultManager().fileExistsAtPath(filePath) {
             HuntResourceManager.sharedInstance.createHunt()
         }
@@ -166,8 +187,8 @@ class DataManager: NSObject {
         hunt = NSKeyedUnarchiver.unarchiveObjectWithFile(docPath! + namePlist) as? Hunt
     }
     func deleteHunt(){
-        zipDownloaded = false
-        zipDownloading = false
+//        zipDownloaded = false
+//        zipDownloading = false
         deleteInDocumentFolder(namePlist)
         deleteInDocumentFolder(nameHuntZip)
         deleteInDocumentFolder(containerFolder)
@@ -203,5 +224,6 @@ class DataManager: NSObject {
 }
 
 func myPrintln(toPrint:AnyObject){
+    println()
     println(toPrint)
 }

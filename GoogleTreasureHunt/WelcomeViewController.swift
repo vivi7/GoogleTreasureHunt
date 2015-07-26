@@ -21,7 +21,7 @@ class WelcomeViewController: UIViewController {
         
         view.backgroundColor = UIColor(patternImage: image)
         
-        DataManager.sharedInstance.startDataManager()
+        //DataManager.sharedInstance.startDataManager()
     }
     
     override func didReceiveMemoryWarning() {

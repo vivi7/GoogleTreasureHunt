@@ -244,3 +244,15 @@ func verifyUrl(urlString: String?) ->Bool{
         }else { return false }
     } else { return false }
 }
+
+//Static Class
+class File {
+    class func open (path: String, utf8: NSStringEncoding = NSUTF8StringEncoding) -> String? {
+        var error: NSError?
+        return NSFileManager().fileExistsAtPath(path) ? String(contentsOfFile: path, encoding: utf8, error: &error)! : nil
+    }
+    class func save (path: String, _ content: String, utf8: NSStringEncoding = NSUTF8StringEncoding) -> Bool {
+        var error: NSError?
+        return content.writeToFile(path, atomically: true, encoding: utf8, error: &error)
+    }
+}
