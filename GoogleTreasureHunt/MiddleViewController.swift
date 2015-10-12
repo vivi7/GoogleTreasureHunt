@@ -13,13 +13,8 @@ class MiddleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        UIImage(named:"bg")?.drawInRect(self.view.bounds)
-        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        view.backgroundColor = UIColor(patternImage: image)
-        
+        self.navigationController?.navigationBar.hidden = true
+        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
     }
     
     override func didReceiveMemoryWarning() {

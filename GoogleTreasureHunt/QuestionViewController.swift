@@ -24,20 +24,18 @@ class QuestionViewController: UIViewController {
     var currentClue:Clue!
     
     var ding:AVAudioPlayer = AVAudioPlayer()
+    var nameFileToPlay = SOUND_REJECTED
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Question"
         
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
         self.navigationController?.navigationBar.hidden = true
+        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
         
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        UIImage(named:"bg")?.drawInRect(self.view.bounds)
-        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        view.backgroundColor = UIColor(patternImage: image)
+        let imageView = UIImageView(frame: self.view.frame)
+        imageView.image = UIImage(named: "material_trim")!
+        self.view.addSubview(imageView)
         
         DataManager.sharedInstance.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: DataManager.sharedInstance, selector: Selector("countSec"), userInfo: nil, repeats: true)
         
@@ -64,16 +62,19 @@ class QuestionViewController: UIViewController {
     }
     
     @IBAction func answerAction(sender: UIButton) {
-        var message = hunt.answerMessage(sender.tag)
-        displayAlert("Answer", message: message)
+        let message = hunt.answerMessage(sender.tag)
+        if message.1 {
+            nameFileToPlay = SOUND_COIN
+        }
+        displayAlert("Answer", message: message.0)
     }
     
     func displayAlert(title:String, message:String) {
         prepareAudios()
         ding.play()
         
-        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
             //self.dismissViewControllerAnimated(true, completion: nil)
             self.goToClueVc()
         } ))
@@ -81,21 +82,19 @@ class QuestionViewController: UIViewController {
     }
     
     func goToClueVc(){
-        let vc : ClueViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ClueViewController") as! ClueViewController;
-        self.showViewController(vc, sender: "")
+        //self.dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.popViewControllerAnimated(true)
     }
-    
-//    func goToClueVcSide(){
-//        var vc = self.storyboard!.instantiateViewControllerWithIdentifier("SideBaseController") as! SideBaseController
-//        vc.storyboardID = "ClueViewController"
-//        self.showViewController(vc, sender: "")
-//    }
     
     //MARK: - Play
     
     func prepareAudios() {
-        var path = NSBundle.mainBundle().pathForResource("coin", ofType: "mp3")
-        ding = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!), error: nil)
+        let path = NSBundle.mainBundle().pathForResource(nameFileToPlay, ofType: "mp3")
+        do {
+            ding = try AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!))
+        } catch {
+            
+        }
         ding.prepareToPlay()
     }
     
@@ -103,7 +102,7 @@ class QuestionViewController: UIViewController {
     
     func animateGif(){
         for i in 1...4{
-            let imageName = "gifandroid\(i)"
+            let imageName = "gifanimocchi\(i)"
             imageList.append(UIImage(named: imageName)!)
         }
         gifImageView.animationImages = imageList

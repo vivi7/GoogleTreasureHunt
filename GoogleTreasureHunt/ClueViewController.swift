@@ -8,14 +8,18 @@
 
 import UIKit
 import AVFoundation
+import QRCodeReader
+//import LiquidFloatingActionButton
 
-class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
+class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate /*, LiquidFloatingActionButtonDataSource, LiquidFloatingActionButtonDelegate*/ {
     
     lazy var reader = QRCodeReaderViewController(metadataObjectTypes: [AVMetadataObjectTypeQRCode])
     
     @IBOutlet var currentPoint : UILabel!
     
-    @IBOutlet var clueImage : UIImageView!
+    //@IBOutlet var clueImage : UIImageView!
+    
+    @IBOutlet var clueYPMagnifyingView: YPMagnifyingView!
     
     @IBOutlet var labelInstruction: UILabel!
 
@@ -23,9 +27,9 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
     
     @IBOutlet var tag2label: UILabel!
     
-    @IBOutlet var circle1: CircleView!
+    @IBOutlet var circle1: UIView!
     
-    @IBOutlet var circle2: CircleView!
+    @IBOutlet var circle2: UIView!
     
     @IBOutlet var gifImageViewSx: UIImageView!
     var imageListSx : [UIImage] = []
@@ -36,34 +40,48 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
     
     var currentClue:Clue?
     
+    var message = ""
+    
     var ding:AVAudioPlayer = AVAudioPlayer()
+    var nameFileToPlay = "rejected"
     
-    //let driveService : GTLService =  GTLService()
-    /*
-    let kKeychainItemName : NSString = "Google Plus Quickstart"
-    let kClientID : NSString = "208944949242-3nv46f8d2priu2p4su9kj1sdruekah56.apps.googleusercontent.com"
-    let kClientSecret : NSString = "4LCknQQmdH_Oa_Kx28Ufgh2f"
-    
-    
-    var num : Int = 0;
-    */
+    var redImage : UIImage!
+    var greenImage : UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Treasure Hunt"
         
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        UIImage(named:"bg")?.drawInRect(self.view.bounds)
-        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        view.backgroundColor = UIColor(patternImage: image)
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
         self.navigationController?.navigationBar.hidden = true
+        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
+        
+        let imageView = UIImageView(frame: self.view.frame)
+        imageView.image = UIImage(named: "material_trim")!
+        self.view.addSubview(imageView)
         
         DataManager.sharedInstance.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: DataManager.sharedInstance, selector: Selector("countSec"), userInfo: nil, repeats: true)
         animateGifSx()
         animateGifDx()
+/*
+        let floatingActionButton = LiquidFloatingActionButton(frame: floatingFrame)
+        floatingActionButton.dataSource = self
+        floatingActionButton.delegate = self
+*/
+        let mag = YPMagnifyingGlass(frame:CGRectMake(clueYPMagnifyingView.frame.origin.x, clueYPMagnifyingView.frame.origin.y,100,100))
+        mag.scale = 2
+        clueYPMagnifyingView.magnifyingGlass = mag
+        
+        NSFileManager.printFilesInDocumentFolder()
+        
+    }
+    
+    func chooseFitPatternBackgroungColorImageForTag(container:UIView, tagFound:Bool) -> UIColor{
+        var nameImage = "material_circle_red"
+        if tagFound == true {
+            nameImage = "material_circle_green"
+        }
+        return UIColor.getFitPatternBackgroungImage(nameImage, container: container)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -73,40 +91,22 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
         currentPoint.text = "Clue #\(hunt.getNumClueView()) of \(hunt.getTotalClues())"
         
         if self.hunt.isHuntComplete() == false{
-            var c1 = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
-            c1.center = circle1.center
-            c1.layer.cornerRadius = 25.0
-            if hunt.tagIsFound(currentClue!.tags[0].id) == true {
-                c1.backgroundColor = UIColor.greenColor()
-            }
-            circle1.backgroundColor = UIColor.clearColor()
-            circle1.addSubview(c1)
-            
-            var c2 = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
-            c2.center = circle2.center
-            c2.layer.cornerRadius = 25.0
+            circle1.backgroundColor = chooseFitPatternBackgroungColorImageForTag(circle1, tagFound: hunt.tagIsFound(currentClue!.tags[0].id))
             if currentClue!.tags.count > 1{
-                if hunt.tagIsFound(currentClue!.tags[1].id) == true {
-                    c2.backgroundColor = UIColor.greenColor()
-                }
-                circle2.backgroundColor = UIColor.clearColor()
-                circle1.addSubview(c2)
+                circle2.backgroundColor = chooseFitPatternBackgroungColorImageForTag(circle2, tagFound: hunt.tagIsFound(currentClue!.tags[1].id))
             } else{
                 UIView.animateWithDuration(0.5) {
                     self.circle1.transform = CGAffineTransformMakeTranslation(75, 0)
                     self.circle2.removeFromSuperview()
                 }
             }
-            
-            clueImage.image = UIImage(named:HuntResourceManager.sharedInstance.getNameClueImage(currentClue!.displayImage))
-            
+            //l'immagine si deve caricare dopo il controllo della verifica della vittoria
+            clueYPMagnifyingView.backgroundColor = UIColor.getFitPatternBackgroungImage(HuntResourceManager.sharedInstance.getNameClueImage(currentClue!.displayImage), container: clueYPMagnifyingView)
+            //clueImage.image = UIImage(named:HuntResourceManager.sharedInstance.getNameClueImage(currentClue!.displayImage))
             goToNext()
         } else{
             goToFinish()
-            //self.goToNextVcSide("VictoryViewController")
         }
-        animateGifSx()
-        animateGifDx()
     }
     
     override func didReceiveMemoryWarning() {
@@ -116,10 +116,9 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
     
     @IBAction func resetAction(sender: UIButton) {
         DataManager.sharedInstance.deleteHunt()
-        var vc = self.storyboard!.instantiateViewControllerWithIdentifier("WelcomeViewController") as! UIViewController
+        let vc = self.storyboard!.instantiateViewControllerWithIdentifier("WelcomeViewController") 
         self.showViewController(vc, sender: "")
     }
-    
     
     @IBAction func callScan(buttonTapped: UIButton){
         scanAction()
@@ -134,7 +133,7 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
             reader.completionBlock = { (result: String?) in
                 myPrintln("Completion with result: \(result)")
                 self.menageResultScan(result!)
-                var isHuntComplete = self.hunt.isHuntComplete()
+                let isHuntComplete = self.hunt.isHuntComplete()
                 if isHuntComplete == true{
                     self.goToFinish()
 //                    self.goToNextVcSide("VictoryViewController")
@@ -151,58 +150,66 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
         }
     }
     
-    var message :String = ""
     func menageResultScan(result:String){
-        message = self.hunt.messageFromTag(result)
-        myPrintln(message)
-        if message == ACK{
+        let message = self.hunt.messageFromTag(result)
+        self.message = message.0
+        nameFileToPlay = message.1
+        myPrintln("message: " + message.0 + ", sound:" + message.1)
+        if message.0 == ACK{
             hunt.setTagFound(result)
-            //goToNext()
-//        } else {
-//            let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .Alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-//            
-//            presentViewController(alert, animated: true, completion: nil)
         }
     }
     
     // MARK: - Segue
-    
+/*
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "goToListSegue" {
+            segue.destinationViewController as! ListViewController
+        } else if segue.identifier == "goToVictorySegue"{
+            segue.destinationViewController as! VictoryViewController
+        } else if segue.identifier == "goToVictorySegue"{
+            segue.destinationViewController as! QuestionViewController
+        }
+    }
+*/
     func goToNext(){
-        var tagsRemain = hunt.tagsRemain()
+        let tagsRemain = hunt.tagsRemain()
         if tagsRemain == 0{
             if hunt.isThereQuestionToAnswer() == true{
                 self.goToQuestion()
-                //self.goToNextVcSide("QuestionViewController")
+                //performSegueWithIdentifier("QuestionViewController", sender: nil)
             } else if self.hunt.isHuntComplete() == true{
                 self.goToFinish()
-                //self.goToNextVcSide("VictoryViewController")
+                //performSegueWithIdentifier("VictoryViewController", sender: nil)
             } else{
                 self.goToClueVc()
-                //self.goToNextVcSide("ClueViewController")
+                //performSegueWithIdentifier("ClueViewController", sender: nil)
             }
         }
     }
     
-    func goToFinish(){
-        var vc : VictoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("VictoryViewController") as! VictoryViewController;
-        self.showViewController(vc, sender: "")
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let controller = segue.destinationViewController as! VictoryViewController
-    }
-    
     func goToQuestion(){
-        var vc : QuestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController;
-        self.presentViewController(vc, animated: true, completion: nil)
+        delay(0.3) { () -> () in
+            let vc : QuestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController;
+            self.showViewController(vc, sender: "")
+            //navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func goToClueVc(){
         let vc : ClueViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ClueViewController") as! ClueViewController;
         self.showViewController(vc, sender: "")
+        //navigationController?.pushViewController(vc, animated: true)
     }
     
+    func goToFinish(){
+        delay(0.3) { () -> () in
+            let vc : VictoryViewController = self.storyboard?.instantiateViewControllerWithIdentifier("VictoryViewController") as! VictoryViewController;
+            self.showViewController(vc, sender: "")
+            //navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+
 //    func goToNextVcSide(storyboardID:String){
 //        var vc = self.storyboard!.instantiateViewControllerWithIdentifier("SideBaseController") as! SideBaseController
 //        vc.storyboardID = storyboardID
@@ -215,10 +222,7 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
         prepareAudios()
         ding.play()
         self.dismissViewControllerAnimated(true, completion: { [unowned self] () -> Void in
-            let alert = UIAlertController(title: "Message", message: self.message, preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-            
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.showMessage()
             })
     }
     
@@ -229,16 +233,20 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
     //MARK: - Play
     
     func prepareAudios() {
-        var path = NSBundle.mainBundle().pathForResource("coin", ofType: "mp3")
-        ding = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!), error: nil)
+        let path = NSBundle.mainBundle().pathForResource(nameFileToPlay, ofType: "mp3")
+        do {
+            try ding = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path!))
+        } catch {
+            print(error)
+        }
         ding.prepareToPlay()
     }
     
     //MARK: - Animation
-    
+    let pixelsTranslate : CGFloat = 525
     func animateGifSx(){
         for i in 1...4{
-            let imageName = "gifandroid\(i)"
+            let imageName = "gifanimocchi\(i)"
             imageListSx.append(UIImage(named: imageName)!)
         }
         gifImageViewSx.animationImages = imageListSx
@@ -248,14 +256,14 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
     }
     func androidUnHideSx(){
         UIView.animateWithDuration(1.5, animations: { () -> Void in
-            self.gifImageViewSx.frame.origin.x -= 125
+            self.gifImageViewSx.frame.origin.x -= self.pixelsTranslate
             }, completion: { (Bool) -> Void in
                 self.androidHideSx()
         })
     }
     func androidHideSx(){
         UIView.animateWithDuration(1.5, animations: { () -> Void in
-            self.gifImageViewSx.frame.origin.x += 125
+            self.gifImageViewSx.frame.origin.x += self.pixelsTranslate
             }, completion: { (Bool) -> Void in
                 self.androidUnHideSx()
         })
@@ -263,7 +271,7 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
     
     func animateGifDx(){
         for i in 1...4{
-            let imageName = "gifandroid\(i)"
+            let imageName = "gifanimocchi\(i)"
             imageListDx.append(UIImage(named: imageName)!)
         }
         gifImageViewDx.animationImages = imageListDx
@@ -273,16 +281,38 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate {
     }
     func androidUnHideDx(){
         UIView.animateWithDuration(1.5, animations: { () -> Void in
-            self.gifImageViewDx.frame.origin.x += 125
+            self.gifImageViewDx.frame.origin.x += self.pixelsTranslate
             }, completion: { (Bool) -> Void in
                 self.androidHideDx()
         })
     }
     func androidHideDx(){
         UIView.animateWithDuration(1.5, animations: { () -> Void in
-            self.gifImageViewDx.frame.origin.x -= 125
+            self.gifImageViewDx.frame.origin.x -= self.pixelsTranslate
             }, completion: { (Bool) -> Void in
                 self.androidUnHideDx()
         })
     }
+    
+    
+    //MARK: - Message
+    func showMessage(){
+        DoneHUD.showInView(self.view, message: self.message, isDone: (self.message == ACK))
+    }
+    
+    //MARK: - LiquidFloatingActionButton 
+/*
+    func numberOfCells(liquidFloatingActionButton: LiquidFloatingActionButton) -> Int {
+        return cells.count
+    }
+    
+    func cellForIndex(index: Int) -> LiquidFloatingCell {
+        return cells[index]
+    }
+    
+    func liquidFloatingActionButton(liquidFloatingActionButton: LiquidFloatingActionButton, didSelectItemAtIndex index: Int) {
+        println("did Tapped! \(index)")
+        liquidFloatingActionButton.close()
+    }
+*/
 }

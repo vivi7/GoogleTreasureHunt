@@ -28,97 +28,57 @@ class HuntResourceManager {
     
     //ATTENZIONE: non usare dropbox
     //let urlPath = "http://192.168.1.3:8089/hunt.zip" //per provare attivare il servizio web da Server
-    let urlPaths = ["http://162.248.167.159:8080/zip/hunt.zip","http://167.88.35.84/var/www/resources/hunt.zip"]
+    let urlPaths = ["http://162.248.167.159:8080/zip/hunt.zip","http://162.219.7.211/resources/hunt.zip"]
     let nameHuntZip = "hunt.zip"
     let nameHuntfolder = "hunt.zip"
     let nameJSON = "sampleHunt.json"
     var jsonDictionary:NSDictionary!
     var jsonString:String!
     
+    var huntIsReady = false
     
     init(){
         
     }
-/*
-    func download() -> Bool{
-        var isDownloaded = false
-        var fileName: String?
-        var finalPath: NSURL?
-        
-        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
-        Alamofire.download(.GET, urlPath, destination)
-            .progress { (bytesRead, totalBytesRead, totalBytesExpectedToRead) in
-                println(totalBytesRead)
-            }
-            .response { (request, response, data, error) in
-                if error != nil {
-                    println("REQUEST: \(request)")
-                    println("RESPONSE: \(response)")
-                    isDownloaded = false
-                } else {
-                    isDownloaded = true
-                    let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
-                    data?.writeToURL(fileUrl, atomically: true, encoding: 1, error: nil)
-                }
-        }
-        println(isDownloaded)
-        
-        return isDownloaded
-    }
     
-    //metodo alternativo che scarica e converte in JSON direttamente
-    func downloadJson(){
-    Alamofire.request(.GET, urlPath)
-    .responseJSON { (req, res, json, error) in
-    if(error != nil) {
-    NSLog("Error: \(error)")
-    println(req)
-    println(res)
-    }
-    else {
-    NSLog("Success: \(self.urlPath)")
-    var json = JSON(json!)
-    }
-    }
-    }
-*/
-    
-    func downloadZip(){
+    func downloadZipDispatched(){
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         dispatch_async(queue, {
-            for urlPath in self.urlPaths{
-                println("->downloadZip() server: " + urlPath)
-                if Reachability.isValidUrlString(urlPath){
-                    println("SERVER UP: " + urlPath)
-                    let task = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!, completionHandler: {(data, response, error) in
-                        println("Task completed")
-                        let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
-                        data.writeToURL(fileUrl, atomically: true)
-                        println(data?.bytes)
-                    })
-                    task.resume()
-                } else {
-                    println("SERVER DOWN: " + urlPath)
-                }
-            }
-            DataManager.sharedInstance.controlHuntOnline = true
-            self.unzipFile()
+            self.downloadZip()
             dispatch_async(dispatch_get_main_queue(), {
                 //<code to update UI elements>
             })
         })
     }
     
+    func downloadZip(){
+        for urlPath in self.urlPaths{
+            myPrintln("->downloadZip() server: " + urlPath + " \n\n")
+            if Reachability.isValidUrlString(urlPath){
+                myPrintln("SERVER UP: " + urlPath)
+                let task = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlPath)!, completionHandler: {(data, response, error) in
+                    myPrintln("Task completed")
+                    let fileUrl = NSFileManager.applicationDocumentsDirectory().URLByAppendingPathComponent(response!.suggestedFilename!)
+                    DataManager.sharedInstance.controlHuntOnline = true
+                    data!.writeToURL(fileUrl, atomically: true)
+                    print(data?.bytes)
+                })
+                task.resume()
+            } else {
+                myPrintln("SERVER DOWN: " + urlPath)
+            }
+        }
+        self.unzipFile()
+    }
+    
     func testHunt(){
-        let paths = NSFileManager.applicationDocumentsDirectory().path
+        let paths = NSFileManager.applicationDocumentsDirectory().path!
         
         let bundle = NSBundle.mainBundle()
         let path = bundle.pathForResource("hunt", ofType: "zip")
         
-        let destination = paths!//.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder)
         myPrintln("servers down: testHunt() start")
-        //NSFileManager.defaultManager().copyItemAtPath(path!, toPath:destination, error:nil)
-        let unZipped = SSZipArchive.unzipFileAtPath(path, toDestination: destination)
+        SSZipArchive.unzipFileAtPath(path, toDestination: paths)
     }
     
     func createHunt(){
@@ -128,12 +88,13 @@ class HuntResourceManager {
         DataManager.sharedInstance.hunt!.createHunt()
         DataManager.sharedInstance.salvaHunt()
         
+        huntIsReady = true
         //DataManager.sharedInstance.printHunt()
     }
     
     func getDestinationHuntFolder() -> String{
-        var paths = NSFileManager.applicationDocumentsDirectory().path!
-        var destination = paths.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder) + "/"
+        let paths = NSFileManager.applicationDocumentsDirectory().path!
+        let destination = (paths as NSString).stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder) + "/"
         
         return destination
     }
@@ -143,19 +104,51 @@ class HuntResourceManager {
     }
     
     func unzipFile() {
-        var paths = NSFileManager.applicationDocumentsDirectory().path
+        let paths = NSFileManager.applicationDocumentsDirectory().path!
         //var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         //        return paths[0] as String
-        var path = paths!.stringByAppendingPathComponent(nameHuntZip)
-        var destination = paths!//.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder)
-        let unZipped = SSZipArchive.unzipFileAtPath(path, toDestination: destination)
+        let path = (paths as NSString).stringByAppendingPathComponent(nameHuntZip)
+        let destination = paths
+        SSZipArchive.unzipFileAtPath(path, toDestination: destination)
     }
     
     func getJsonData() -> NSData{
-        var path = NSFileManager.applicationDocumentsDirectory().path!.stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder+nameJSON)
+        let path = (NSFileManager.applicationDocumentsDirectory().path! as NSString).stringByAppendingPathComponent(DataManager.sharedInstance.containerFolder+nameJSON)
         
         let data = NSData(contentsOfFile: path)
         
         return data!
+    }
+    
+    func downloadZipFromFTPConnection(url:String)
+    {
+        var url: CFStringRef
+        url = "Test" as NSString
+        var requestURL: CFURLRef
+        requestURL = CFURLCreateWithString(kCFAllocatorDefault, url, nil);
+        
+        let ftpStream = CFReadStreamCreateWithFTPURL(kCFAllocatorDefault, requestURL).takeRetainedValue()
+        
+        CFReadStreamOpen(ftpStream)
+        
+        var numBytesRead = 0
+        let bufSize = 4096
+        var buf = [UInt8](count: bufSize, repeatedValue: 0)
+        
+        repeat{
+            numBytesRead = CFReadStreamRead(ftpStream, &buf, bufSize)
+        } while( numBytesRead > 0 );
+        
+        
+        CFReadStreamClose(ftpStream)
+        
+        let data = NSData(bytes: buf, length: bufSize)
+        let paths = NSFileManager.applicationDocumentsDirectory().path!
+        let path = (paths as NSString).stringByAppendingPathComponent(nameHuntZip)
+        do {
+            try data.writeToFile(path, options: NSDataWritingOptions.DataWritingAtomic)
+        } catch {
+            print("Error to write file at path:\(path)")
+        }
     }
 }

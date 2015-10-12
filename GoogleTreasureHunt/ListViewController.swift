@@ -20,19 +20,17 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     var clue : Clue?
     
     override func viewDidLoad() {
-//        super.viewDidLoad()
+        super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.hidden = true
+        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        UIImage(named:"bg")?.drawInRect(self.view.bounds)
-        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        view.backgroundColor = UIColor(patternImage: image)
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
-        //self.navigationController?.navigationBar.hidden = true
-//        self.navigationController?.navigationBar.
+
+        let imageView = UIImageView(frame: self.view.frame)
+        imageView.image = UIImage(named: "material_trim")!
+        self.view.addSubview(imageView)
         
         clues = hunt!.clues
     }
@@ -42,9 +40,9 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var clue:Clue = clues[indexPath.row]
+        let clue:Clue = clues[indexPath.row]
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as!UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
         cell.textLabel!.text = clue.displayName
         cell.textLabel!.backgroundColor = UIColor.clearColor()
         cell.detailTextLabel?.text = clue.displayText
@@ -52,7 +50,7 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
         
         UIGraphicsBeginImageContext(cell.imageView!.frame.size)
         UIImage(named:HuntResourceManager.sharedInstance.getNameClueImage(clue.displayImage))?.drawInRect(cell.imageView!.bounds)
-        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         cell.imageView!.image = image
         
@@ -60,6 +58,7 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
         if hunt!.isClueComplete(clue) == true{
             cell.accessoryType = .Checkmark
             color = UIColor(red: 0.0, green: 200.0, blue: 0.0, alpha: 0.2)
+            cell.imageView?.image = UIImage(named:HuntResourceManager.sharedInstance.getNameClueImage(clue.displayImage))
         }
         
         cell.backgroundColor = color
@@ -80,13 +79,25 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     //    detailViewController.clue = self.clue
     //}
     
+    @IBAction func backAction(sender: UIButton) {
+        goToClueVc()
+    }
+    
     @IBAction func swipeGestureAction(sender: UISwipeGestureRecognizer) {
         goToClueVc()
     }
     
     func goToClueVc(){
-        let vc : ClueViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ClueViewController") as! ClueViewController;
-        self.showViewController(vc, sender: "")
+        //let vc : ClueViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ClueViewController") as! ClueViewController;
+        //self.showViewController(vc, sender: "")
+        /*print(navigationController!.viewControllers.count)
+        for controller in navigationController!.viewControllers{
+            print(controller)
+        }
+        self.navigationController!.popToRootViewControllerAnimated(true)
+        */
+        //self.dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.popViewControllerAnimated(true)
     }
 }
 

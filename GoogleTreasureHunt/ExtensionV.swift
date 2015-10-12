@@ -16,7 +16,7 @@ extension NSFileManager {
         var stringWithoutSlash:String = stringWithPossibleSlash
         // If the file name contains a slash at the beginning then we remove so that we don't end up with two
         if stringWithPossibleSlash.hasPrefix("/") {
-            stringWithoutSlash = stringWithPossibleSlash.substringFromIndex(advance(stringWithoutSlash.startIndex,1))
+            stringWithoutSlash = stringWithPossibleSlash.substringToIndex(stringWithPossibleSlash.endIndex.advancedBy(-1))
         }
         // Return the string with no slash at the beginning
         return stringWithoutSlash
@@ -25,7 +25,7 @@ extension NSFileManager {
     class func saveDataToDocumentsDirectory(fileData:NSData, path:String, subdirectory:String?) -> Bool
     {
         // Remove unnecessary slash if need
-        var newPath = self.stripSlashIfNeeded(path)
+        let newPath = self.stripSlashIfNeeded(path)
         var newSubdirectory:String?
         if (subdirectory != nil) {
             newSubdirectory = self.stripSlashIfNeeded(subdirectory!)
@@ -42,9 +42,9 @@ extension NSFileManager {
         // Add requested save path
         savePath += newPath
         
-        println(savePath)
+        print(savePath)
         // Save the file and see if it was successful
-        var ok:Bool = NSFileManager.defaultManager().createFileAtPath(savePath,contents:fileData, attributes:nil)
+        let ok:Bool = self.defaultManager().createFileAtPath(savePath,contents:fileData, attributes:nil)
         
         // Return status of file save
         return ok;
@@ -59,7 +59,7 @@ extension NSFileManager {
                 documentsDirectory = pathString as String
             }
         }
-        return NSURL(fileURLWithPath: documentsDirectory!)!
+        return NSURL(fileURLWithPath: documentsDirectory!)
     }
     
     class func applicationLibraryDirectory() -> NSURL {
@@ -70,7 +70,7 @@ extension NSFileManager {
                 libraryDirectory = pathString as String
             }
         }
-        return NSURL(fileURLWithPath: libraryDirectory!)!
+        return NSURL(fileURLWithPath: libraryDirectory!)
     }
     
     class func applicationSupportDirectory() -> NSURL {
@@ -81,12 +81,12 @@ extension NSFileManager {
                 applicationSupportDirectory =  pathString as String
             }
         }
-        return NSURL(fileURLWithPath: applicationSupportDirectory!)!
+        return NSURL(fileURLWithPath: applicationSupportDirectory!)
     }
     
     class func applicationTemporaryDirectory() -> NSURL {
-        var temporaryDirectory:String? = NSTemporaryDirectory();
-        return NSURL(fileURLWithPath: temporaryDirectory!)!
+        let temporaryDirectory:String? = NSTemporaryDirectory();
+        return NSURL(fileURLWithPath: temporaryDirectory!)
     }
     
     class func applicationCachesDirectory() -> NSURL {
@@ -100,13 +100,12 @@ extension NSFileManager {
                 cachesDirectory = pathString as String
             }
         }
-        return NSURL(fileURLWithPath: cachesDirectory!)!;
+        return NSURL(fileURLWithPath: cachesDirectory!);
     }
     
     class func createSubDirectory(subdirectoryPath:NSString) -> Bool {
-        var error:NSError?
         var isDir:ObjCBool=false;
-        var exists:Bool = NSFileManager.defaultManager().fileExistsAtPath(subdirectoryPath as String, isDirectory:&isDir)
+        let exists:Bool = self.defaultManager().fileExistsAtPath(subdirectoryPath as String, isDirectory:&isDir)
         if (exists) {
             /* a file of the same name exists, we don't care about this so won't do anything */
             if isDir {
@@ -114,145 +113,139 @@ extension NSFileManager {
                 return true;
             }
         }
-        var success:Bool = NSFileManager.defaultManager().createDirectoryAtPath(subdirectoryPath as String, withIntermediateDirectories:true, attributes:nil, error:&error)
-        
-        if (error != nil) { println(error) }
-        
-        return success;
+        do {
+            try self.defaultManager().createDirectoryAtPath(subdirectoryPath as String, withIntermediateDirectories:true, attributes:nil)
+            return true
+        } catch {
+            print(error)
+            return false
+        }
     }
     
     class func deleteFromDocumentsDirectory(subdirectoryOrFileName:String) -> Bool{
         // Remove unnecessary slash if need
-        var newSubdirectory:String? = self.stripSlashIfNeeded(subdirectoryOrFileName)
+        let newSubdirectory:String? = self.stripSlashIfNeeded(subdirectoryOrFileName)
         
         // Create generic beginning to file delete path
         var deletePath = self.applicationDocumentsDirectory().path!+"/"
         
         if (newSubdirectory != nil) {
             deletePath += newSubdirectory!
-            var dir:ObjCBool=true
-            if !NSFileManager.defaultManager().fileExistsAtPath(deletePath) {
+            if !self.defaultManager().fileExistsAtPath(deletePath) {
                 return false
             }
         }
         // Delete the file and see if it was successful
-        var error:NSError?
-        var isDelete : Bool = NSFileManager.defaultManager().removeItemAtPath(deletePath, error: &error)
-        if (error != nil) {
-            println(error)
-        }
-        return isDelete
+        return deleteFileAtPath(deletePath)
     }
-}
-
-extension UIImageView {
     
-    func downloadAsyncImage(urlStr:String){
-        let url = NSURL(string: urlStr)
+    /* Create a folder with a given path */
+    class func createFolderAtPath(path: String){
+        do{
+            try self.defaultManager().createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("Failed to create folder at \(path)")
+        }
+    }
+    
+    /* Deletes a folder with a given path */
+    class func deleteFileAtPath(path: String) -> Bool{
+        do{
+            try self.defaultManager().removeItemAtPath(path)
+            return true
+        } catch {
+            print("Failed to delete folder at \(path)")
+            return false
+        }
+    }
+    
+    /* Enumerates all files/folders at a given path */
+    class func enumerateFilesInFolder(folder: String) -> [String]{
+        var folders : [String] = []
+        do{
+            folders = try self.defaultManager().contentsOfDirectoryAtPath(folder)
+        } catch {
+            print("Failed to enumerate folders at \(folder)")
+        }
+        return folders
+    }
+    
+    /* Deletes all files/folders in a given path */
+    class func deleteFilesInFolder(folder: String){
         
-        let urlRequest = NSURLRequest(URL: url!)
+        let contents = enumerateFilesInFolder(folder)
         
-        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
+        for fileName in contents{
+            let filePath = (folder as NSString).stringByAppendingPathComponent(fileName)
             
-            if error != nil {
-                
-                println(error)
-                
-            } else {
-                
-                if let bach = UIImage(data: data) {
-                    
-                    // self.image.image = bach
-                    
-                    var documentsDirectory:String?
-                    
-                    var paths:[AnyObject] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-                    
-                    if paths.count > 0 {
-                        
-                        documentsDirectory = paths[0] as? String
-                        
-                        var savePath = documentsDirectory! + url!.lastPathComponent!
-                        
-                        NSFileManager.defaultManager().createFileAtPath(savePath, contents: data, attributes: nil)
-                        
-                        self.image = UIImage(named: savePath)
-                        
-                    }
-                    
-                }
-                
-                
-            }
-        }
-    }
-    
-    func loadImage(url: NSURL, autoCache: Bool) {
-        var urlId = url.hash
-        
-        var fileHandler = FileController()
-        var cacheDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String //"Documents/cache/images/\(urlId)"
-        var existFileData = fileHandler.readFile(cacheDir)
-        
-        if existFileData == nil {
-            NSURLSession.sharedSession().dataTaskWithURL(url) {
-                (data: NSData!, response: NSURLResponse!, error: NSError!) in
-                if error == nil {
-                    dispatch_async(dispatch_get_main_queue()) { self.image = UIImage(data: data) }
-                }
-                }.resume()
-        } else {
-            image = UIImage(data: existFileData!)
-        }
-    }
-    
-    class FileController {
-        func writeFile(fileDir: String, fileContent: NSData) -> Bool {
-            var filePath = NSHomeDirectory().stringByAppendingPathComponent(fileDir)
+            deleteFileAtPath(filePath)
             
-            return fileContent.writeToFile(filePath, atomically: true)
         }
         
-        func readFile(fileDir: String) -> NSData? {
-            var filePath = NSHomeDirectory().stringByAppendingPathComponent(fileDir)
-            if let fileHandler = NSFileHandle(forReadingAtPath: filePath) {
-                var fileData = fileHandler.readDataToEndOfFile()
-                fileHandler.closeFile()
-                return fileData
-            } else {
-                return nil
-            }
+    }
+    
+    class func printFilesInDocumentFolder(){
+        do{
+            try printFilesInFolderRecursive(applicationDocumentsDirectory())
+        } catch {
+            print("Error")
         }
-        
-        func mkdir(fileDir: String) -> Bool {
-            var filePath = NSHomeDirectory().stringByAppendingPathComponent(fileDir)
-            return NSFileManager.defaultManager().createDirectoryAtPath(filePath, withIntermediateDirectories: true, attributes: nil, error: nil)
+    }
+    
+    class func printFilesInFolderRecursive(path:NSURL) throws{
+        let filelist = try self.defaultManager().enumeratorAtPath(path.path!)
+        while let element = filelist?.nextObject() as? String {
+            print(element)
         }
     }
 }
 
-//Methods
-func verifyUrl(urlString: String?) ->Bool{
-    //Check for nil
-    if let urlString = urlString{
-        //Create NSURL instance
-        if let url = NSURL(string: urlString){
-            //Check if your application can open the NSURL instance
-            if UIApplication.sharedApplication().canOpenURL(url){
-                return true
-            } else { return false }
-        }else { return false }
-    } else { return false }
+func delay(delay:Double, closure:()->()) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,Int64(delay * Double(NSEC_PER_SEC))),dispatch_get_main_queue(), closure)
 }
 
-//Static Class
-class File {
-    class func open (path: String, utf8: NSStringEncoding = NSUTF8StringEncoding) -> String? {
-        var error: NSError?
-        return NSFileManager().fileExistsAtPath(path) ? String(contentsOfFile: path, encoding: utf8, error: &error)! : nil
-    }
-    class func save (path: String, _ content: String, utf8: NSStringEncoding = NSUTF8StringEncoding) -> Bool {
-        var error: NSError?
-        return content.writeToFile(path, atomically: true, encoding: utf8, error: &error)
+extension UIColor {
+    class func getFitPatternBackgroungImage(nameImage:String, container:UIView) -> UIColor{
+        UIGraphicsBeginImageContext(container.frame.size)
+        UIImage(named: nameImage)!.drawInRect(container.bounds)
+        let imagePatternFit = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return self.init(patternImage: imagePatternFit)
     }
 }
+
+/*
+func returnBackNavigationControllerByIdentifier(storyboard:UIStoryboard, navigationController:UINavigationController, identifier:String, animate:Bool) {
+    
+    //creiamo un Bool che ci servirà più avanti
+    var ceNonCe = false
+    
+    //lanciamo un ciclo for dentro all'array viewControllers che contiene tutti i controller caricati nella barra di navigazione
+    for controller in navigationController.viewControllers {
+        
+        //verifichiamo che il ciclo sia arrivato al controller a cuo vogliamo tornare
+        if controller is SecondoController {
+            //una volta trovato usaimo il metodo per tornare ad uno specifico controller
+            navigationController.popToViewController(controller, animated: true)
+            
+            //mettiamo il boolano su true perchè abbiamo trovato il controller che ci interessava e ci siamo già tornati
+            ceNonCe = true
+            break
+        }
+    }
+    
+    //nel caso in cui il ciclo for vada a vuoto (ovvero non abbiamo trovato il controller che ci interessava)
+    //il boolenano rimase su false e se lo è...
+    if ceNonCe == false {
+        print("non in memoria")
+        //carichiamo a mano il controller in memoria (chiamiamo in causa lo storyboard che lo farà per noi)
+        //NOTA: per poterlo fare il controller in questione è stato "nominato" (Controller2 in questo esempio)
+        //per nominare un controller bisigna selezionarlo (nello storyboard), aprire l'Identity Inspector (la carta di identità), e scrivere un nome nel campo Storyboard ID
+        if let secondoController = storyboard!.instantiateViewControllerWithIdentifier("Controller2") as? SecondoController {
+            //adesso che è carico in memoria lo apriamo con l'apposito metodo
+            navigationController!.pushViewController(secondoController, animated: true)
+        }
+    }
+    
+}
+*/

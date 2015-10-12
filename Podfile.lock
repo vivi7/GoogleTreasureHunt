@@ -1,0 +1,13 @@
+PODS:
+  - MBProgressHUD (0.9.1)
+  - QRCodeReader.swift (5.1.0)
+
+DEPENDENCIES:
+  - MBProgressHUD (~> 0.9.1)
+  - QRCodeReader.swift (~> 5.1.0)
+
+SPEC CHECKSUMS:
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  QRCodeReader.swift: 69e4b105f0e4ff22a8f83e755cb7ae74994c0af5
+
+COCOAPODS: 0.38.2

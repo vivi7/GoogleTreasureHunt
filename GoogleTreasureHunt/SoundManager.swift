@@ -10,7 +10,7 @@ import Foundation
 
 class SoundManager  {
     var foundItAll:Int = 0;
-    var repeat:Int = 1;
+    var repeater:Int = 1;
     var rejected:Int = 2;
     var foundIt:Int = 3;
     var fanfare:Int = 4;

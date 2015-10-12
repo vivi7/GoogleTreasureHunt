@@ -15,11 +15,18 @@ let QUESTION_STATE_KEY:String = "QUESTION_STATE_KEY"
 let FINISH_TIME_KEY:String = "FINISH_TIME_KEY"
 let HAS_SEEN_INTRO_KEY: String = "HAS_SEEN_INTRO_KEY";
 
+let SOUND_COIN = "coin"
+let SOUND_REPEAT = "repeat"
+let SOUND_FOUNDITALL = "founditall"
+let SOUND_FANFARE = "fanfare"
+let SOUND_REJECTED = "rejected"
+
 let WRONG_CLUE:String = "WRONG CLUE"
 let ACK:String = "TAG FOUND"
 let CLUE_COMPLETE:String = "CLUE COMPLETE"
 let ALREADY_FOUND:String = "ALREADY FOUND"
 let DECOY:String = "DECOY"
+
 // The actual text for the DECOY clue.
 let DECOY_ID:String = "decoy"
 
@@ -87,7 +94,7 @@ class Hunt : NSObject, NSCoding{
         
         if let cluesArray = json["clues"].array {
             for(var i = 0; i < cluesArray.count; i++){
-                var clue: Clue = Clue()
+                let clue: Clue = Clue()
                 clue.id = cluesArray[i]["id"].string
                 clue.type = cluesArray[i]["type"].string
                 clue.shufflegroup = cluesArray[i]["shufflegroup"].int
@@ -96,8 +103,8 @@ class Hunt : NSObject, NSCoding{
                 clue.displayImage = cluesArray[i]["displayImage"].string
                 if let tagsArray = cluesArray[i]["tags"].array {
                     for(var t = 0; t < tagsArray.count; t++){
-                        var tagId = tagsArray[t]["id"].string!
-                        var ahTag: AHTag = AHTag(idPassed: tagId, clueIdPassed: clue.id)
+                        let tagId = tagsArray[t]["id"].string!
+                        let ahTag: AHTag = AHTag(idPassed: tagId, clueIdPassed: clue.id)
                         clue.tags.append(ahTag)
                         
                         tagsFound.updateValue(false, forKey: tagId)
@@ -107,7 +114,7 @@ class Hunt : NSObject, NSCoding{
                 clue.question = TriviaQuestion(myQuestion: cluesArray[i]["question"]["question"].string!)
                 clue.question?.bitmapID = cluesArray[i]["question"]["bitmap"].string
                     
-                var answersArray = cluesArray[i]["question"]["answers"].array
+                let answersArray = cluesArray[i]["question"]["answers"].array
                 if answersArray != nil && !answersArray!.isEmpty{
                     for answear in answersArray! {
                         clue.question?.answers.append(answear.string!)
@@ -143,7 +150,7 @@ class Hunt : NSObject, NSCoding{
         
         //Divide Clues for shufflegroup
         for var i:Int = 0; i < clues.count; i++ {
-            var clueIter:Clue = clues[i]
+            let clueIter:Clue = clues[i]
             if (clueIter.shufflegroup != firstClue.shufflegroup &&
                 clueIter.shufflegroup != lastClue.shufflegroup) {
                 cluesToShuffle.append(clueIter)
@@ -427,7 +434,7 @@ class Hunt : NSObject, NSCoding{
     
     //go to question
     func readyForAnswers() -> Bool{
-        var currentClue = getThisCLue()
+        getThisCLue()
         if tagsRemain() == 0  && isThereQuestionToAnswer() == true{
             return true
         }
@@ -482,7 +489,7 @@ class Hunt : NSObject, NSCoding{
     
     func tagsRemain() -> Int{ //0,1,2
         var tagsRemain = 0
-        var currentClue = getThisCLue()
+        let currentClue = getThisCLue()
         if currentClue != nil{
             for tag :AHTag in currentClue!.tags {
                 if (tagIsFound(tag.id) == false) {
@@ -495,7 +502,7 @@ class Hunt : NSObject, NSCoding{
     
     func isThereQuestionToAnswer() -> Bool{
         var isThereQuestion = false
-        var clue = getThisCLue()
+        let clue = getThisCLue()
         if clue != nil && clue!.question != nil && !clue!.question!.answers.isEmpty && questions[clue!.id] == ANSWARE_UNDONE{
             isThereQuestion = true
         }
@@ -503,9 +510,9 @@ class Hunt : NSObject, NSCoding{
     }
     
     func getThisCLue() -> Clue?{
-        var length:Int = clues.count;
+        let length:Int = clues.count;
         for (var i:Int = 0; i < length; i++) {
-            var clue:Clue = clues[i];
+            let clue:Clue = clues[i];
             
             if (!isClueComplete(clue)) {
                 return clue;
@@ -534,31 +541,31 @@ class Hunt : NSObject, NSCoding{
         return true
     }
     
-    func messageFromTag(tagId:String) -> String{
+    func messageFromTag(tagId:String) -> (String,String){
         if (tagId == DECOY_ID) {
-            return DECOY;
+            return (DECOY, SOUND_REJECTED);
         }
         // See if this tag is part of this clue
-        var clue:Clue = getThisCLue()!;
+        let clue:Clue = getThisCLue()!;
         
         //        var tag:AHTag? = tags[tagId]!;
-        var tag:AHTag? = getClueTagFromId(tagId)
+        let tag:AHTag? = getClueTagFromId(tagId)
         
         if tag == nil {
-            return WRONG_CLUE
+            return (WRONG_CLUE, SOUND_REJECTED)
         }
         
         if (clue.id == tag!.clueId) {
             if (isClueTagFound(tagId)) {
-                return ALREADY_FOUND
+                return (ALREADY_FOUND, SOUND_REPEAT)
             }
             if (isClueComplete(clue)) {
-                return CLUE_COMPLETE;
+                return (CLUE_COMPLETE, SOUND_FOUNDITALL)
             }
             //setTagFound(tag!.id) //si setta dopo
-            return ACK;
+            return (ACK, SOUND_COIN)
         }
-        return WRONG_CLUE;
+        return (WRONG_CLUE, SOUND_REJECTED)
     }
     
     func setTagFound(id:String){
@@ -567,15 +574,15 @@ class Hunt : NSObject, NSCoding{
         DataManager.sharedInstance.loadHunt()
     }
     
-    func answerMessage(answer:Int) -> String{
-        var currentClue = getThisCLue()!
+    func answerMessage(answer:Int) -> (String,Bool){
+        let currentClue = getThisCLue()!
         
         setAnswer(answer)
             
         if currentClue.question!.correctAnswer == answer{
-            return currentClue.question!.rightMessage!
+            return (currentClue.question!.rightMessage!, true)
         }else{
-            return currentClue.question!.wrongMessage!
+            return (currentClue.question!.wrongMessage!, false)
         }
     }
     
@@ -587,9 +594,11 @@ class Hunt : NSObject, NSCoding{
             }
         }
         var num = 0
+        let arrValFromDict = Array(questions.values)
         for (var i:Int = 0; i < cluesWithQuestion.count; i++) {
-            var clue:Clue = cluesWithQuestion[i];
-            var questionDone:Int = questions.values.array[i]
+            let clue:Clue = cluesWithQuestion[i];
+//            let questionDone:Int = questions.values.array[i]
+            let questionDone:Int = arrValFromDict[i]
             if (clue.question?.correctAnswer == questionDone) {
                 num++;
             }
@@ -598,7 +607,7 @@ class Hunt : NSObject, NSCoding{
     }
     
     func setAnswer(answer:Int){
-        var currentClue = getThisCLue()!
+        let currentClue = getThisCLue()!
         DataManager.sharedInstance.hunt!.questions.updateValue(answer, forKey: currentClue.id)
         DataManager.sharedInstance.salvaHunt()
         DataManager.sharedInstance.loadHunt()

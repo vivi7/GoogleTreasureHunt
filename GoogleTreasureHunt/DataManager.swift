@@ -52,8 +52,8 @@ class DataManager: NSObject {
             //printTagsFound()
             //printQuestions()
         } else {
-            HuntResourceManager.sharedInstance.downloadZip()
-/*          
+            downloadHuntZip(true)
+/*
             if !isZipDownloaded() && !isZipUnzipped() && !controlHuntOnline{
                 HuntResourceManager.sharedInstance.downloadZip()
             } else if isZipDownloaded() && !isZipUnzipped(){
@@ -63,6 +63,20 @@ class DataManager: NSObject {
             }
 */
         }
+    }
+    
+    func downloadHuntZip(isDispatched:Bool){
+        if Reachability.isConnectedToNetwork() {
+            if isDispatched {
+                HuntResourceManager.sharedInstance.downloadZipDispatched()
+            } else {
+                HuntResourceManager.sharedInstance.downloadZip()
+            }
+        }
+    }
+    
+    func huntIsReady() -> Bool{
+        return HuntResourceManager.sharedInstance.huntIsReady
     }
     
     func isZipDownloaded() -> Bool{
@@ -102,17 +116,21 @@ class DataManager: NSObject {
     }
     
     func createHunt(){
-        var filePath = docPath! + namePlist
+        let filePath = docPath! + namePlist
         print(filePath)
         if !NSFileManager.defaultManager().fileExistsAtPath(filePath) {
             HuntResourceManager.sharedInstance.createHunt()
         }
     }
     
+    func testHunt(){
+        HuntResourceManager.sharedInstance.testHunt()
+    }
+    
     func printQuestions(){
         for qDic in hunt!.questions{
             print(qDic.0)
-            println(qDic.1)
+            print(qDic.1)
         }
     }
     
@@ -189,9 +207,12 @@ class DataManager: NSObject {
     func deleteHunt(){
 //        zipDownloaded = false
 //        zipDownloading = false
-        deleteInDocumentFolder(namePlist)
-        deleteInDocumentFolder(nameHuntZip)
-        deleteInDocumentFolder(containerFolder)
+        //deleteInDocumentFolder(namePlist)
+        //deleteInDocumentFolder(nameHuntZip)
+        //deleteInDocumentFolder(containerFolder)
+        NSFileManager.deleteFilesInFolder(docPath!)
+        HuntResourceManager.sharedInstance.huntIsReady = false
+        controlHuntOnline = false
     }
     
 //    func getHuntSelected() -> Hunt{
@@ -224,6 +245,6 @@ class DataManager: NSObject {
 }
 
 func myPrintln(toPrint:AnyObject){
-    println()
-    println(toPrint)
+    print("")
+    print(toPrint)
 }

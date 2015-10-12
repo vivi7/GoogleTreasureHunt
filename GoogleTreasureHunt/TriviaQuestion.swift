@@ -31,8 +31,8 @@ class TriviaQuestion : NSObject, NSCoding {
         question = triviaQuestions["question"].string!
         bitmapID = triviaQuestions["bitmap"].string
         
-        var answersString = triviaQuestions["answers"][0].string
-        var answersArray = answersString?.componentsSeparatedByString(",")
+        let answersString = triviaQuestions["answers"][0].string
+        let answersArray = answersString?.componentsSeparatedByString(",")
         
         for answear in answersArray! {
             answers.append(answear)
