@@ -1,13 +1,19 @@
 PODS:
+  - CheckAndXHUD (1.0.0)
+  - GMDColors (1.1.0)
   - MBProgressHUD (0.9.1)
   - QRCodeReader.swift (5.1.0)
 
 DEPENDENCIES:
+  - CheckAndXHUD
+  - GMDColors
   - MBProgressHUD (~> 0.9.1)
   - QRCodeReader.swift (~> 5.1.0)
 
 SPEC CHECKSUMS:
+  CheckAndXHUD: f8c3f24ac3afff752c77a608a97d454a94e40858
+  GMDColors: 847b0502278a0c18436767f843657e2ea03f4785
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   QRCodeReader.swift: 69e4b105f0e4ff22a8f83e755cb7ae74994c0af5
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

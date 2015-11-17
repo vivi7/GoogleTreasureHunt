@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GoogleTreasureHunt.xcodeproj">
+      location = "group:/Users/vivi/Dropbox/WS_CODE/W_S_IOS/GoogleTreasureHunt/GoogleTreasureHunt.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

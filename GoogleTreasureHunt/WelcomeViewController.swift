@@ -8,7 +8,6 @@
 
 import UIKit
 import Foundation
-import MBProgressHUD
 
 class WelcomeViewController: UIViewController {
 
@@ -21,8 +20,8 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.hidden = true
-        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
+        ThemeManager.sharedInstance.applyBackgroundTheme(view)
+        ThemeManager.sharedInstance.applyNavigationBarTheme(self.navigationController?.navigationBar)
         
         controls()
     }
@@ -37,8 +36,7 @@ class WelcomeViewController: UIViewController {
     
     func controls() -> Bool{
         if !DataManager.sharedInstance.huntIsReady(){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.labelText = "Loading Hunt..."
+            ThemeManager.sharedInstance.startProgressHud(self.view)
             if Reachability.isConnectedToNetwork() {
                 
                 let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -52,7 +50,7 @@ class WelcomeViewController: UIViewController {
                     }
                     dispatch_async(dispatch_get_main_queue(), {
                         //<code to update UI elements>
-                        MBProgressHUD.hideHUDForView(self.view, animated: true)
+                        ThemeManager.sharedInstance.stopProgressHud(self.view)
                     })
                 })
                 

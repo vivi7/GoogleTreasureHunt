@@ -11,10 +11,8 @@
 		440146D91AFF6B9100B8E802 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440146D81AFF6B9100B8E802 /* QuestionViewController.swift */; };
 		4444C63E1A90DED0001B9CAC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4444C62B1A90DECF001B9CAC /* Extensions.swift */; };
 		4444C64E1A90E3B4001B9CAC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4444C64D1A90E3B4001B9CAC /* DataManager.swift */; };
-		4454D7011BCAF82C00063B71 /* DoneHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4454D6FF1BCAF82C00063B71 /* DoneHUD.swift */; settings = {ASSET_TAGS = (); }; };
-		4454D7021BCAF82C00063B71 /* DoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4454D7001BCAF82C00063B71 /* DoneView.swift */; settings = {ASSET_TAGS = (); }; };
-		4454D7051BCB2EB700063B71 /* YPMagnifyingGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4454D7031BCB2EB700063B71 /* YPMagnifyingGlass.swift */; settings = {ASSET_TAGS = (); }; };
-		4454D7061BCB2EB700063B71 /* YPMagnifyingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4454D7041BCB2EB700063B71 /* YPMagnifyingView.swift */; settings = {ASSET_TAGS = (); }; };
+		4454D7051BCB2EB700063B71 /* YPMagnifyingGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4454D7031BCB2EB700063B71 /* YPMagnifyingGlass.swift */; };
+		4454D7061BCB2EB700063B71 /* YPMagnifyingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4454D7041BCB2EB700063B71 /* YPMagnifyingView.swift */; };
 		447F13A01B0ACB04000FBD6F /* VictoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447F139F1B0ACB04000FBD6F /* VictoryViewController.swift */; };
 		447F13A21B0B6CCA000FBD6F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447F13A11B0B6CCA000FBD6F /* GameScene.swift */; };
 		447F13B01B0B6D15000FBD6F /* explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 447F13A71B0B6D15000FBD6F /* explode.sks */; };
@@ -52,6 +50,7 @@
 		4482EEB919F944AC0078D8C4 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEAC19F944AC0078D8C4 /* ListViewController.swift */; };
 		4482EEBC19F944AC0078D8C4 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEAF19F944AC0078D8C4 /* SoundManager.swift */; };
 		4482EEBD19F944AC0078D8C4 /* TriviaQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4482EEB019F944AC0078D8C4 /* TriviaQuestion.swift */; };
+		4483FFD91BF8A56F000118B5 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4483FFD81BF8A56F000118B5 /* ThemeManager.swift */; };
 		448683761B811A1D00315ED5 /* hunt.zip in Resources */ = {isa = PBXBuildFile; fileRef = 448683751B811A1D00315ED5 /* hunt.zip */; };
 		44D3198E1A056EA800DB7D6E /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 44D319841A056EA800DB7D6E /* ioapi.c */; };
 		44D3198F1A056EA800DB7D6E /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 44D319861A056EA800DB7D6E /* mztools.c */; };
@@ -68,7 +67,7 @@
 		44DA2A8A1B0CE96A00800D69 /* founditall.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44DA2A871B0CE96A00800D69 /* founditall.mp3 */; };
 		44DA2A9B1B0F701B00800D69 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DA2A9A1B0F701B00800D69 /* WelcomeViewController.swift */; };
 		44DA2A9F1B10BD6600800D69 /* MiddleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DA2A9E1B10BD6600800D69 /* MiddleViewController.swift */; };
-		DFBC5EB8974DCFF002218C0D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F93C7971CD9CB24F9F0D48 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DFBC5EB8974DCFF002218C0D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F93C7971CD9CB24F9F0D48 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,8 +99,6 @@
 		440146D81AFF6B9100B8E802 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		4444C62B1A90DECF001B9CAC /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		4444C64D1A90E3B4001B9CAC /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		4454D6FF1BCAF82C00063B71 /* DoneHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoneHUD.swift; sourceTree = "<group>"; };
-		4454D7001BCAF82C00063B71 /* DoneView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoneView.swift; sourceTree = "<group>"; };
 		4454D7031BCB2EB700063B71 /* YPMagnifyingGlass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YPMagnifyingGlass.swift; sourceTree = "<group>"; };
 		4454D7041BCB2EB700063B71 /* YPMagnifyingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YPMagnifyingView.swift; sourceTree = "<group>"; };
 		445673E019FC6F3100B511B8 /* GoogleTreasureHunt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoogleTreasureHunt-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -136,7 +133,7 @@
 		4482EE8919F943D60078D8C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4482EE8B19F943D60078D8C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4482EE8E19F943D60078D8C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		4482EE9419F943D60078D8C4 /* GoogleTreasureHuntTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleTreasureHuntTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4482EE9419F943D60078D8C4 /* GoogleTreasureHunt.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoogleTreasureHunt.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4482EE9919F943D60078D8C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4482EE9A19F943D60078D8C4 /* GoogleTreasureHuntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTreasureHuntTests.swift; sourceTree = "<group>"; };
 		4482EEA519F944AC0078D8C4 /* AHTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AHTag.swift; sourceTree = "<group>"; };
@@ -146,6 +143,7 @@
 		4482EEAC19F944AC0078D8C4 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		4482EEAF19F944AC0078D8C4 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		4482EEB019F944AC0078D8C4 /* TriviaQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriviaQuestion.swift; sourceTree = "<group>"; };
+		4483FFD81BF8A56F000118B5 /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		448683751B811A1D00315ED5 /* hunt.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = hunt.zip; sourceTree = "<group>"; };
 		44D319831A056EA800DB7D6E /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		44D319841A056EA800DB7D6E /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
@@ -206,15 +204,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4454D7071BCB2EC100063B71 /* DoneHUD */ = {
-			isa = PBXGroup;
-			children = (
-				4454D6FF1BCAF82C00063B71 /* DoneHUD.swift */,
-				4454D7001BCAF82C00063B71 /* DoneView.swift */,
-			);
-			name = DoneHUD;
-			sourceTree = "<group>";
-		};
 		4454D7081BCB2EE500063B71 /* YPMagnifyingGlass */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,7 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				448683771B84839900315ED5 /* Frameworks */,
-				4482EE7E19F943D60078D8C4 /* GoogleTreasureHunt */,
+				4482EE7E19F943D60078D8C4 /* TreasureHunt */,
 				4482EE9719F943D60078D8C4 /* GoogleTreasureHuntTests */,
 				4482EE7D19F943D60078D8C4 /* Products */,
 				D308537E46D26499940FE522 /* Pods */,
@@ -262,12 +251,12 @@
 			isa = PBXGroup;
 			children = (
 				4482EE7C19F943D60078D8C4 /* GoogleTreasureHunt.app */,
-				4482EE9419F943D60078D8C4 /* GoogleTreasureHuntTests.xctest */,
+				4482EE9419F943D60078D8C4 /* GoogleTreasureHunt.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4482EE7E19F943D60078D8C4 /* GoogleTreasureHunt */ = {
+		4482EE7E19F943D60078D8C4 /* TreasureHunt */ = {
 			isa = PBXGroup;
 			children = (
 				44D319811A056EA800DB7D6E /* SSZipArchive */,
@@ -276,7 +265,6 @@
 				4482EEBF19F944CD0078D8C4 /* Bean */,
 				4482EEC019F944E30078D8C4 /* Controller */,
 				447F13A31B0B6CD0000FBD6F /* GameScene */,
-				4454D7071BCB2EC100063B71 /* DoneHUD */,
 				4454D7081BCB2EE500063B71 /* YPMagnifyingGlass */,
 				44DA2A8B1B0CEB1A00800D69 /* Graphic */,
 				44D9A5561AE94579005B58AD /* ThirthLib */,
@@ -284,6 +272,7 @@
 				4482EE8319F943D60078D8C4 /* GoogleTreasureHunt.xcdatamodeld */,
 				4482EE7F19F943D60078D8C4 /* Supporting Files */,
 			);
+			name = TreasureHunt;
 			path = GoogleTreasureHunt;
 			sourceTree = "<group>";
 		};
@@ -324,6 +313,7 @@
 				4482EEA919F944AC0078D8C4 /* HuntResourceManager.swift */,
 				4444C64D1A90E3B4001B9CAC /* DataManager.swift */,
 				4482EEAF19F944AC0078D8C4 /* SoundManager.swift */,
+				4483FFD81BF8A56F000118B5 /* ThemeManager.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -479,7 +469,7 @@
 			);
 			name = GoogleTreasureHuntTests;
 			productName = GoogleTreasureHuntTests;
-			productReference = 4482EE9419F943D60078D8C4 /* GoogleTreasureHuntTests.xctest */;
+			productReference = 4482EE9419F943D60078D8C4 /* GoogleTreasureHunt.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -655,7 +645,6 @@
 				440146D41AFBA98D00B8E802 /* ClueViewController.swift in Sources */,
 				44D319911A056EA800DB7D6E /* zip.c in Sources */,
 				44D319921A056EA800DB7D6E /* SSZipArchive.m in Sources */,
-				4454D7021BCAF82C00063B71 /* DoneView.swift in Sources */,
 				4454D7051BCB2EB700063B71 /* YPMagnifyingGlass.swift in Sources */,
 				44DA2A9B1B0F701B00800D69 /* WelcomeViewController.swift in Sources */,
 				4482EE8719F943D60078D8C4 /* ViewController.swift in Sources */,
@@ -667,13 +656,13 @@
 				4482EE8219F943D60078D8C4 /* AppDelegate.swift in Sources */,
 				4482EEBD19F944AC0078D8C4 /* TriviaQuestion.swift in Sources */,
 				4482EEB519F944AC0078D8C4 /* Hunt.swift in Sources */,
-				4454D7011BCAF82C00063B71 /* DoneHUD.swift in Sources */,
 				44D9A5621AF12A4D005B58AD /* ExtensionV.swift in Sources */,
 				4482EEB319F944AC0078D8C4 /* Clue.swift in Sources */,
 				44D3198E1A056EA800DB7D6E /* ioapi.c in Sources */,
 				447F13B61B0B6D15000FBD6F /* Helper.swift in Sources */,
 				44D319901A056EA800DB7D6E /* unzip.c in Sources */,
 				440146D91AFF6B9100B8E802 /* QuestionViewController.swift in Sources */,
+				4483FFD91BF8A56F000118B5 /* ThemeManager.swift in Sources */,
 				4482EEB619F944AC0078D8C4 /* HuntResourceManager.swift in Sources */,
 				447F13A21B0B6CCA000FBD6F /* GameScene.swift in Sources */,
 				4454D7061BCB2EB700063B71 /* YPMagnifyingView.swift in Sources */,
@@ -823,7 +812,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleTreasureHunt/SSZipArchive",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GoogleTreasureHunt;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GoogleTreasureHunt/GoogleTreasureHunt-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Ounchecked";
@@ -853,7 +842,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleTreasureHunt/SSZipArchive",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GoogleTreasureHunt;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "GoogleTreasureHunt/GoogleTreasureHunt-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Ounchecked";
@@ -875,7 +864,7 @@
 				);
 				INFOPLIST_FILE = GoogleTreasureHuntTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GoogleTreasureHunt;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GoogleTreasureHunt.app/GoogleTreasureHunt";
 			};
 			name = Debug;
@@ -890,7 +879,7 @@
 				);
 				INFOPLIST_FILE = GoogleTreasureHuntTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GoogleTreasureHunt;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GoogleTreasureHunt.app/GoogleTreasureHunt";
 			};
 			name = Release;

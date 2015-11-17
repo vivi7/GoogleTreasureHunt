@@ -4,35 +4,65 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>CheckAndXHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>GMDColors.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>QRCodeReader.swift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>17EF7B9D19FDE849C520DC0C8EF5F0C6</key>
+		<key>1BDCD69D3EA7A0EAC7E8A37D9B8ECD39</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>28D2125AE4BCEE3B2392F16126F32130</key>
+		<key>6E132AEEDA4BFDB98E26CB94C0553648</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5CA0C30C5EF464DD0B0DF1E2CF381A4A</key>
+		<key>B65C4207C02E7FE8981FAD4E6E614155</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CD27AD3E98FFF372F7D670259CEF86A5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
 		<dict>
 			<key>primary</key>
 			<true/>

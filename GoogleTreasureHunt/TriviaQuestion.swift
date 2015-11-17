@@ -19,12 +19,9 @@ class TriviaQuestion : NSObject, NSCoding {
     var rightMessage: String?
     var wrongMessage: String?
     
-    //var doneAnswer: Int!
-    
     init(myQuestion: String){
         question = myQuestion
         correctAnswer = -1
-        //doneAnswer = ANSWARE_UNDONE
     }
     
     init(triviaQuestions: JSON) {
@@ -49,7 +46,6 @@ class TriviaQuestion : NSObject, NSCoding {
         self.correctAnswer = aDecoder.decodeObjectForKey("kcorrectAnswer") as! Int
         self.rightMessage = aDecoder.decodeObjectForKey("krightMessage") as? String
         self.wrongMessage = aDecoder.decodeObjectForKey("kwrongMessage") as? String
-        //self.doneAnswer = aDecoder.decodeObjectForKey("kdoneAnswer") as! Int
     }
     
     func encodeWithCoder(encoder: NSCoder) {
@@ -59,7 +55,6 @@ class TriviaQuestion : NSObject, NSCoding {
         encoder.encodeObject(self.correctAnswer, forKey: "kcorrectAnswer")
         encoder.encodeObject(self.rightMessage, forKey: "krightMessage")
         encoder.encodeObject(self.wrongMessage, forKey: "kwrongMessage")
-        //encoder.encodeObject(self.doneAnswer, forKey: "kdoneAnswer")
     }
 
 }

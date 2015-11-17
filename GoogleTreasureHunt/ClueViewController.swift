@@ -33,8 +33,8 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate /
     
     @IBOutlet var gifImageViewSx: UIImageView!
     var imageListSx : [UIImage] = []
-    @IBOutlet var gifImageViewDx: UIImageView!
-    var imageListDx : [UIImage] = []
+    //@IBOutlet var gifImageViewDx: UIImageView!
+    //var imageListDx : [UIImage] = []
     
     var hunt : Hunt!
     
@@ -52,21 +52,14 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate /
         super.viewDidLoad()
         self.title = "Treasure Hunt"
         
-        self.navigationController?.navigationBar.hidden = true
-        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
-        
-        let imageView = UIImageView(frame: self.view.frame)
-        imageView.image = UIImage(named: "material_trim")!
-        self.view.addSubview(imageView)
+        ThemeManager.sharedInstance.applyBackgroundTheme(view)
+        ThemeManager.sharedInstance.applyNavigationBarTheme(self.navigationController?.navigationBar)
+        //ThemeManager.sharedInstance.applyBackgroundTrimTheme(view)
         
         DataManager.sharedInstance.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: DataManager.sharedInstance, selector: Selector("countSec"), userInfo: nil, repeats: true)
+        
         animateGifSx()
-        animateGifDx()
-/*
-        let floatingActionButton = LiquidFloatingActionButton(frame: floatingFrame)
-        floatingActionButton.dataSource = self
-        floatingActionButton.delegate = self
-*/
+
         let mag = YPMagnifyingGlass(frame:CGRectMake(clueYPMagnifyingView.frame.origin.x, clueYPMagnifyingView.frame.origin.y,100,100))
         mag.scale = 2
         clueYPMagnifyingView.magnifyingGlass = mag
@@ -100,9 +93,7 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate /
                     self.circle2.removeFromSuperview()
                 }
             }
-            //l'immagine si deve caricare dopo il controllo della verifica della vittoria
             clueYPMagnifyingView.backgroundColor = UIColor.getFitPatternBackgroungImage(HuntResourceManager.sharedInstance.getNameClueImage(currentClue!.displayImage), container: clueYPMagnifyingView)
-            //clueImage.image = UIImage(named:HuntResourceManager.sharedInstance.getNameClueImage(currentClue!.displayImage))
             goToNext()
         } else{
             goToFinish()
@@ -209,12 +200,6 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate /
             //navigationController?.pushViewController(vc, animated: true)
         }
     }
-
-//    func goToNextVcSide(storyboardID:String){
-//        var vc = self.storyboard!.instantiateViewControllerWithIdentifier("SideBaseController") as! SideBaseController
-//        vc.storyboardID = storyboardID
-//        self.showViewController(vc, sender: "")
-//    }
     
     // MARK: - QRCodeReader Delegate Methods
     
@@ -243,7 +228,7 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate /
     }
     
     //MARK: - Animation
-    let pixelsTranslate : CGFloat = 525
+    let pixelsTranslate : CGFloat = 8
     func animateGifSx(){
         for i in 1...4{
             let imageName = "gifanimocchi\(i)"
@@ -252,52 +237,26 @@ class ClueViewController: UIViewController, QRCodeReaderViewControllerDelegate /
         gifImageViewSx.animationImages = imageListSx
         gifImageViewSx.animationDuration = NSTimeInterval(0.8)
         gifImageViewSx.startAnimating()
-        androidUnHideSx()
+        dondolaSuAnimation()
     }
-    func androidUnHideSx(){
+    func dondolaSuAnimation(){
         UIView.animateWithDuration(1.5, animations: { () -> Void in
-            self.gifImageViewSx.frame.origin.x -= self.pixelsTranslate
+            self.gifImageViewSx.frame.origin.y -= self.pixelsTranslate
             }, completion: { (Bool) -> Void in
-                self.androidHideSx()
+                self.dondolaGiuAnimation()
         })
     }
-    func androidHideSx(){
+    func dondolaGiuAnimation(){
         UIView.animateWithDuration(1.5, animations: { () -> Void in
-            self.gifImageViewSx.frame.origin.x += self.pixelsTranslate
+            self.gifImageViewSx.frame.origin.y += self.pixelsTranslate
             }, completion: { (Bool) -> Void in
-                self.androidUnHideSx()
+                self.dondolaSuAnimation()
         })
     }
-    
-    func animateGifDx(){
-        for i in 1...4{
-            let imageName = "gifanimocchi\(i)"
-            imageListDx.append(UIImage(named: imageName)!)
-        }
-        gifImageViewDx.animationImages = imageListDx
-        gifImageViewDx.animationDuration = NSTimeInterval(0.8)
-        gifImageViewDx.startAnimating()
-        androidUnHideDx()
-    }
-    func androidUnHideDx(){
-        UIView.animateWithDuration(1.5, animations: { () -> Void in
-            self.gifImageViewDx.frame.origin.x += self.pixelsTranslate
-            }, completion: { (Bool) -> Void in
-                self.androidHideDx()
-        })
-    }
-    func androidHideDx(){
-        UIView.animateWithDuration(1.5, animations: { () -> Void in
-            self.gifImageViewDx.frame.origin.x -= self.pixelsTranslate
-            }, completion: { (Bool) -> Void in
-                self.androidUnHideDx()
-        })
-    }
-    
     
     //MARK: - Message
     func showMessage(){
-        DoneHUD.showInView(self.view, message: self.message, isDone: (self.message == ACK))
+        ThemeManager.sharedInstance.showMessage(self.view, message: self.message, isDone: (self.message == ACK))
     }
     
     //MARK: - LiquidFloatingActionButton 

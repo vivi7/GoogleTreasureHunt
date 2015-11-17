@@ -10,23 +10,7 @@ pod 'QRCodeReader.swift', '~> 5.1.0'
 #import MBProgressHUD
 pod 'MBProgressHUD', '~> 0.9.1'
 
-#import LiquidFloatingActionButton
-#pod 'LiquidFloatingActionButton'
+pod 'CheckAndXHUD'
 
-#import Google_Material_Design_Icons_Swift
-#pod 'Google-Material-Design-Icons-Swift', '~> 1.0.1'
+pod 'GMDColors'
 
-#import DOPageControl
-#pod 'DOPageControl'
-
-#import Presentation
-#pod 'Presentation'
-
-#import AlamofireJsonToObjects
-#pod 'AlamofireJsonToObjects', '~> 1.0'
-
-#import EVReflection
-#pod "EVReflection", '~> 2.6'
-
-#import BFKit
-#pod 'BFKit-Swift'

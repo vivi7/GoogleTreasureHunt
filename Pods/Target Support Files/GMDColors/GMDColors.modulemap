@@ -1,0 +1,6 @@
+framework module GMDColors {
+  umbrella header "GMDColors-umbrella.h"
+
+  export *
+  module * { export * }
+}

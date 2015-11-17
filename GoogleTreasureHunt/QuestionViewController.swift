@@ -30,19 +30,15 @@ class QuestionViewController: UIViewController {
         super.viewDidLoad()
         self.title = "Question"
         
-        self.navigationController?.navigationBar.hidden = true
-        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
-        
-        let imageView = UIImageView(frame: self.view.frame)
-        imageView.image = UIImage(named: "material_trim")!
-        self.view.addSubview(imageView)
+        ThemeManager.sharedInstance.applyBackgroundTheme(view)
+        ThemeManager.sharedInstance.applyNavigationBarTheme(self.navigationController?.navigationBar)
+        //ThemeManager.sharedInstance.applyBackgroundTrimTheme(view)
         
         DataManager.sharedInstance.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: DataManager.sharedInstance, selector: Selector("countSec"), userInfo: nil, repeats: true)
         
         currentClue = hunt.getThisCLue()!
         
-        questionLabel.backgroundColor = UIColor.clearColor() //UIColor(patternImage: UIImage(named: "questionBorder")!)
-        
+        questionLabel.backgroundColor = UIColor.clearColor()
         questionLabel.text = currentClue.question?.question
         answer0Button.setTitle(currentClue.question?.answers[0], forState: UIControlState.Normal)
         answer1Button.setTitle(currentClue.question?.answers[1], forState: UIControlState.Normal)

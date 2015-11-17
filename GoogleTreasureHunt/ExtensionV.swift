@@ -248,4 +248,19 @@ func returnBackNavigationControllerByIdentifier(storyboard:UIStoryboard, navigat
     }
     
 }
+
+extension Dictionary {
+init(_ pairs: [Element]) {
+self.init()
+for (k, v) in pairs {
+self[k] = v
+}
+}
+
+func map<K: Hashable, V>(transform: Element -> (K, V)) -> [K: V] {
+return Dictionary<K, V>(Swift.map(self, transform))
+}
+}
+
+let mapped = dict.map { (key, value) in (key, value.rawValue) }
 */

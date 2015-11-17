@@ -35,7 +35,7 @@ class VictoryViewController: UIViewController {
     
     @IBOutlet var answersLabel: UILabel!
     @IBOutlet var finishTimeLabel: UILabel!
-    @IBOutlet var androidVictoryImageView: UIImageView!
+    @IBOutlet var victoryImageView: UIImageView!
     var imageList : [UIImage] = []
     
     var ding:AVAudioPlayer = AVAudioPlayer()
@@ -44,8 +44,9 @@ class VictoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.hidden = true
-        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
+        ThemeManager.sharedInstance.applyBackgroundTheme(view)
+        ThemeManager.sharedInstance.applyNavigationBarTheme(self.navigationController?.navigationBar)
+        ThemeManager.sharedInstance.applyBackgroundTrimTheme(view)
         
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             let skView = self.view as! SKView
@@ -62,20 +63,16 @@ class VictoryViewController: UIViewController {
             skView.presentScene(scene)
         }
         
-        let imageView = UIImageView(frame: self.view.frame)
-        imageView.image = UIImage(named: "material_trim")!
-        self.view.addSubview(imageView)
-        
         DataManager.sharedInstance.stopTimer()
         finishTimeLabel.text = "Finish Time: " + DataManager.sharedInstance.resultTimer()
         answersLabel.text = " Your correct answers: \(DataManager.sharedInstance.hunt!.numAnswersCorrect()) on \(DataManager.sharedInstance.hunt!.questions.count)"
         
-        androidVictoryImageView.image = UIImage(named: "C-mon_win")
+        victoryImageView.image = UIImage(named: "C-mon_win")
         
         prepareAudios()
         ding.play()
         
-        messageRestart()
+        //messageRestart()
     }
     
     func messageRestart(){
@@ -119,6 +116,10 @@ class VictoryViewController: UIViewController {
     
     func reset(){
         DataManager.sharedInstance.deleteHunt()
+        if let vc = storyboard!.instantiateViewControllerWithIdentifier("WelcomeViewController") as? WelcomeViewController {
+            //adesso che è carico in memoria lo apriamo con l'apposito metodo
+            navigationController!.pushViewController(vc, animated: true)
+        }
     }
 /*
     override func supportedInterfaceOrientations() -> Int {

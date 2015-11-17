@@ -13,12 +13,11 @@ class MiddleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.hidden = true
-        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
+        ThemeManager.sharedInstance.applyBackgroundTheme(view)
+        ThemeManager.sharedInstance.applyNavigationBarTheme(self.navigationController?.navigationBar)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }

@@ -22,16 +22,13 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.hidden = true
-        view.backgroundColor = UIColor.getFitPatternBackgroungImage("bg", container: self.view)
+        ThemeManager.sharedInstance.applyBackgroundTheme(view)
+        ThemeManager.sharedInstance.applyNavigationBarTheme(self.navigationController?.navigationBar)
+        //ThemeManager.sharedInstance.applyBackgroundTrimTheme(view)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
 
-        let imageView = UIImageView(frame: self.view.frame)
-        imageView.image = UIImage(named: "material_trim")!
-        self.view.addSubview(imageView)
-        
         clues = hunt!.clues
     }
     
@@ -74,11 +71,6 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
         //self.performSegueWithIdentifier("detailViewControllerSegue", sender: self)
     }
     
-    //override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    //    var detailViewController = segue.destinationViewController as! DetailViewController
-    //    detailViewController.clue = self.clue
-    //}
-    
     @IBAction func backAction(sender: UIButton) {
         goToClueVc()
     }
@@ -88,15 +80,6 @@ class ListViewController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func goToClueVc(){
-        //let vc : ClueViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ClueViewController") as! ClueViewController;
-        //self.showViewController(vc, sender: "")
-        /*print(navigationController!.viewControllers.count)
-        for controller in navigationController!.viewControllers{
-            print(controller)
-        }
-        self.navigationController!.popToRootViewControllerAnimated(true)
-        */
-        //self.dismissViewControllerAnimated(true, completion: nil)
         navigationController?.popViewControllerAnimated(true)
     }
 }

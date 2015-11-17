@@ -19,7 +19,6 @@ class Clue : NSObject, NSCoding {
     var displayImage:String!
     var tags:[AHTag] = []
     var question:TriviaQuestion?
-    //var number:Int!
     
     override init() {
         
@@ -34,7 +33,6 @@ class Clue : NSObject, NSCoding {
         self.displayImage = aDecoder.decodeObjectForKey("kdisplayImage") as! String
         self.tags = aDecoder.decodeObjectForKey("ktags") as! [AHTag]
         self.question = aDecoder.decodeObjectForKey("kquestion") as? TriviaQuestion
-        //self.number = aDecoder.decodeObjectForKey("knumber") as! Int
     }
     
     func encodeWithCoder(encoder: NSCoder) {
@@ -46,36 +44,7 @@ class Clue : NSObject, NSCoding {
         encoder.encodeObject(self.displayImage, forKey: "kdisplayImage")
         encoder.encodeObject(self.tags, forKey: "ktags")
         encoder.encodeObject(self.question, forKey: "kquestion")
-        //encoder.encodeObject(self.number, forKey: "knumber")
     }
-    
-/*
-    init(idPassed:String, displayNamePassed:String, displayTextPassed:String, displayImagePassed:String, shufflegroupPassed:Int, numberPassed:Int) {
-        
-        id = idPassed
-        shufflegroup = shufflegroupPassed
-        displayName = displayNamePassed
-        displayText = displayTextPassed
-        displayImage = displayImagePassed
-    
-        tags = Array<AHTag>()
-        number = numberPassed
-    }
-*/
-    
-//    func getCluesFound(hunt:Hunt) -> Int {
-//        var count:Int = 0;
-//        for tag:AHTag in tags {
-//            if (hunt.isTagFound(tag.id)) {
-//                count++;
-//            }
-//        }
-//        return count;
-//    }
-    
-//    func getStatus(hunt:Hunt) -> NSString {
-//        return "\(getCluesFound(hunt)) / \(tags.count)";
-//    }
     
     func addTag(tag:AHTag) {
         tags.append(tag);

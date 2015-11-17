@@ -1,0 +1,6 @@
+framework module CheckAndXHUD {
+  umbrella header "CheckAndXHUD-umbrella.h"
+
+  export *
+  module * { export * }
+}

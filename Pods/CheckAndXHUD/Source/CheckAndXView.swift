@@ -1,14 +1,14 @@
 //
-//  DoneView.swift
-//  DoneAnimation
+//  CheckAndXView.swift
+//  CheckAndXHUD
 //
-//  Created by Ryuta Kibe on 2015/08/22.
-//  Copyright (c) 2015 blk. All rights reserved.
+//  Created by Vincenzo Favara on 14/10/15.
+//  Copyright © 2015 Vincenzo Favara. All rights reserved.
 //
 
 import UIKit
 
-public class DoneView: UIView {
+public class CheckAndXView: UIView {
 
     // MARK: - private variables
     
@@ -62,7 +62,7 @@ public class DoneView: UIView {
         self.isDone = isDone
     }
     
-    public func drawCheckX(completion: (() -> Void)?) {
+    public func drawCheck(completion: (() -> Void)?) {
         let canvasFrame = CGRectMake(
             self.frame.width / 4,
             message == nil ? self.frame.height / 3 : self.frame.height / 5 * 2,

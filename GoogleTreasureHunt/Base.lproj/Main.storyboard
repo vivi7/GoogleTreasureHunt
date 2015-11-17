@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hZo-oJ-9jM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hZo-oJ-9jM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -27,7 +27,7 @@
         <!--Welcome View Controller-->
         <scene sceneID="dtL-FP-7xq">
             <objects>
-                <viewController storyboardIdentifier="WelcomeViewController" id="hBD-Yz-cuc" customClass="WelcomeViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeViewController" id="hBD-Yz-cuc" customClass="WelcomeViewController" customModule="TreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kDS-AQ-RQe"/>
                         <viewControllerLayoutGuide type="bottom" id="IcX-dT-nZg"/>
@@ -190,7 +190,7 @@
         <!--View Controller-->
         <scene sceneID="nfA-AS-inu">
             <objects>
-                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ayQ-vz-qEG" customClass="ViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ayQ-vz-qEG" customClass="ViewController" customModule="TreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GiN-mx-0fE"/>
                         <viewControllerLayoutGuide type="bottom" id="vQJ-8A-yw3"/>
@@ -360,7 +360,7 @@
         <!--Question View Controller-->
         <scene sceneID="ECj-OU-cJ7">
             <objects>
-                <viewController storyboardIdentifier="QuestionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tHr-ze-Lce" customClass="QuestionViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QuestionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tHr-ze-Lce" customClass="QuestionViewController" customModule="TreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MeR-qb-cIc"/>
                         <viewControllerLayoutGuide type="bottom" id="TZb-OH-XRa"/>
@@ -580,7 +580,7 @@
         <!--List View Controller-->
         <scene sceneID="67d-37-AXY">
             <objects>
-                <viewController storyboardIdentifier="ListViewController" id="0Pw-Zg-fvI" customClass="ListViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ListViewController" id="0Pw-Zg-fvI" customClass="ListViewController" customModule="TreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XCk-Bu-P8q"/>
                         <viewControllerLayoutGuide type="bottom" id="obR-Gf-V7w"/>
@@ -755,7 +755,7 @@
         <!--Middle View Controller-->
         <scene sceneID="pUh-Uh-hvQ">
             <objects>
-                <viewController id="1uB-1F-Qqm" customClass="MiddleViewController" customModule="GoogleTreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1uB-1F-Qqm" customClass="MiddleViewController" customModule="TreasureHunt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qOS-gW-3FB"/>
                         <viewControllerLayoutGuide type="bottom" id="uye-Ea-w4j"/>
@@ -1041,7 +1041,7 @@ Scan the two tags you find next to it.</string>
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mpu-MC-ypS" customClass="YPMagnifyingView" customModule="GoogleTreasureHunt" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mpu-MC-ypS" customClass="YPMagnifyingView" customModule="TreasureHunt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="0.099567819148936171" colorSpace="calibratedWhite"/>
@@ -1085,33 +1085,6 @@ Scan the two tags you find next to it.</string>
                                     <segue destination="0Pw-Zg-fvI" kind="show" identifier="goToListSegue" id="qjp-gs-gUj"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yQA-1q-L6q">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <animations/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="-198" y="585" width="240" height="234"/>
-                                </variation>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fcd-XO-Y0u">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="234" id="Qxg-TW-eKh"/>
-                                    <constraint firstAttribute="width" constant="240" id="cpJ-B2-FJW"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Qxg-TW-eKh"/>
-                                        <exclude reference="cpJ-B2-FJW"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="Qxg-TW-eKh"/>
-                                        <include reference="cpJ-B2-FJW"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clue # of #" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cyh-uz-ZBc">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <animations/>
@@ -1135,19 +1108,37 @@ Scan the two tags you find next to it.</string>
                                     </mask>
                                 </variation>
                             </label>
+                            <imageView userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gifanimocchi1" translatesAutoresizingMaskIntoConstraints="NO" id="Fcd-XO-Y0u">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="128" id="F27-ET-NxR"/>
+                                    <constraint firstAttribute="height" constant="128" id="R7t-QN-nkn"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="F27-ET-NxR"/>
+                                        <exclude reference="R7t-QN-nkn"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="F27-ET-NxR"/>
+                                        <include reference="R7t-QN-nkn"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Fcd-XO-Y0u" secondAttribute="bottom" id="0KF-pv-Wwj">
-                                <variation key="widthClass=compact" constant="-38"/>
-                            </constraint>
                             <constraint firstItem="Mpu-MC-ypS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4Bo-Ow-oZT"/>
                             <constraint firstItem="oj8-bA-Rz3" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="6g4-eS-0Xh">
                                 <variation key="widthClass=compact" constant="191"/>
                             </constraint>
                             <constraint firstItem="Mpu-MC-ypS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="798-zb-8Fw"/>
+                            <constraint firstItem="Fcd-XO-Y0u" firstAttribute="top" secondItem="oj8-bA-Rz3" secondAttribute="bottom" constant="8" id="7o1-Zd-59C"/>
                             <constraint firstItem="KOL-aE-fym" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9wd-cE-oWM">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
@@ -1162,6 +1153,7 @@ Scan the two tags you find next to it.</string>
                             <constraint firstItem="KOL-aE-fym" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="cDM-rn-6vO">
                                 <variation key="widthClass=compact" constant="-20"/>
                             </constraint>
+                            <constraint firstItem="Fcd-XO-Y0u" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eLc-Ni-ZaX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Mpu-MC-ypS" secondAttribute="trailing" constant="-20" id="eTz-fw-FJZ"/>
                             <constraint firstItem="Cyh-uz-ZBc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kXT-LU-9QI"/>
                             <constraint firstItem="Cyh-uz-ZBc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="6" id="n8j-jf-wUw"/>
@@ -1169,7 +1161,6 @@ Scan the two tags you find next to it.</string>
                             <constraint firstItem="KOL-aE-fym" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="oLk-am-W64">
                                 <variation key="widthClass=compact" constant="129"/>
                             </constraint>
-                            <constraint firstItem="Fcd-XO-Y0u" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="ogA-Ah-nqS"/>
                             <constraint firstItem="KOL-aE-fym" firstAttribute="top" secondItem="Bd4-Nv-5JM" secondAttribute="bottom" constant="28" id="rJc-pg-Q6c">
                                 <variation key="widthClass=compact" constant="8"/>
                             </constraint>
@@ -1187,32 +1178,31 @@ Scan the two tags you find next to it.</string>
                                 <exclude reference="oj8-bA-Rz3"/>
                                 <exclude reference="Mpu-MC-ypS"/>
                                 <exclude reference="xdX-lh-83W"/>
-                                <exclude reference="yQA-1q-L6q"/>
-                                <exclude reference="Fcd-XO-Y0u"/>
                                 <exclude reference="Cyh-uz-ZBc"/>
+                                <exclude reference="Fcd-XO-Y0u"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="kXT-LU-9QI"/>
                                 <exclude reference="n8j-jf-wUw"/>
-                                <exclude reference="4Bo-Ow-oZT"/>
-                                <exclude reference="798-zb-8Fw"/>
-                                <exclude reference="eTz-fw-FJZ"/>
-                                <exclude reference="nHg-y9-hBl"/>
-                                <exclude reference="UBl-hR-haM"/>
-                                <exclude reference="uXw-XO-ZPV"/>
-                                <exclude reference="zuD-cn-6na"/>
-                                <exclude reference="SOW-uV-Mg6"/>
-                                <exclude reference="wTu-N6-5IG"/>
-                                <exclude reference="ogA-Ah-nqS"/>
                                 <exclude reference="9wd-cE-oWM"/>
                                 <exclude reference="cDM-rn-6vO"/>
                                 <exclude reference="oLk-am-W64"/>
                                 <exclude reference="rJc-pg-Q6c"/>
                                 <exclude reference="vhS-xM-deK"/>
+                                <exclude reference="SOW-uV-Mg6"/>
+                                <exclude reference="wTu-N6-5IG"/>
+                                <exclude reference="UBl-hR-haM"/>
+                                <exclude reference="uXw-XO-ZPV"/>
+                                <exclude reference="zuD-cn-6na"/>
+                                <exclude reference="7o1-Zd-59C"/>
+                                <exclude reference="eLc-Ni-ZaX"/>
+                                <exclude reference="4Bo-Ow-oZT"/>
+                                <exclude reference="798-zb-8Fw"/>
+                                <exclude reference="eTz-fw-FJZ"/>
+                                <exclude reference="nHg-y9-hBl"/>
                                 <exclude reference="6g4-eS-0Xh"/>
                                 <exclude reference="Rqx-gg-gA1"/>
                                 <exclude reference="X9s-cJ-cbm"/>
-                                <exclude reference="0KF-pv-Wwj"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1222,32 +1212,31 @@ Scan the two tags you find next to it.</string>
                                 <include reference="oj8-bA-Rz3"/>
                                 <include reference="Mpu-MC-ypS"/>
                                 <include reference="xdX-lh-83W"/>
-                                <include reference="yQA-1q-L6q"/>
-                                <include reference="Fcd-XO-Y0u"/>
                                 <include reference="Cyh-uz-ZBc"/>
+                                <include reference="Fcd-XO-Y0u"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="kXT-LU-9QI"/>
                                 <include reference="n8j-jf-wUw"/>
-                                <include reference="4Bo-Ow-oZT"/>
-                                <include reference="798-zb-8Fw"/>
-                                <include reference="eTz-fw-FJZ"/>
-                                <include reference="nHg-y9-hBl"/>
-                                <include reference="UBl-hR-haM"/>
-                                <include reference="uXw-XO-ZPV"/>
-                                <include reference="zuD-cn-6na"/>
-                                <include reference="SOW-uV-Mg6"/>
-                                <include reference="wTu-N6-5IG"/>
-                                <include reference="ogA-Ah-nqS"/>
                                 <include reference="9wd-cE-oWM"/>
                                 <include reference="cDM-rn-6vO"/>
                                 <include reference="oLk-am-W64"/>
                                 <exclude reference="rJc-pg-Q6c"/>
                                 <include reference="vhS-xM-deK"/>
+                                <include reference="SOW-uV-Mg6"/>
+                                <include reference="wTu-N6-5IG"/>
+                                <include reference="UBl-hR-haM"/>
+                                <include reference="uXw-XO-ZPV"/>
+                                <include reference="zuD-cn-6na"/>
+                                <include reference="7o1-Zd-59C"/>
+                                <include reference="eLc-Ni-ZaX"/>
+                                <include reference="4Bo-Ow-oZT"/>
+                                <include reference="798-zb-8Fw"/>
+                                <include reference="eTz-fw-FJZ"/>
+                                <include reference="nHg-y9-hBl"/>
                                 <include reference="6g4-eS-0Xh"/>
                                 <exclude reference="Rqx-gg-gA1"/>
                                 <include reference="X9s-cJ-cbm"/>
-                                <include reference="0KF-pv-Wwj"/>
                             </mask>
                         </variation>
                     </view>
@@ -1258,7 +1247,6 @@ Scan the two tags you find next to it.</string>
                         <outlet property="circle2" destination="Cdf-O6-wPj" id="ZJw-rT-iER"/>
                         <outlet property="clueYPMagnifyingView" destination="Mpu-MC-ypS" id="4I6-ML-FfX"/>
                         <outlet property="currentPoint" destination="Cyh-uz-ZBc" id="KHy-id-MSO"/>
-                        <outlet property="gifImageViewDx" destination="yQA-1q-L6q" id="Pfn-Qd-7WS"/>
                         <outlet property="gifImageViewSx" destination="Fcd-XO-Y0u" id="2bx-mh-uvH"/>
                         <outlet property="labelInstruction" destination="KOL-aE-fym" id="mwh-QR-YJw"/>
                         <outlet property="tag1Label" destination="aP9-k3-Uyd" id="pIP-LN-IHW"/>
@@ -1459,9 +1447,9 @@ Scan the two tags you find next to it.</string>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
-                        <outlet property="androidVictoryImageView" destination="UsV-ZG-VQI" id="3ez-ZJ-C2y"/>
                         <outlet property="answersLabel" destination="cK2-QI-jeZ" id="Ymz-wl-ukz"/>
                         <outlet property="finishTimeLabel" destination="OEG-oQ-6qb" id="BBW-KA-HCB"/>
+                        <outlet property="victoryImageView" destination="UsV-ZG-VQI" id="DLL-E2-M0s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kHp-oE-rqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1480,6 +1468,7 @@ Scan the two tags you find next to it.</string>
         <image name="beezbeez3" width="2019" height="3328"/>
         <image name="c-mon" width="1472" height="1006"/>
         <image name="gifandroid.gif" width="1067" height="1067"/>
+        <image name="gifanimocchi1" width="1472" height="1005"/>
         <image name="list89" width="512" height="512"/>
         <image name="logo" width="2480" height="2480"/>
         <image name="qrcode_example" width="425" height="425"/>
